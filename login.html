@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | Project Graveyard</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="navbar">
+
+        <div class="logo">
+            ⚰️ Project Graveyard
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="projects.html">Graveyard</a>
+            <a href="bury.html">Bury Project</a>
+            <a href="requests.html">Requests</a>
+        </nav>
+
+    </header>
+
+    <main>
+
+        <div class="auth-container">
+
+            <div class="auth-card" id="loginCard">
+
+                <div class="auth-icon">
+                    ⚰️
+                </div>
+
+                <h1>Welcome Back</h1>
+
+                <p class="auth-subtitle">
+                    Login to Project Graveyard
+                </p>
+
+                <form id="loginForm">
+
+                    <label for="loginEmail">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="loginEmail"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                    <label for="loginPassword">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        placeholder="Enter your password"
+                        required
+                    >
+
+                    <button
+                        type="submit"
+                        class="auth-btn"
+                    >
+                        🔐 Login
+                    </button>
+
+                </form>
+
+                <div class="auth-divider">
+                    <span>OR</span>
+                </div>
+
+                <button
+                    id="googleLogin"
+                    class="google-btn"
+                >
+                    🌐 Continue with Google
+                </button>
+
+                <p class="auth-switch">
+                    Don't have an account?
+                    <a href="#" id="showSignup">
+                        Sign Up
+                    </a>
+                </p>
+
+            </div>
+
+
+            <div
+                class="auth-card signup-card"
+                id="signupCard"
+            >
+
+                <div class="auth-icon">
+                    🧟
+                </div>
+
+                <h1>Create Account</h1>
+
+                <p class="auth-subtitle">
+                    Join the Project Graveyard
+                </p>
+
+                <form id="signupForm">
+
+                    <label for="signupName">
+                        Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="signupName"
+                        placeholder="Enter your name"
+                        required
+                    >
+
+                    <label for="signupEmail">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="signupEmail"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                    <label for="signupPassword">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="signupPassword"
+                        placeholder="Create a password"
+                        minlength="6"
+                        required
+                    >
+
+                    <button
+                        type="submit"
+                        class="auth-btn"
+                    >
+                        🧟 Create Account
+                    </button>
+
+                </form>
+
+                <p class="auth-switch">
+                    Already have an account?
+                    <a href="#" id="showLogin">
+                        Login
+                    </a>
+                </p>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script type="module">
+
+        import { auth, db } from "./firebase.js";
+
+        import {
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            GoogleAuthProvider,
+            signInWithPopup,
+            updateProfile
+            
+        } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+        import {
+            doc,
+            setDoc
+        } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+        const loginForm =
+            document.getElementById("loginForm");
+
+        const signupForm =
+            document.getElementById("signupForm");
+
+        const googleLogin =
+            document.getElementById("googleLogin");
+        
+        const loginCard =
+            document.getElementById("loginCard");
+
+        const signupCard =
+            document.getElementById("signupCard");
+
+        const showSignup =
+            document.getElementById("showSignup");
+
+        const showLogin =
+            document.getElementById("showLogin");
+
+
+        showSignup.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+                loginCard.style.display = "none";
+                signupCard.style.display = "block";
+
+            }
+        );
+
+
+        showLogin.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+                signupCard.style.display = "none";
+                loginCard.style.display = "block";
+
+            }
+        );
+
+
+        signupForm.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+                const name =
+                    document.getElementById("signupName").value.trim();
+
+                const email =
+                    document.getElementById("signupEmail").value.trim();
+
+                const password =
+                    document.getElementById("signupPassword").value;
+
+
+                try {
+
+                    const userCredential = await createUserWithEmailAndPassword(
+                        auth,
+                        email,
+                        password
+                    );
+
+                    await updateProfile(userCredential.user, {
+                        displayName: name
+                    });
+
+                    await setDoc(
+                        doc(db, "users", userCredential.user.uid),
+                        {
+                            name: name,
+                            email: email,
+                            createdAt: new Date()
+                        }
+                    );
+                    await setDoc(
+                        doc(db, "users", userCredential.user.uid),
+                        {
+                            name: name,
+                            email: email,
+                            createdAt: new Date()
+                        }
+                    );
+
+                    alert(
+                        "🎉 Account created successfully!"
+                    );
+
+                    window.location.href =
+                        "index.html";
+
+                } catch (error) {
+
+                    console.error(
+                        "Signup error:",
+                        error
+                    );
+
+                    alert(
+                        "❌ " + error.message
+                    );
+
+                }
+
+            }
+        );
+
+
+        loginForm.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+                const email =
+                    document.getElementById("loginEmail").value.trim();
+
+                const password =
+                    document.getElementById("loginPassword").value;
+
+
+                try {
+
+                    await signInWithEmailAndPassword(
+                        auth,
+                        email,
+                        password
+                    );
+
+                    alert(
+                        "👋 Login successful!"
+                    );
+
+                    window.location.href =
+                        "index.html";
+
+                } catch (error) {
+
+                    console.error(
+                        "Login error:",
+                        error
+                    );
+
+                    alert(
+                        "❌ " + error.message
+                    );
+
+                }
+
+            }
+        );
+
+
+        googleLogin.addEventListener(
+            "click",
+            async function () {
+
+                try {
+
+                    const provider =
+                        new GoogleAuthProvider();
+
+                    await signInWithPopup(
+                        auth,
+                        provider
+                    );
+
+                    alert(
+                        "🌐 Google login successful!"
+                    );
+
+                    window.location.href =
+                        "index.html";
+
+                } catch (error) {
+
+                    console.error(
+                        "Google login error:",
+                        error
+                    );
+
+                    alert(
+                        "❌ " + error.message
+                    );
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

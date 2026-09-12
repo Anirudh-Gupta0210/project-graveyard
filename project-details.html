@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Project Details | Project Graveyard</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ============================= -->
+    <!-- NAVIGATION -->
+    <!-- ============================= -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            ⚰️ Project Graveyard
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="projects.html">Graveyard</a>
+            <a href="bury.html">Bury Project</a>
+            <a href="requests.html">Requests</a>
+        </nav>
+
+    </header>
+
+
+    <!-- ============================= -->
+    <!-- PROJECT DETAILS -->
+    <!-- ============================= -->
+
+    <main>
+
+        <div class="details-page">
+
+            <a href="projects.html" class="back-link">
+                ← Back to Graveyard
+            </a>
+
+            <div id="projectDetails">
+
+                <!-- Loading message -->
+                <div class="loading">
+                    ⚰️ Digging up project details...
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ============================= -->
+    <!-- FIREBASE -->
+    <!-- ============================= -->
+
+    <script type="module">
+
+        import { db } from "./firebase.js";
+
+        import {
+            doc,
+            getDoc,
+            collection,
+            addDoc,
+            updateDoc,
+            serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+        const projectDetails =
+            document.getElementById("projectDetails");
+
+
+        // Get project ID from URL
+        const urlParams = new URLSearchParams(
+            window.location.search
+        );
+
+        const projectId = urlParams.get("id");
+
+
+        // =============================
+        // LOAD PROJECT
+        // =============================
+
+        async function loadProject() {
+
+            if (!projectId) {
+
+                projectDetails.innerHTML = `
+                    <div class="error-box">
+                        ☠️
+                        <h1>Project Not Found</h1>
+                        <p>No project ID was provided.</p>
+
+                        <a href="projects.html">
+                            Return to Graveyard
+                        </a>
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            try {
+
+                const projectRef =
+                    doc(db, "projects", projectId);
+
+                const projectSnap =
+                    await getDoc(projectRef);
+
+
+                if (!projectSnap.exists()) {
+
+                    projectDetails.innerHTML = `
+                        <div class="error-box">
+
+                            <div class="error-icon">
+                                ☠️
+                            </div>
+
+                            <h1>Project Not Found</h1>
+
+                            <p>
+                                This project may have been removed
+                                from the graveyard.
+                            </p>
+
+                            <a href="projects.html">
+                                ← Return to Graveyard
+                            </a>
+
+                        </div>
+                    `;
+
+                    return;
+                }
+
+
+                const project =
+                    projectSnap.data();
+
+
+                const difficulty =
+                    project.difficulty || "easy";
+
+
+                const stars =
+                    difficulty === "easy"
+                        ? "⭐"
+                        : difficulty === "medium"
+                            ? "⭐⭐"
+                            : "⭐⭐⭐";
+
+
+                // =============================
+                // PROJECT HTML
+                // =============================
+
+                projectDetails.innerHTML = `
+
+                    <div class="details-header">
+
+                        <div class="grave-icon">
+                            ⚰️
+                        </div>
+
+                        <span class="details-status">
+                            ☠️ ABANDONED
+                        </span>
+
+                        <h1>
+                            ${project.name || "Unnamed Project"}
+                        </h1>
+
+                        <p class="details-description">
+                            ${project.description || "No description provided."}
+                        </p>
+
+                    </div>
+
+
+                    <div class="details-grid">
+
+
+                        <!-- TECHNOLOGY -->
+
+                        <div class="detail-card">
+
+                            <div class="detail-icon">
+                                🛠️
+                            </div>
+
+                            <div>
+                                <h2>Technology</h2>
+
+                                <p>
+                                    ${project.technology || "Not specified"}
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <!-- CAUSE -->
+
+                        <div class="detail-card cause-card">
+
+                            <div class="detail-icon">
+                                💀
+                            </div>
+
+                            <div>
+                                <h2>Cause of Abandonment</h2>
+
+                                <p>
+                                    ${project.cause || "Unknown"}
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <!-- UNFINISHED -->
+
+                        <div class="detail-card unfinished-card">
+
+                            <div class="detail-icon">
+                                🚧
+                            </div>
+
+                            <div>
+                                <h2>What's Unfinished?</h2>
+
+                                <p>
+                                    ${project.unfinished || "Not specified"}
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <!-- DIFFICULTY -->
+
+                        <div class="detail-card difficulty-card">
+
+                            <div class="detail-icon">
+                                ⭐
+                            </div>
+
+                            <div>
+
+                                <h2>Difficulty</h2>
+
+                                <p class="difficulty-stars">
+                                    ${stars}
+                                </p>
+
+                                <span class="difficulty-label">
+                                    ${difficulty.toUpperCase()}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ACTIONS -->
+
+                    <div class="details-actions">
+
+
+                        ${
+                            project.github
+                                ? `
+                                    <a
+                                        href="${project.github}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="github-btn"
+                                    >
+                                        💻 View GitHub
+                                    </a>
+                                  `
+                                : ""
+                        }
+
+
+                        <button
+                            class="revive-btn"
+                            id="reviveButton"
+                        >
+                            🧟 Revive This Project
+                        </button>
+                        <button
+                            class="revived-btn"
+                            id="revivedButton"
+                        >
+                            ✨ Mark as Revived
+                        </button>
+
+
+                    </div>
+
+
+                    <!-- FUTURE AI SECTION -->
+
+                    <div class="autopsy-preview">
+
+                        <div class="autopsy-icon">
+                            🤖
+                        </div>
+
+                        <div>
+
+                            <span class="coming-soon">
+                                COMING SOON
+                            </span>
+
+                            <h2>
+                                🔬 AI Project Autopsy
+                            </h2>
+
+                            <p>
+                                Let AI analyze this abandoned project,
+                                identify what's missing, estimate
+                                completion difficulty, and suggest
+                                how to bring it back to life.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+
+                // =============================
+                // REVIVE BUTTON
+                // =============================
+
+                document
+                    .getElementById("reviveButton")
+                    .addEventListener("click", async function () {
+
+                        try {
+
+                            await addDoc(
+                                collection(db, "revivalRequests"),
+                                {
+                                    projectName:
+                                        project.name || "Unnamed Project",
+
+                                    projectId:
+                                        projectId,
+
+                                    requestedAt:
+                                        serverTimestamp(),
+
+                                    status:
+                                        "pending"
+                                }
+                            );
+                            await updateDoc(
+                                doc(db, "projects", projectId),
+                                {
+                                    status: "revival-requested"
+                                }
+                            );
+
+
+                            alert(
+                                "🧟 Revival Request Sent!\n\n" +
+                                "Someone will review your request."
+                            );
+
+                        }
+
+                        catch (error) {
+
+                            console.error(
+                                "Error creating revival request:",
+                                error
+                            );
+
+                            alert(
+                                "❌ Something went wrong. Please try again."
+                            );
+
+                        }
+
+                    });
+                    document
+                        .getElementById("revivedButton")
+                        .addEventListener("click", async function () {
+
+                            try {
+
+                                await updateDoc(
+                                    doc(db, "projects", projectId),
+                                    {
+                                        status: "revived"
+                                    }
+                                );
+
+                                alert(
+                                    "✨ Project Revived!\n\n" +
+                                    "This project has officially been brought back to life!"
+                                );
+
+                                window.location.reload();
+
+                            } catch (error) {
+
+                                console.error(
+                                    "Error marking project as revived:",
+                                    error
+                                );
+
+                                alert(
+                                    "❌ Something went wrong. Please try again."
+                                );
+
+                            }
+
+                        });
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Error loading project:",
+                    error
+                );
+
+                projectDetails.innerHTML = `
+
+                    <div class="error-box">
+
+                        <div class="error-icon">
+                            ⚠️
+                        </div>
+
+                        <h1>
+                            Unable to Load Project
+                        </h1>
+
+                        <p>
+                            Something went wrong while retrieving
+                            this project.
+                        </p>
+
+                        <a href="projects.html">
+                            ← Back to Graveyard
+                        </a>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        // Start
+        loadProject();
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Project Graveyard</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">⚰️ Project<span>Graveyard</span></div>
+
+        <div>
+            <a href="#">Explore</a>
+            <a href="#">About</a>
+            <a href="login.html" id="authLink">Login</a>
+        </div>
+    </nav>
+
+
+    <section class="hero">
+
+        <div class="grave">⚰️</div>
+
+        <h1>
+            Give Dead Projects<br>
+            <span>A Second Life.</span>
+        </h1>
+
+        <p>
+            A collaborative platform where abandoned student projects
+            are discovered, adopted, improved, and brought back to life.
+        </p>
+
+        <div class="buttons">
+
+            <a href="projects.html" class="btn primary">
+                🔎 Explore Projects
+            </a>
+
+            <a href="bury.html" class="btn secondary">
+                ⚰️ Bury a Project
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <section class="stats">
+
+        <div class="stat">
+            <h2 id="projectsBuried">0</h2>
+            <p>Projects Buried</p>
+        </div>
+
+        <div class="stat">
+            <h2 id="projectsRevived">0</h2>
+            <p>Projects Revived</p>
+        </div>
+
+        <div class="stat">
+            <h2 id="studentDevelopers">0</h2>
+            <p>Student Developers</p>
+        </div>
+
+    </section>
+
+
+    <script src="script.js"></script>
+    <script type="module">
+    import { auth } from "./firebase.js";
+
+    import {
+        onAuthStateChanged,
+        signOut
+    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+    const authLink = document.getElementById("authLink");
+
+    onAuthStateChanged(auth, (user) => {
+
+        if (user) {
+
+            authLink.textContent =
+                "👤 " + (user.displayName || "Account");
+
+            authLink.href = "#";
+
+            authLink.addEventListener("click", async function (event) {
+
+                event.preventDefault();
+
+                await signOut(auth);
+
+                window.location.reload();
+
+            });
+
+        } else {
+
+            authLink.textContent = "Login";
+            authLink.href = "login.html";
+
+        }
+
+    });
+</script>
+<script type="module">
+
+    import { db } from "./firebase.js";
+
+    import {
+        collection,
+        getDocs
+    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+    async function loadStats() {
+
+        const snapshot =
+            await getDocs(collection(db, "projects"));
+
+        const usersSnapshot =
+            await getDocs(collection(db, "users"));
+
+        let buried = 0;
+        let revived = 0;
+
+        snapshot.forEach((doc) => {
+
+            const project = doc.data();
+
+            buried++;
+
+
+            if (project.status === "revived") {
+                revived++;
+            }
+
+        });
+
+
+        document.getElementById("projectsBuried").textContent = buried;
+
+        document.getElementById("projectsRevived").textContent = revived;
+
+        document.getElementById("studentDevelopers").textContent =
+            usersSnapshot.size;
+
+    }
+
+
+    loadStats();
+
+</script>
+
+
+</body>
+</html>

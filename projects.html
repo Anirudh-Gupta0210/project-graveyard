@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Project Graveyard | Explore</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+
+    <nav>
+
+        <div class="logo">
+            ⚰️ Project<span>Graveyard</span>
+        </div>
+
+        <div>
+            <a href="index.html">Home</a>
+            <a href="projects.html">Explore</a>
+            <a href="bury.html">Bury a Project</a>
+            <a href="requests.html">Requests</a>
+            <a href="login.html" id="authLink">Login</a>
+        </div>
+
+    </nav>
+
+
+    <!-- Page Header -->
+
+    <section class="projects-header">
+
+        <div class="grave">
+            ⚰️
+        </div>
+
+        <h1>
+            The Project Graveyard
+        </h1>
+
+        <p>
+            Thousands of ideas are abandoned before they reach their potential.
+            Maybe you can give one of them a second life.
+        </p>
+
+    </section>
+
+
+    <!-- Search and Filters -->
+
+    <section class="project-controls">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="🔎 Search abandoned projects..."
+        >
+
+
+        <!-- Category Filters -->
+
+        <div class="filters">
+
+            <button
+                class="filter active"
+                onclick="filterProjects('all', this)"
+            >
+                All
+            </button>
+
+            <button
+                class="filter"
+                onclick="filterProjects('web', this)"
+            >
+                Web
+            </button>
+
+            <button
+                class="filter"
+                onclick="filterProjects('ai', this)"
+            >
+                AI / ML
+            </button>
+
+            <button
+                class="filter"
+                onclick="filterProjects('mobile', this)"
+            >
+                Mobile
+            </button>
+
+        </div>
+
+
+        <!-- Status Filters -->
+
+        <div class="filters status-filters">
+
+            <button
+                class="status-filter active"
+                onclick="filterByStatus('all', this)"
+            >
+                All Status
+            </button>
+
+            <button
+                class="status-filter"
+                onclick="filterByStatus('abandoned', this)"
+            >
+                ☠️ Abandoned
+            </button>
+
+            <button
+                class="status-filter"
+                onclick="filterByStatus('revival-requested', this)"
+            >
+                🧟 Revival Requested
+            </button>
+
+            <button
+                class="status-filter"
+                onclick="filterByStatus('in-progress', this)"
+            >
+                🔨 In Progress
+            </button>
+
+            <button
+                class="status-filter"
+                onclick="filterByStatus('revived', this)"
+            >
+                ✨ Revived
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- Projects -->
+
+    <main
+        class="project-grid"
+        id="projectGrid"
+    >
+
+        <!-- Projects will be loaded from Firebase -->
+
+    </main>
+
+
+    <!-- Main JavaScript -->
+
+    <script type="module" src="script.js"></script>
+
+
+    <!-- Firebase Projects -->
+
+    <script type="module">
+
+        import { db } from "./firebase.js";
+
+        import {
+            collection,
+            getDocs
+        } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+        const projectGrid =
+            document.getElementById("projectGrid");
+
+
+        async function loadProjects() {
+
+            try {
+
+                const snapshot =
+                    await getDocs(
+                        collection(db, "projects")
+                    );
+
+
+                if (snapshot.empty) {
+
+                    projectGrid.innerHTML = `
+                        <div class="no-projects">
+
+                            <h2>
+                                💀 The Graveyard is Empty
+                            </h2>
+
+                            <p>
+                                No abandoned projects have been buried yet.
+                            </p>
+
+                            <a href="bury.html">
+                                Bury the First Project
+                            </a>
+
+                        </div>
+                    `;
+
+                    return;
+                }
+
+
+                snapshot.forEach((doc) => {
+
+                    const project =
+                        doc.data();
+
+
+                    // =============================
+                    // PROJECT STATUS
+                    // =============================
+
+                    const projectStatus =
+                        project.status || "abandoned";
+
+
+                    let statusText =
+                        projectStatus
+                            .replaceAll("-", " ")
+                            .toUpperCase();
+
+
+                    // =============================
+                    // STATUS ICON
+                    // =============================
+
+                    let statusIcon = "☠️";
+
+
+                    if (projectStatus === "revival-requested") {
+
+                        statusIcon = "🧟";
+
+                    }
+
+
+                    if (projectStatus === "in-progress") {
+
+                        statusIcon = "🔨";
+
+                    }
+
+
+                    if (projectStatus === "revived") {
+
+                        statusIcon = "✨";
+
+                    }
+
+
+                    // =============================
+                    // CREATE PROJECT CARD
+                    // =============================
+
+                    const card =
+                        document.createElement("article");
+
+
+                    card.className =
+                        "project-card";
+
+
+                    card.dataset.category =
+                        project.category || "other";
+
+
+                    card.dataset.status =
+                        projectStatus;
+
+
+                    // =============================
+                    // REVIVE BUTTON
+                    // =============================
+
+                    let reviveButton = "";
+
+
+                    if (projectStatus === "abandoned") {
+
+                        reviveButton = `
+                            <button
+                                class="revive-btn"
+                                onclick="reviveProject(
+                                    '${escapeJS(doc.id)}',
+                                    '${escapeJS(project.name || "Unnamed Project")}'
+                                )"
+                            >
+                                🧟 Revive
+                            </button>
+                        `;
+
+                    }
+
+
+                    else if (
+                        projectStatus === "revival-requested"
+                    ) {
+
+                        reviveButton = `
+                            <button
+                                class="revive-btn"
+                                disabled
+                            >
+                                ⏳ Request Pending
+                            </button>
+                        `;
+
+                    }
+
+
+                    else if (
+                        projectStatus === "in-progress"
+                    ) {
+
+                        reviveButton = `
+                            <button
+                                class="revive-btn"
+                                disabled
+                            >
+                                🔨 In Progress
+                            </button>
+                        `;
+
+                    }
+
+
+                    else if (
+                        projectStatus === "revived"
+                    ) {
+
+                        reviveButton = `
+                            <button
+                                class="revive-btn"
+                                disabled
+                            >
+                                ✨ Revived
+                            </button>
+                        `;
+
+                    }
+
+
+                    // =============================
+                    // PROJECT CARD HTML
+                    // =============================
+
+                    card.innerHTML = `
+
+                        <div class="tombstone">
+                            ⚰️
+                        </div>
+
+
+                        <span class="status">
+
+                            ${statusIcon}
+                            ${statusText}
+
+                        </span>
+
+
+                        <h2>
+                            ${escapeHTML(
+                                project.name || "Unnamed Project"
+                            )}
+                        </h2>
+
+
+                        <p>
+                            ${escapeHTML(
+                                project.description ||
+                                "No description provided."
+                            )}
+                        </p>
+
+
+                        <div class="tech">
+
+                            ${
+                                project.technology
+                                    ? project.technology
+                                        .split(",")
+                                        .map(
+                                            tech =>
+                                                `<span>${escapeHTML(
+                                                    tech.trim()
+                                                )}</span>`
+                                        )
+                                        .join("")
+                                    : "<span>Not specified</span>"
+                            }
+
+                        </div>
+
+
+                        <div class="cause">
+
+                            <strong>
+                                Cause of death:
+                            </strong>
+
+                            ${escapeHTML(
+                                project.cause || "Unknown"
+                            )}
+
+                        </div>
+
+
+                        <div class="difficulty">
+
+                            Difficulty:
+
+                            ${
+                                "⭐".repeat(
+                                    project.difficulty === "easy"
+                                        ? 1
+                                        : project.difficulty === "medium"
+                                            ? 2
+                                            : 3
+                                )
+                            }
+
+                        </div>
+
+
+                        <div class="card-buttons">
+
+                            <!-- View Project -->
+
+                            <button
+                                class="view-btn"
+                                data-project-id="${doc.id}"
+                            >
+                                View Project
+                            </button>
+
+
+                            <!-- Status-based Revive Button -->
+
+                            ${reviveButton}
+
+                        </div>
+
+                    `;
+
+
+                    projectGrid.appendChild(card);
+
+
+                    // =============================
+                    // VIEW PROJECT
+                    // =============================
+
+                    card
+                        .querySelector(".view-btn")
+                        .addEventListener(
+                            "click",
+                            function () {
+
+                                window.location.href =
+                                    `project-details.html?id=${doc.id}`;
+
+                            }
+                        );
+
+                });
+
+
+            } catch (error) {
+
+                console.error(
+                    "Error loading projects:",
+                    error
+                );
+
+
+                projectGrid.innerHTML = `
+
+                    <div class="no-projects">
+
+                        <h2>
+                            ❌ Unable to Load Projects
+                        </h2>
+
+                        <p>
+                            Something went wrong while loading
+                            the Project Graveyard.
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        // =============================
+        // START LOADING PROJECTS
+        // =============================
+
+        loadProjects();
+
+
+        // =============================
+        // SECURITY HELPERS
+        // =============================
+
+        function escapeHTML(text) {
+
+            return String(text)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+        function escapeJS(text) {
+
+            return String(text)
+                .replace(/\\/g, "\\\\")
+                .replace(/'/g, "\\'")
+                .replace(/\n/g, "\\n")
+                .replace(/\r/g, "\\r");
+
+        }
+
+    </script>
+
+
+    <!-- Authentication -->
+
+    <script type="module">
+
+        import { auth } from "./firebase.js";
+
+        import {
+            onAuthStateChanged,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+
+        const authLink =
+            document.getElementById("authLink");
+
+
+        onAuthStateChanged(
+            auth,
+            (user) => {
+
+                if (user) {
+
+                    authLink.textContent =
+                        "👤 " +
+                        (user.displayName || "Account");
+
+
+                    authLink.href =
+                        "#";
+
+
+                    authLink.onclick =
+                        async function (event) {
+
+                            event.preventDefault();
+
+                            await signOut(auth);
+
+                            window.location.reload();
+
+                        };
+
+                }
+
+                else {
+
+                    authLink.textContent =
+                        "Login";
+
+
+                    authLink.href =
+                        "login.html";
+
+                }
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>

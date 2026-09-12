@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Revival Requests | Project Graveyard</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            ⚰️ Project Graveyard
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="projects.html">Graveyard</a>
+            <a href="bury.html">Bury Project</a>
+            <a href="requests.html">Requests</a>
+        </nav>
+    </header>
+
+
+    <main class="requests-container">
+
+        <section class="page-header">
+
+            <div class="tombstone">
+                ⚰️
+            </div>
+
+            <h1>Revival Requests</h1>
+
+            <p>
+                Students who want to give your abandoned projects
+                a second life.
+            </p>
+
+        </section>
+
+
+        <section id="requestsGrid" class="requests-grid">
+
+            <p class="loading">
+                Loading revival requests...
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <script type="module">
+
+        import { db } from "./firebase.js";
+
+        import {
+            collection,
+            getDocs,
+            updateDoc,
+            getDoc,
+            doc
+        } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+        const requestsGrid =
+            document.getElementById("requestsGrid");
+
+
+        async function loadRequests() {
+
+            try {
+
+                const snapshot =
+                    await getDocs(
+                        collection(db, "revivalRequests")
+                    );
+
+
+                requestsGrid.innerHTML = "";
+
+
+                if (snapshot.empty) {
+
+                    requestsGrid.innerHTML = `
+                        <div class="no-requests">
+                            <h2>💀 No Revival Requests</h2>
+
+                            <p>
+                                Nobody has requested to revive a
+                                project yet.
+                            </p>
+                        </div>
+                    `;
+
+                    return;
+                }
+
+
+                snapshot.forEach((requestDoc) => {
+
+                    const request =
+                        requestDoc.data();
+
+
+                    const card =
+                        document.createElement("article");
+
+                    card.className =
+                        "request-card";
+
+
+                    card.innerHTML = `
+
+                        <div class="request-icon">
+                            🧟
+                        </div>
+
+
+                        <span class="request-status">
+                            ${request.status || "pending"}
+                        </span>
+
+
+                        <h2>
+                            ${request.projectName || "Unknown Project"}
+                        </h2>
+
+
+                        <p>
+                            Someone wants to bring this
+                            project back to life.
+                        </p>
+
+
+                        <div class="request-buttons">
+
+                            <button
+                                class="accept-btn"
+                                data-id="${requestDoc.id}">
+                                ✅ Accept Revival
+                            </button>
+
+
+                            <button
+                                class="reject-btn"
+                                data-id="${requestDoc.id}">
+                                ❌ Reject
+                            </button>
+
+                        </div>
+
+                    `;
+
+
+                    requestsGrid.appendChild(card);
+
+                });
+
+
+                addButtonListeners();
+
+
+            } catch (error) {
+
+                console.error(
+                    "Error loading requests:",
+                    error
+                );
+
+
+                requestsGrid.innerHTML = `
+
+                    <div class="no-requests">
+
+                        <h2>
+                            ❌ Unable to load requests
+                        </h2>
+
+                        <p>
+                            Please refresh the page and try again.
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        function addButtonListeners() {
+
+
+            document
+                .querySelectorAll(".accept-btn")
+                .forEach(button => {
+
+                    button.addEventListener(
+                        "click",
+                        () => updateRequest(
+                            button.dataset.id,
+                            "accepted"
+                        )
+                    );
+
+                });
+
+
+            document
+                .querySelectorAll(".reject-btn")
+                .forEach(button => {
+
+                    button.addEventListener(
+                        "click",
+                        () => updateRequest(
+                            button.dataset.id,
+                            "rejected"
+                        )
+                    );
+
+                });
+
+        }
+
+
+        async function updateRequest(
+            requestId,
+            newStatus
+        ) {
+
+            try {
+
+                await updateDoc(
+
+                    doc(
+                        db,
+                        "revivalRequests",
+                        requestId
+                    ),
+
+                    {
+                        status: newStatus
+                    }
+
+                );
+                const requestSnap = await getDoc(
+                    doc(db, "revivalRequests", requestId)
+                );
+
+                const request = requestSnap.data();
+                if (newStatus === "accepted" && request.projectId) {
+                await updateDoc(
+                    doc(db, "projects", request.projectId),
+                    {
+                        status: "in-progress"
+                    }
+                );
+            }
+
+
+                alert(
+                    newStatus === "accepted"
+                        ? "🎉 Revival request accepted!"
+                        : "💀 Revival request rejected."
+                );
+
+
+                loadRequests();
+
+
+            } catch (error) {
+
+                console.error(
+                    "Error updating request:",
+                    error
+                );
+
+
+                alert(
+                    "❌ Something went wrong. Please try again."
+                );
+
+            }
+
+        }
+
+
+        loadRequests();
+
+    </script>
+
+</body>
+</html>

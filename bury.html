@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Project Graveyard | Bury a Project</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+
+    <nav>
+
+        <div class="logo">
+            ⚰️ Project<span>Graveyard</span>
+        </div>
+
+        <div>
+            <a href="index.html">Home</a>
+            <a href="projects.html">Explore</a>
+            <a href="bury.html">Bury a Project</a>
+        </div>
+
+    </nav>
+
+
+    <!-- Form Header -->
+
+    <section class="bury-header">
+
+        <div class="grave">
+            ⚰️
+        </div>
+
+        <h1>
+            Bury Your Project
+        </h1>
+
+        <p>
+            Don't let your unfinished idea disappear.
+            Give another developer the chance to bring it back to life.
+        </p>
+
+    </section>
+
+
+    <!-- Project Form -->
+
+    <section class="bury-container">
+
+        <form id="buryForm">
+
+
+            <!-- Project Name -->
+
+            <div class="form-group">
+
+                <label for="projectName">
+                    Project Name *
+                </label>
+
+                <input
+                    type="text"
+                    id="projectName"
+                    placeholder="e.g. CampusConnect"
+                    required
+                >
+
+            </div>
+
+
+            <!-- Description -->
+
+            <div class="form-group">
+
+                <label for="description">
+                    Project Description *
+                </label>
+
+                <textarea
+                    id="description"
+                    placeholder="Tell us what your project was supposed to do..."
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <!-- GitHub -->
+
+            <div class="form-group">
+
+                <label for="github">
+                    GitHub Repository
+                </label>
+
+                <input
+                    type="url"
+                    id="github"
+                    placeholder="https://github.com/username/project"
+                >
+
+                <small>
+                    Optional — sharing the repository helps others understand and revive your project.
+                </small>
+
+            </div>
+
+
+            <!-- Technology -->
+
+            <div class="form-group">
+
+                <label for="technology">
+                    Technology / Tech Stack *
+                </label>
+
+                <input
+                    type="text"
+                    id="technology"
+                    placeholder="e.g. React, Node.js, MongoDB"
+                    required
+                >
+
+            </div>
+
+
+            <!-- Category -->
+
+            <div class="form-group">
+
+                <label for="category">
+                    Project Category *
+                </label>
+
+                <select id="category" required>
+
+                    <option value="">
+                        Select a category
+                    </option>
+
+                    <option value="web">
+                        Web
+                    </option>
+
+                    <option value="ai">
+                        AI / Machine Learning
+                    </option>
+
+                    <option value="mobile">
+                        Mobile
+                    </option>
+
+                    <option value="other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Cause -->
+
+            <div class="form-group">
+
+                <label for="cause">
+                    Why was the project abandoned? *
+                </label>
+
+                <textarea
+                    id="cause"
+                    placeholder="e.g. Team graduated, lost interest, lack of time..."
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <!-- Unfinished Features -->
+
+            <div class="form-group">
+
+                <label for="unfinished">
+                    What's unfinished? *
+                </label>
+
+                <textarea
+                    id="unfinished"
+                    placeholder="List the features or parts that still need work..."
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <!-- Difficulty -->
+
+            <div class="form-group">
+
+                <label for="difficulty">
+                    Estimated Difficulty *
+                </label>
+
+                <select id="difficulty" required>
+
+                    <option value="">
+                        Select difficulty
+                    </option>
+
+                    <option value="easy">
+                        ⭐⭐ Easy
+                    </option>
+
+                    <option value="medium">
+                        ⭐⭐⭐ Medium
+                    </option>
+
+                    <option value="hard">
+                        ⭐⭐⭐⭐ Hard
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Submit -->
+
+            <button
+                type="submit"
+                class="bury-submit"
+            >
+                ☠️ Bury This Project
+            </button>
+
+
+        </form>
+
+    </section>
+
+
+    <script src="script.js"></script>
+
+<script type="module">
+    import { db } from "./firebase.js";
+    import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+    const form = document.getElementById("buryForm");
+
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const project = {
+            status: "abandoned",
+            name: document.getElementById("projectName").value.trim(),
+            description: document.getElementById("description").value.trim(),
+            github: document.getElementById("github").value.trim(),
+            technology: document.getElementById("technology").value.trim(),
+            category: document.getElementById("category").value,
+            cause: document.getElementById("cause").value.trim(),
+            unfinished: document.getElementById("unfinished").value.trim(),
+            difficulty: document.getElementById("difficulty").value,
+            createdAt: serverTimestamp()
+        };
+
+        try {
+            await addDoc(collection(db, "projects"), project);
+
+            alert("☠️ Project buried successfully!");
+
+            form.reset();
+
+        } catch (error) {
+            console.error("Error adding project:", error);
+            alert("❌ Something went wrong. Please try again.");
+        }
+    });
+</script>
+
+</body>
+
+</html>
