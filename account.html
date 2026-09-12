@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Account | Project Graveyard</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =============================
+         NAVIGATION
+    ============================== -->
+
+    <nav>
+
+        <div class="logo">
+            ⚰️ Project<span>Graveyard</span>
+        </div>
+
+        <div>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="projects.html">
+                Explore
+            </a>
+
+            <a href="bury.html">
+                Bury a Project
+            </a>
+
+            <a href="requests.html">
+                Requests
+            </a>
+
+            <a
+                href="account.html"
+                class="account-nav-active"
+            >
+                👤 Account
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =============================
+         ACCOUNT PROFILE
+    ============================== -->
+
+    <section class="account-profile">
+
+        <div class="account-profile-icon">
+            👤
+        </div>
+
+
+        <div class="account-profile-info">
+
+            <p class="account-label">
+                PROJECT GRAVEYARD MEMBER
+            </p>
+
+
+            <!-- USER NAME -->
+
+            <div
+                style="
+                    display: flex;
+                    align-items: center;
+                    gap: 14px;
+                    flex-wrap: wrap;
+                "
+            >
+
+                <h1
+                    id="accountName"
+                    style="margin: 0;"
+                >
+                    Loading...
+                </h1>
+
+
+                <button
+                    id="editNameButton"
+                    type="button"
+                    style="
+                        border: 1px solid #8b5cf6;
+                        background: transparent;
+                        color: #a78bfa;
+                        padding: 8px 14px;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        font-size: 14px;
+                    "
+                >
+                    ✏️ Edit Name
+                </button>
+
+            </div>
+
+
+            <!-- EDIT NAME FORM -->
+
+            <div
+                id="editNameForm"
+                style="
+                    display: none;
+                    margin-top: 15px;
+                "
+            >
+
+                <input
+                    type="text"
+                    id="newName"
+                    placeholder="Enter your name"
+                    maxlength="50"
+                    style="
+                        padding: 11px 14px;
+                        border-radius: 8px;
+                        border: 1px solid #444;
+                        background: #181820;
+                        color: white;
+                        font-size: 15px;
+                        width: 250px;
+                        outline: none;
+                    "
+                >
+
+
+                <button
+                    id="saveNameButton"
+                    type="button"
+                    style="
+                        margin-left: 8px;
+                        border: none;
+                        background: #8b5cf6;
+                        color: white;
+                        padding: 11px 16px;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        font-size: 14px;
+                    "
+                >
+                    💾 Save
+                </button>
+
+
+                <button
+                    id="cancelNameButton"
+                    type="button"
+                    style="
+                        margin-left: 6px;
+                        border: 1px solid #444;
+                        background: transparent;
+                        color: #aaa;
+                        padding: 10px 14px;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        font-size: 14px;
+                    "
+                >
+                    Cancel
+                </button>
+
+
+                <p
+                    id="nameMessage"
+                    style="
+                        margin-top: 10px;
+                        font-size: 14px;
+                    "
+                ></p>
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <p
+                id="accountEmail"
+                class="account-email"
+            >
+                Loading account...
+            </p>
+
+
+            <!-- MEMBER SINCE -->
+
+            <p
+                id="memberSince"
+                class="member-since"
+            >
+                Member since: Loading...
+            </p>
+
+        </div>
+
+
+        <!-- LOGOUT -->
+
+        <button
+            id="logoutButton"
+            class="logout-btn"
+        >
+            🚪 Logout
+        </button>
+
+    </section>
+
+
+    <!-- =============================
+         ACCOUNT STATS
+    ============================== -->
+
+    <section class="account-stats">
+
+
+        <!-- Total Projects -->
+
+        <div class="account-stat">
+
+            <div class="account-stat-icon">
+                ☠️
+            </div>
+
+            <h2 id="buriedCount">
+                0
+            </h2>
+
+            <p>
+                Projects Buried
+            </p>
+
+        </div>
+
+
+        <!-- Awaiting Revival -->
+
+        <div class="account-stat">
+
+            <div class="account-stat-icon">
+                🧟
+            </div>
+
+            <h2 id="pendingCount">
+                0
+            </h2>
+
+            <p>
+                Awaiting Revival
+            </p>
+
+        </div>
+
+
+        <!-- In Progress -->
+
+        <div class="account-stat">
+
+            <div class="account-stat-icon">
+                🔨
+            </div>
+
+            <h2 id="progressCount">
+                0
+            </h2>
+
+            <p>
+                In Progress
+            </p>
+
+        </div>
+
+
+        <!-- Revived -->
+
+        <div class="account-stat">
+
+            <div class="account-stat-icon">
+                ✨
+            </div>
+
+            <h2 id="revivedCount">
+                0
+            </h2>
+
+            <p>
+                Projects Revived
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =============================
+         QUICK ACTIONS
+    ============================== -->
+
+    <section class="account-actions">
+
+        <a
+            href="projects.html"
+            class="account-action secondary-action"
+        >
+            🔎 Explore Projects
+        </a>
+
+
+        <a
+            href="bury.html"
+            class="account-action primary-action"
+        >
+            ⚰️ Bury a Project
+        </a>
+
+
+        <a
+            href="requests.html"
+            class="account-action secondary-action"
+        >
+            🧟 View Requests
+        </a>
+
+    </section>
+
+
+    <!-- =============================
+         MY PROJECTS
+    ============================== -->
+
+    <section class="account-projects">
+
+
+        <div class="account-section-header">
+
+            <div>
+
+                <p class="account-section-label">
+                    YOUR CONTRIBUTIONS
+                </p>
+
+                <h2>
+                    📁 My Projects
+                </h2>
+
+            </div>
+
+
+            <a
+                href="bury.html"
+                class="btn primary"
+            >
+                ⚰️ Bury a Project
+            </a>
+
+        </div>
+
+
+        <div
+            id="myProjects"
+            class="account-project-grid"
+        >
+
+            <div class="loading">
+                Loading your projects...
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =============================
+         FIREBASE
+    ============================== -->
+
+    <script type="module">
+
+        import {
+            auth,
+            db
+        } from "./firebase.js";
+
+
+        import {
+            onAuthStateChanged,
+            signOut,
+            updateProfile
+        } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+
+        import {
+            collection,
+            getDocs,
+            query,
+            where,
+            doc,
+            setDoc
+        } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+        // =============================
+        // GET ELEMENTS
+        // =============================
+
+        const accountName =
+            document.getElementById("accountName");
+
+
+        const accountEmail =
+            document.getElementById("accountEmail");
+
+
+        const memberSince =
+            document.getElementById("memberSince");
+
+
+        const logoutButton =
+            document.getElementById("logoutButton");
+
+
+        const buriedCount =
+            document.getElementById("buriedCount");
+
+
+        const pendingCount =
+            document.getElementById("pendingCount");
+
+
+        const progressCount =
+            document.getElementById("progressCount");
+
+
+        const revivedCount =
+            document.getElementById("revivedCount");
+
+
+        const myProjects =
+            document.getElementById("myProjects");
+
+
+        const editNameButton =
+            document.getElementById("editNameButton");
+
+
+        const editNameForm =
+            document.getElementById("editNameForm");
+
+
+        const newName =
+            document.getElementById("newName");
+
+
+        const saveNameButton =
+            document.getElementById("saveNameButton");
+
+
+        const cancelNameButton =
+            document.getElementById("cancelNameButton");
+
+
+        const nameMessage =
+            document.getElementById("nameMessage");
+
+
+        // =============================
+        // SECURITY HELPER
+        // =============================
+
+        function escapeHTML(text) {
+
+            return String(text)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+        // =============================
+        // STATUS ICON
+        // =============================
+
+        function getStatusIcon(status) {
+
+            if (
+                status ===
+                "revival-requested"
+            ) {
+
+                return "🧟";
+
+            }
+
+
+            if (
+                status ===
+                "in-progress"
+            ) {
+
+                return "🔨";
+
+            }
+
+
+            if (
+                status ===
+                "revived"
+            ) {
+
+                return "✨";
+
+            }
+
+
+            return "☠️";
+
+        }
+
+
+        // =============================
+        // STATUS CLASS
+        // =============================
+
+        function getStatusClass(status) {
+
+            if (
+                status ===
+                "revival-requested"
+            ) {
+
+                return "status-revival-requested";
+
+            }
+
+
+            if (
+                status ===
+                "in-progress"
+            ) {
+
+                return "status-in-progress";
+
+            }
+
+
+            if (
+                status ===
+                "revived"
+            ) {
+
+                return "status-revived";
+
+            }
+
+
+            return "status-abandoned";
+
+        }
+
+
+        // =============================
+        // LOAD USER PROJECTS
+        // =============================
+
+        async function loadMyProjects(user) {
+
+            try {
+
+                const projectsQuery =
+                    query(
+                        collection(
+                            db,
+                            "projects"
+                        ),
+                        where(
+                            "ownerId",
+                            "==",
+                            user.uid
+                        )
+                    );
+
+
+                const snapshot =
+                    await getDocs(
+                        projectsQuery
+                    );
+
+
+                let buried = 0;
+                let pending = 0;
+                let inProgress = 0;
+                let revived = 0;
+
+
+                myProjects.innerHTML = "";
+
+
+                if (snapshot.empty) {
+
+                    myProjects.innerHTML = `
+
+                        <div class="account-empty">
+
+                            <div class="account-empty-icon">
+                                ⚰️
+                            </div>
+
+                            <h2>
+                                Your graveyard is empty
+                            </h2>
+
+                            <p>
+                                You haven't buried a project yet.
+                                Give your unfinished idea a second life.
+                            </p>
+
+                            <a
+                                href="bury.html"
+                                class="btn primary"
+                            >
+                                ⚰️ Bury Your First Project
+                            </a>
+
+                        </div>
+
+                    `;
+
+                }
+
+
+                snapshot.forEach(
+                    (projectDoc) => {
+
+                        const project =
+                            projectDoc.data();
+
+
+                        buried++;
+
+
+                        if (
+                            project.status ===
+                            "revival-requested"
+                        ) {
+
+                            pending++;
+
+                        }
+
+
+                        if (
+                            project.status ===
+                            "in-progress"
+                        ) {
+
+                            inProgress++;
+
+                        }
+
+
+                        if (
+                            project.status ===
+                            "revived"
+                        ) {
+
+                            revived++;
+
+                        }
+
+
+                        const status =
+                            project.status ||
+                            "abandoned";
+
+
+                        const statusText =
+                            status
+                                .replaceAll(
+                                    "-",
+                                    " "
+                                )
+                                .toUpperCase();
+
+
+                        const statusIcon =
+                            getStatusIcon(
+                                status
+                            );
+
+
+                        const statusClass =
+                            getStatusClass(
+                                status
+                            );
+
+
+                        // =============================
+                        // PROJECT CARD
+                        // =============================
+
+                        const card =
+                            document.createElement(
+                                "article"
+                            );
+
+
+                        card.className =
+                            "account-project-card";
+
+
+                        card.innerHTML = `
+
+                            <div class="account-project-top">
+
+                                <div class="account-project-icon">
+                                    ⚰️
+                                </div>
+
+                                <span
+                                    class="account-project-status ${statusClass}"
+                                >
+                                    ${statusIcon}
+                                    ${statusText}
+                                </span>
+
+                            </div>
+
+
+                            <h3>
+                                ${escapeHTML(
+                                    project.name ||
+                                    "Unnamed Project"
+                                )}
+                            </h3>
+
+
+                            <p
+                                class="account-project-description"
+                            >
+
+                                ${escapeHTML(
+                                    project.description ||
+                                    "No description provided."
+                                )}
+
+                            </p>
+
+
+                            <div class="account-project-tech">
+
+                                <strong>
+                                    💻 Tech:
+                                </strong>
+
+                                ${escapeHTML(
+                                    project.technology ||
+                                    "Not specified"
+                                )}
+
+                            </div>
+
+
+                            <div class="account-project-cause">
+
+                                <strong>
+                                    Cause of death:
+                                </strong>
+
+                                ${escapeHTML(
+                                    project.cause ||
+                                    "Unknown"
+                                )}
+
+                            </div>
+
+
+                            <div class="account-project-footer">
+
+                                <button
+                                    class="view-btn"
+                                    data-id="${projectDoc.id}"
+                                >
+                                    View Project →
+                                </button>
+
+                            </div>
+
+                        `;
+
+
+                        myProjects.appendChild(
+                            card
+                        );
+
+
+                        // =============================
+                        // VIEW PROJECT
+                        // =============================
+
+                        card
+                            .querySelector(
+                                ".view-btn"
+                            )
+                            .addEventListener(
+                                "click",
+                                function () {
+
+                                    window.location.href =
+                                        "project-details.html?id=" +
+                                        projectDoc.id;
+
+                                }
+                            );
+
+                    }
+                );
+
+
+                // =============================
+                // UPDATE STATS
+                // =============================
+
+                buriedCount.textContent =
+                    buried;
+
+
+                pendingCount.textContent =
+                    pending;
+
+
+                progressCount.textContent =
+                    inProgress;
+
+
+                revivedCount.textContent =
+                    revived;
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Error loading account:",
+                    error
+                );
+
+
+                myProjects.innerHTML = `
+
+                    <div class="account-empty">
+
+                        <div class="account-empty-icon">
+                            ⚠️
+                        </div>
+
+                        <h2>
+                            Unable to load your projects
+                        </h2>
+
+                        <p>
+                            Please refresh the page and try again.
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        // =============================
+        // CHECK AUTHENTICATION
+        // =============================
+
+        onAuthStateChanged(
+            auth,
+            async (user) => {
+
+                if (!user) {
+
+                    window.location.href =
+                        "login.html";
+
+                    return;
+
+                }
+
+
+                // =============================
+                // USER NAME
+                // =============================
+
+                accountName.textContent =
+                    user.displayName ||
+                    "Project Graveyard User";
+
+
+                // Put current name into edit box
+
+                newName.value =
+                    user.displayName || "";
+
+
+                // =============================
+                // USER EMAIL
+                // =============================
+
+                accountEmail.textContent =
+                    user.email ||
+                    "No email available";
+
+
+                // =============================
+                // MEMBER SINCE
+                // =============================
+
+                if (
+                    user.metadata &&
+                    user.metadata.creationTime
+                ) {
+
+                    const date =
+                        new Date(
+                            user.metadata.creationTime
+                        );
+
+
+                    memberSince.textContent =
+                        "Member since: " +
+                        date.toLocaleDateString(
+                            "en-IN",
+                            {
+                                day: "numeric",
+                                month: "long",
+                                year: "numeric"
+                            }
+                        );
+
+                }
+
+                else {
+
+                    memberSince.textContent =
+                        "Project Graveyard Member";
+
+                }
+
+
+                // =============================
+                // LOAD PROJECTS
+                // =============================
+
+                await loadMyProjects(
+                    user
+                );
+
+            }
+        );
+
+
+        // =============================
+        // EDIT NAME
+        // =============================
+
+        editNameButton.addEventListener(
+            "click",
+            function () {
+
+                editNameForm.style.display =
+                    "block";
+
+
+                newName.value =
+                    accountName.textContent ===
+                    "Project Graveyard User"
+                        ? ""
+                        : accountName.textContent;
+
+
+                nameMessage.textContent =
+                    "";
+
+
+                newName.focus();
+
+            }
+        );
+
+
+        // =============================
+        // CANCEL EDIT
+        // =============================
+
+        cancelNameButton.addEventListener(
+            "click",
+            function () {
+
+                editNameForm.style.display =
+                    "none";
+
+
+                nameMessage.textContent =
+                    "";
+
+            }
+        );
+
+
+        // =============================
+        // SAVE NEW NAME
+        // =============================
+
+        saveNameButton.addEventListener(
+            "click",
+            async function () {
+
+                const name =
+                    newName.value.trim();
+
+
+                if (!name) {
+
+                    nameMessage.textContent =
+                        "⚠️ Please enter your name.";
+
+                    nameMessage.style.color =
+                        "#ff4d6d";
+
+                    return;
+
+                }
+
+
+                if (name.length < 2) {
+
+                    nameMessage.textContent =
+                        "⚠️ Name must be at least 2 characters.";
+
+                    nameMessage.style.color =
+                        "#ff4d6d";
+
+                    return;
+
+                }
+
+
+                try {
+
+                    saveNameButton.disabled =
+                        true;
+
+
+                    saveNameButton.textContent =
+                        "Saving...";
+
+
+                    const user =
+                        auth.currentUser;
+
+
+                    if (!user) {
+
+                        window.location.href =
+                            "login.html";
+
+                        return;
+
+                    }
+
+
+                    // =============================
+                    // UPDATE FIREBASE AUTH PROFILE
+                    // =============================
+
+                    await updateProfile(
+                        user,
+                        {
+                            displayName: name
+                        }
+                    );
+
+
+                    // =============================
+                    // UPDATE / CREATE FIRESTORE USER
+                    // =============================
+
+                    await setDoc(
+                        doc(
+                            db,
+                            "users",
+                            user.uid
+                        ),
+                        {
+                            name: name,
+                            email: user.email || ""
+                        },
+                        {
+                            merge: true
+                        }
+                    );
+
+
+                    // =============================
+                    // UPDATE PAGE
+                    // =============================
+
+                    accountName.textContent =
+                        name;
+
+
+                    newName.value =
+                        name;
+
+
+                    editNameForm.style.display =
+                        "none";
+
+
+                    nameMessage.textContent =
+                        "";
+
+
+                    alert(
+                        "✅ Your name has been updated!"
+                    );
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Error updating name:",
+                        error
+                    );
+
+
+                    nameMessage.textContent =
+                        "❌ Could not update your name. Please try again.";
+
+
+                    nameMessage.style.color =
+                        "#ff4d6d";
+
+                }
+
+                finally {
+
+                    saveNameButton.disabled =
+                        false;
+
+
+                    saveNameButton.textContent =
+                        "💾 Save";
+
+                }
+
+            }
+        );
+
+
+        // =============================
+        // LOGOUT
+        // =============================
+
+        logoutButton.addEventListener(
+            "click",
+            async function () {
+
+                try {
+
+                    await signOut(
+                        auth
+                    );
+
+
+                    alert(
+                        "👋 You have been logged out."
+                    );
+
+
+                    window.location.href =
+                        "index.html";
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Logout error:",
+                        error
+                    );
+
+
+                    alert(
+                        "❌ Could not log out."
+                    );
+
+                }
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>

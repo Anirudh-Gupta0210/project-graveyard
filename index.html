@@ -1,164 +1,431 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Project Graveyard</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
+
 
 <body>
 
+
+    <!-- =============================
+         NAVIGATION
+    ============================== -->
+
     <nav>
-        <div class="logo">⚰️ Project<span>Graveyard</span></div>
+
+        <div class="logo">
+            ⚰️ Project<span>Graveyard</span>
+        </div>
+
 
         <div>
-            <a href="#">Explore</a>
-            <a href="#">About</a>
-            <a href="login.html" id="authLink">Login</a>
+
+            <!-- Explore -->
+
+            <a href="projects.html">
+                Explore
+            </a>
+
+
+            <!-- About -->
+
+            <a href="#about">
+                About
+            </a>
+
+
+            <!-- Account / Login -->
+
+            <a
+                href="login.html"
+                id="authLink"
+            >
+                Login
+            </a>
+
         </div>
+
     </nav>
 
 
+
+    <!-- =============================
+         HERO SECTION
+    ============================== -->
+
     <section class="hero">
 
-        <div class="grave">⚰️</div>
+        <div class="grave">
+            ⚰️
+        </div>
+
 
         <h1>
+
             Give Dead Projects<br>
-            <span>A Second Life.</span>
+
+            <span>
+                A Second Life.
+            </span>
+
         </h1>
 
+
         <p>
+
             A collaborative platform where abandoned student projects
             are discovered, adopted, improved, and brought back to life.
+
         </p>
+
 
         <div class="buttons">
 
-            <a href="projects.html" class="btn primary">
+
+            <a
+                href="projects.html"
+                class="btn primary"
+            >
                 🔎 Explore Projects
             </a>
 
-            <a href="bury.html" class="btn secondary">
+
+            <a
+                href="bury.html"
+                class="btn secondary"
+            >
                 ⚰️ Bury a Project
             </a>
 
+
         </div>
 
     </section>
 
+
+
+    <!-- =============================
+         LIVE STATISTICS
+    ============================== -->
 
     <section class="stats">
 
-        <div class="stat">
-            <h2 id="projectsBuried">0</h2>
-            <p>Projects Buried</p>
-        </div>
 
         <div class="stat">
-            <h2 id="projectsRevived">0</h2>
-            <p>Projects Revived</p>
+
+            <h2 id="projectsBuried">
+                0
+            </h2>
+
+            <p>
+                Projects Buried
+            </p>
+
         </div>
 
+
+
         <div class="stat">
-            <h2 id="studentDevelopers">0</h2>
-            <p>Student Developers</p>
+
+            <h2 id="projectsRevived">
+                0
+            </h2>
+
+            <p>
+                Projects Revived
+            </p>
+
+        </div>
+
+
+
+        <div class="stat">
+
+            <h2 id="studentDevelopers">
+                0
+            </h2>
+
+            <p>
+                Student Developers
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =============================
+         ABOUT SECTION
+    ============================== -->
+
+    <section
+        id="about"
+        class="about-section"
+    >
+
+        <div class="about-content">
+
+            <div class="grave">
+                🪦
+            </div>
+
+
+            <h2>
+                What is Project Graveyard?
+            </h2>
+
+
+            <p>
+
+                Every year, students create amazing projects that never
+                get finished. Maybe the team graduates, runs out of time,
+                loses interest, or simply doesn't know how to continue.
+
+            </p>
+
+
+            <p>
+
+                Project Graveyard gives these abandoned ideas a second
+                chance. Students can bury unfinished projects, discover
+                projects created by others, and request to revive them.
+
+            </p>
+
+
+            <div class="about-flow">
+
+                <div>
+                    ☠️
+                    <strong>
+                        Abandoned
+                    </strong>
+                </div>
+
+
+                <div>
+                    🧟
+                    <strong>
+                        Discover
+                    </strong>
+                </div>
+
+
+                <div>
+                    🤝
+                    <strong>
+                        Adopt
+                    </strong>
+                </div>
+
+
+                <div>
+                    🔨
+                    <strong>
+                        Revive
+                    </strong>
+                </div>
+
+
+                <div>
+                    ✨
+                    <strong>
+                        Revived
+                    </strong>
+                </div>
+
+            </div>
+
         </div>
 
     </section>
 
 
-    <script src="script.js"></script>
+
+    <!-- =============================
+         MAIN JAVASCRIPT
+    ============================== -->
+
+    <script
+        type="module"
+        src="script.js"
+    ></script>
+
+
+
+    <!-- =============================
+         FIREBASE AUTHENTICATION
+    ============================== -->
+
     <script type="module">
-    import { auth } from "./firebase.js";
 
-    import {
-        onAuthStateChanged,
-        signOut
-    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+        import { auth } from "./firebase.js";
 
-    const authLink = document.getElementById("authLink");
 
-    onAuthStateChanged(auth, (user) => {
+        import {
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-        if (user) {
 
-            authLink.textContent =
-                "👤 " + (user.displayName || "Account");
+        const authLink =
+            document.getElementById("authLink");
 
-            authLink.href = "#";
 
-            authLink.addEventListener("click", async function (event) {
+        onAuthStateChanged(
+            auth,
+            (user) => {
 
-                event.preventDefault();
+                if (user) {
 
-                await signOut(auth);
+                    // =============================
+                    // USER IS LOGGED IN
+                    // =============================
 
-                window.location.reload();
+                    authLink.textContent =
+                        "👤 " +
+                        (user.displayName || "Account");
 
-            });
 
-        } else {
+                    // Send user to their account
 
-            authLink.textContent = "Login";
-            authLink.href = "login.html";
+                    authLink.href =
+                        "account.html";
+
+                }
+
+                else {
+
+                    // =============================
+                    // USER IS LOGGED OUT
+                    // =============================
+
+                    authLink.textContent =
+                        "Login";
+
+
+                    authLink.href =
+                        "login.html";
+
+                }
+
+            }
+        );
+
+    </script>
+
+
+
+    <!-- =============================
+         FIREBASE LIVE STATISTICS
+    ============================== -->
+
+    <script type="module">
+
+        import { db } from "./firebase.js";
+
+
+        import {
+            collection,
+            getDocs
+        } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+        async function loadStats() {
+
+            try {
+
+                const snapshot =
+                    await getDocs(
+                        collection(db, "projects")
+                    );
+
+
+                const usersSnapshot =
+                    await getDocs(
+                        collection(db, "users")
+                    );
+
+
+                let buried = 0;
+
+                let revived = 0;
+
+
+                snapshot.forEach(
+                    (doc) => {
+
+                        const project =
+                            doc.data();
+
+
+                        buried++;
+
+
+                        if (
+                            project.status ===
+                            "revived"
+                        ) {
+
+                            revived++;
+
+                        }
+
+                    }
+                );
+
+
+                document
+                    .getElementById("projectsBuried")
+                    .textContent = buried;
+
+
+                document
+                    .getElementById("projectsRevived")
+                    .textContent = revived;
+
+
+                document
+                    .getElementById("studentDevelopers")
+                    .textContent =
+                    usersSnapshot.size;
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Error loading statistics:",
+                    error
+                );
+
+            }
 
         }
 
-    });
-</script>
-<script type="module">
 
-    import { db } from "./firebase.js";
+        loadStats();
 
-    import {
-        collection,
-        getDocs
-    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
-
-
-    async function loadStats() {
-
-        const snapshot =
-            await getDocs(collection(db, "projects"));
-
-        const usersSnapshot =
-            await getDocs(collection(db, "users"));
-
-        let buried = 0;
-        let revived = 0;
-
-        snapshot.forEach((doc) => {
-
-            const project = doc.data();
-
-            buried++;
-
-
-            if (project.status === "revived") {
-                revived++;
-            }
-
-        });
-
-
-        document.getElementById("projectsBuried").textContent = buried;
-
-        document.getElementById("projectsRevived").textContent = revived;
-
-        document.getElementById("studentDevelopers").textContent =
-            usersSnapshot.size;
-
-    }
-
-
-    loadStats();
-
-</script>
+    </script>
 
 
 </body>
+
 </html>

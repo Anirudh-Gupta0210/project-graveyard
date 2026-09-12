@@ -2,17 +2,30 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Project Graveyard | Bury a Project</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
+
 
 <body>
 
-    <!-- Navigation -->
+
+    <!-- =============================
+         NAVIGATION
+    ============================== -->
 
     <nav>
 
@@ -20,16 +33,45 @@
             ⚰️ Project<span>Graveyard</span>
         </div>
 
+
         <div>
-            <a href="index.html">Home</a>
-            <a href="projects.html">Explore</a>
-            <a href="bury.html">Bury a Project</a>
+
+            <a href="index.html">
+                Home
+            </a>
+
+
+            <a href="projects.html">
+                Explore
+            </a>
+
+
+            <a href="bury.html">
+                Bury a Project
+            </a>
+
+
+            <a href="requests.html">
+                Requests
+            </a>
+
+
+            <a
+                href="login.html"
+                id="authLink"
+            >
+                Login
+            </a>
+
         </div>
 
     </nav>
 
 
-    <!-- Form Header -->
+
+    <!-- =============================
+         FORM HEADER
+    ============================== -->
 
     <section class="bury-header">
 
@@ -37,19 +79,26 @@
             ⚰️
         </div>
 
+
         <h1>
             Bury Your Project
         </h1>
 
+
         <p>
+
             Don't let your unfinished idea disappear.
             Give another developer the chance to bring it back to life.
+
         </p>
 
     </section>
 
 
-    <!-- Project Form -->
+
+    <!-- =============================
+         PROJECT FORM
+    ============================== -->
 
     <section class="bury-container">
 
@@ -64,6 +113,7 @@
                     Project Name *
                 </label>
 
+
                 <input
                     type="text"
                     id="projectName"
@@ -74,6 +124,7 @@
             </div>
 
 
+
             <!-- Description -->
 
             <div class="form-group">
@@ -81,6 +132,7 @@
                 <label for="description">
                     Project Description *
                 </label>
+
 
                 <textarea
                     id="description"
@@ -91,6 +143,7 @@
             </div>
 
 
+
             <!-- GitHub -->
 
             <div class="form-group">
@@ -99,17 +152,23 @@
                     GitHub Repository
                 </label>
 
+
                 <input
                     type="url"
                     id="github"
                     placeholder="https://github.com/username/project"
                 >
 
+
                 <small>
-                    Optional — sharing the repository helps others understand and revive your project.
+
+                    Optional — sharing the repository helps others
+                    understand and revive your project.
+
                 </small>
 
             </div>
+
 
 
             <!-- Technology -->
@@ -119,6 +178,7 @@
                 <label for="technology">
                     Technology / Tech Stack *
                 </label>
+
 
                 <input
                     type="text"
@@ -130,6 +190,7 @@
             </div>
 
 
+
             <!-- Category -->
 
             <div class="form-group">
@@ -138,23 +199,31 @@
                     Project Category *
                 </label>
 
-                <select id="category" required>
+
+                <select
+                    id="category"
+                    required
+                >
 
                     <option value="">
                         Select a category
                     </option>
 
+
                     <option value="web">
                         Web
                     </option>
+
 
                     <option value="ai">
                         AI / Machine Learning
                     </option>
 
+
                     <option value="mobile">
                         Mobile
                     </option>
+
 
                     <option value="other">
                         Other
@@ -165,6 +234,7 @@
             </div>
 
 
+
             <!-- Cause -->
 
             <div class="form-group">
@@ -172,6 +242,7 @@
                 <label for="cause">
                     Why was the project abandoned? *
                 </label>
+
 
                 <textarea
                     id="cause"
@@ -182,6 +253,7 @@
             </div>
 
 
+
             <!-- Unfinished Features -->
 
             <div class="form-group">
@@ -189,6 +261,7 @@
                 <label for="unfinished">
                     What's unfinished? *
                 </label>
+
 
                 <textarea
                     id="unfinished"
@@ -199,6 +272,7 @@
             </div>
 
 
+
             <!-- Difficulty -->
 
             <div class="form-group">
@@ -207,19 +281,26 @@
                     Estimated Difficulty *
                 </label>
 
-                <select id="difficulty" required>
+
+                <select
+                    id="difficulty"
+                    required
+                >
 
                     <option value="">
                         Select difficulty
                     </option>
 
+
                     <option value="easy">
                         ⭐⭐ Easy
                     </option>
 
+
                     <option value="medium">
                         ⭐⭐⭐ Medium
                     </option>
+
 
                     <option value="hard">
                         ⭐⭐⭐⭐ Hard
@@ -230,11 +311,13 @@
             </div>
 
 
+
             <!-- Submit -->
 
             <button
                 type="submit"
                 class="bury-submit"
+                id="burySubmit"
             >
                 ☠️ Bury This Project
             </button>
@@ -245,43 +328,352 @@
     </section>
 
 
-    <script src="script.js"></script>
 
-<script type="module">
-    import { db } from "./firebase.js";
-    import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+    <!-- =============================
+         FIREBASE
+    ============================== -->
 
-    const form = document.getElementById("buryForm");
+    <script type="module">
 
-    form.addEventListener("submit", async (event) => {
-        event.preventDefault();
+        import {
+            auth,
+            db
+        } from "./firebase.js";
 
-        const project = {
-            status: "abandoned",
-            name: document.getElementById("projectName").value.trim(),
-            description: document.getElementById("description").value.trim(),
-            github: document.getElementById("github").value.trim(),
-            technology: document.getElementById("technology").value.trim(),
-            category: document.getElementById("category").value,
-            cause: document.getElementById("cause").value.trim(),
-            unfinished: document.getElementById("unfinished").value.trim(),
-            difficulty: document.getElementById("difficulty").value,
-            createdAt: serverTimestamp()
-        };
 
-        try {
-            await addDoc(collection(db, "projects"), project);
+        import {
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-            alert("☠️ Project buried successfully!");
 
-            form.reset();
+        import {
+            collection,
+            addDoc,
+            serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
-        } catch (error) {
-            console.error("Error adding project:", error);
-            alert("❌ Something went wrong. Please try again.");
-        }
-    });
-</script>
+
+        // =============================
+        // GET ELEMENTS
+        // =============================
+
+        const form =
+            document.getElementById("buryForm");
+
+
+        const burySubmit =
+            document.getElementById("burySubmit");
+
+
+        const authLink =
+            document.getElementById("authLink");
+
+
+        let currentUser = null;
+
+
+
+        // =============================
+        // CHECK LOGIN STATUS
+        // =============================
+
+        onAuthStateChanged(
+            auth,
+            (user) => {
+
+                if (!user) {
+
+                    currentUser = null;
+
+
+                    authLink.textContent =
+                        "Login";
+
+
+                    authLink.href =
+                        "login.html";
+
+
+                    alert(
+                        "🔐 Please login before burying a project."
+                    );
+
+
+                    window.location.href =
+                        "login.html";
+
+
+                    return;
+
+                }
+
+
+                // =============================
+                // USER IS LOGGED IN
+                // =============================
+
+                currentUser = user;
+
+
+                authLink.textContent =
+                    "👤 " +
+                    (
+                        user.displayName ||
+                        "Account"
+                    );
+
+
+                authLink.href =
+                    "account.html";
+
+            }
+        );
+
+
+
+        // =============================
+        // BURY PROJECT
+        // =============================
+
+        form.addEventListener(
+            "submit",
+            async (event) => {
+
+                event.preventDefault();
+
+
+                // =============================
+                // MAKE SURE USER IS LOGGED IN
+                // =============================
+
+                if (!currentUser) {
+
+                    alert(
+                        "🔐 Please login before burying a project."
+                    );
+
+
+                    window.location.href =
+                        "login.html";
+
+
+                    return;
+
+                }
+
+
+
+                try {
+
+                    // Disable button while saving
+
+                    burySubmit.disabled =
+                        true;
+
+
+                    burySubmit.textContent =
+                        "⚰️ Burying Project...";
+
+
+
+                    // =============================
+                    // COLLECT PROJECT INFORMATION
+                    // =============================
+
+                    const project = {
+
+                        // Project status
+
+                        status:
+                            "abandoned",
+
+
+
+                        // Project name
+
+                        name:
+                            document
+                                .getElementById(
+                                    "projectName"
+                                )
+                                .value
+                                .trim(),
+
+
+
+                        // Description
+
+                        description:
+                            document
+                                .getElementById(
+                                    "description"
+                                )
+                                .value
+                                .trim(),
+
+
+
+                        // GitHub repository
+
+                        github:
+                            document
+                                .getElementById(
+                                    "github"
+                                )
+                                .value
+                                .trim(),
+
+
+
+                        // Technology
+
+                        technology:
+                            document
+                                .getElementById(
+                                    "technology"
+                                )
+                                .value
+                                .trim(),
+
+
+
+                        // Category
+
+                        category:
+                            document
+                                .getElementById(
+                                    "category"
+                                )
+                                .value,
+
+
+
+                        // Cause of abandonment
+
+                        cause:
+                            document
+                                .getElementById(
+                                    "cause"
+                                )
+                                .value
+                                .trim(),
+
+
+
+                        // Unfinished features
+
+                        unfinished:
+                            document
+                                .getElementById(
+                                    "unfinished"
+                                )
+                                .value
+                                .trim(),
+
+
+
+                        // Difficulty
+
+                        difficulty:
+                            document
+                                .getElementById(
+                                    "difficulty"
+                                )
+                                .value,
+
+
+
+                        // =============================
+                        // PROJECT OWNER
+                        // =============================
+
+                        ownerId:
+                            currentUser.uid,
+
+
+                        ownerName:
+                            currentUser.displayName ||
+                            "Anonymous Developer",
+
+
+                        ownerEmail:
+                            currentUser.email ||
+                            "",
+
+
+
+                        // =============================
+                        // CREATION TIME
+                        // =============================
+
+                        createdAt:
+                            serverTimestamp()
+
+                    };
+
+
+
+                    // =============================
+                    // SAVE TO FIRESTORE
+                    // =============================
+
+                    await addDoc(
+                        collection(
+                            db,
+                            "projects"
+                        ),
+                        project
+                    );
+
+
+
+                    // =============================
+                    // SUCCESS
+                    // =============================
+
+                    alert(
+                        "☠️ Project buried successfully!"
+                    );
+
+
+
+                    // Go directly to Account
+
+                    window.location.href =
+                        "account.html";
+
+                }
+
+
+                catch (error) {
+
+                    console.error(
+                        "Error adding project:",
+                        error
+                    );
+
+
+                    alert(
+                        "❌ Something went wrong. Please try again."
+                    );
+
+
+                    // Re-enable button
+
+                    burySubmit.disabled =
+                        false;
+
+
+                    burySubmit.textContent =
+                        "☠️ Bury This Project";
+
+                }
+
+            }
+        );
+
+    </script>
+
 
 </body>
 

@@ -1,29 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Revival Requests | Project Graveyard</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <style>
+
+        /* =============================
+           REQUESTER INFORMATION
+        ============================== */
+
+        .requester-info {
+
+            margin-top: 18px;
+            padding: 14px 16px;
+
+            background: rgba(139, 92, 246, 0.08);
+
+            border: 1px solid rgba(139, 92, 246, 0.18);
+
+            border-radius: 12px;
+
+        }
+
+
+        .requester-info strong {
+
+            display: block;
+
+            color: #c4b5fd;
+
+            margin-bottom: 6px;
+
+            font-size: 14px;
+
+        }
+
+
+        .requester-name {
+
+            color: #ffffff;
+
+            font-size: 16px;
+
+            font-weight: 600;
+
+        }
+
+
+        .requester-email {
+
+            color: #999;
+
+            font-size: 13px;
+
+            margin-top: 4px;
+
+            word-break: break-word;
+
+        }
+
+
+    </style>
+
 </head>
+
+
 
 <body>
 
-    <header class="navbar">
+
+
+    <!-- =============================
+         NAVIGATION
+    ============================== -->
+
+    <nav>
+
         <div class="logo">
-            ⚰️ Project Graveyard
+
+            ⚰️ Project<span>Graveyard</span>
+
         </div>
 
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="projects.html">Graveyard</a>
-            <a href="bury.html">Bury Project</a>
-            <a href="requests.html">Requests</a>
-        </nav>
-    </header>
 
+
+        <div>
+
+            <a href="index.html">
+                Home
+            </a>
+
+
+            <a href="projects.html">
+                Explore
+            </a>
+
+
+            <a href="bury.html">
+                Bury a Project
+            </a>
+
+
+            <a href="requests.html">
+                Requests
+            </a>
+
+
+            <a
+                href="login.html"
+                id="authLink"
+            >
+                Login
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =============================
+         PAGE HEADER
+    ============================== -->
 
     <main class="requests-container">
 
@@ -33,17 +145,31 @@
                 ⚰️
             </div>
 
-            <h1>Revival Requests</h1>
+
+            <h1>
+                Revival Requests
+            </h1>
+
 
             <p>
+
                 Students who want to give your abandoned projects
                 a second life.
+
             </p>
 
         </section>
 
 
-        <section id="requestsGrid" class="requests-grid">
+
+        <!-- =============================
+             REQUESTS
+        ============================== -->
+
+        <section
+            id="requestsGrid"
+            class="requests-grid"
+        >
 
             <p class="loading">
                 Loading revival requests...
@@ -54,9 +180,26 @@
     </main>
 
 
+
+    <!-- =============================
+         FIREBASE
+    ============================== -->
+
     <script type="module">
 
-        import { db } from "./firebase.js";
+
+        import {
+            auth,
+            db
+        } from "./firebase.js";
+
+
+
+        import {
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+
 
         import {
             collection,
@@ -67,105 +210,584 @@
         } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
+
+        // =============================
+        // GET ELEMENTS
+        // =============================
+
         const requestsGrid =
-            document.getElementById("requestsGrid");
+            document.getElementById(
+                "requestsGrid"
+            );
 
 
-        async function loadRequests() {
+        const authLink =
+            document.getElementById(
+                "authLink"
+            );
 
-            try {
 
-                const snapshot =
-                    await getDocs(
-                        collection(db, "revivalRequests")
+
+        // =============================
+        // CURRENT USER
+        // =============================
+
+        let currentUser = null;
+
+
+
+        // =============================
+        // SECURITY HELPER
+        // =============================
+
+        function escapeHTML(text) {
+
+            return String(text)
+
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+
+        }
+
+
+
+        // =============================
+        // AUTHENTICATION
+        // =============================
+
+        onAuthStateChanged(
+
+            auth,
+
+            async (user) => {
+
+
+                if (!user) {
+
+
+                    authLink.textContent =
+                        "Login";
+
+
+                    authLink.href =
+                        "login.html";
+
+
+                    alert(
+                        "🔐 Please login to view revival requests."
                     );
 
 
-                requestsGrid.innerHTML = "";
+                    window.location.href =
+                        "login.html";
 
-
-                if (snapshot.empty) {
-
-                    requestsGrid.innerHTML = `
-                        <div class="no-requests">
-                            <h2>💀 No Revival Requests</h2>
-
-                            <p>
-                                Nobody has requested to revive a
-                                project yet.
-                            </p>
-                        </div>
-                    `;
 
                     return;
+
                 }
 
 
-                snapshot.forEach((requestDoc) => {
+
+                // =============================
+                // USER IS LOGGED IN
+                // =============================
+
+                currentUser = user;
+
+
+
+                authLink.textContent =
+                    "👤 " +
+                    (
+                        user.displayName ||
+                        "Account"
+                    );
+
+
+                authLink.href =
+                    "account.html";
+
+
+
+                // =============================
+                // LOAD REQUESTS
+                // =============================
+
+                await loadRequests(
+                    user
+                );
+
+            }
+
+        );
+
+
+
+        // =============================
+        // LOAD REQUESTS
+        // =============================
+
+        async function loadRequests(user) {
+
+
+            try {
+
+
+                const snapshot =
+                    await getDocs(
+                        collection(
+                            db,
+                            "revivalRequests"
+                        )
+                    );
+
+
+                requestsGrid.innerHTML =
+                    "";
+
+
+                let visibleRequests = 0;
+
+
+
+                // =============================
+                // CHECK EACH REQUEST
+                // =============================
+
+                for (
+                    const requestDoc
+                    of snapshot.docs
+                ) {
+
 
                     const request =
                         requestDoc.data();
 
 
-                    const card =
-                        document.createElement("article");
 
-                    card.className =
-                        "request-card";
+                    // =============================
+                    // PROJECT ID CHECK
+                    // =============================
 
+                    if (
+                        !request.projectId
+                    ) {
 
-                    card.innerHTML = `
+                        continue;
 
-                        <div class="request-icon">
-                            🧟
-                        </div>
-
-
-                        <span class="request-status">
-                            ${request.status || "pending"}
-                        </span>
+                    }
 
 
-                        <h2>
-                            ${request.projectName || "Unknown Project"}
-                        </h2>
+
+                    // =============================
+                    // GET PROJECT
+                    // =============================
+
+                    const projectSnap =
+                        await getDoc(
+                            doc(
+                                db,
+                                "projects",
+                                request.projectId
+                            )
+                        );
 
 
-                        <p>
-                            Someone wants to bring this
-                            project back to life.
-                        </p>
+
+                    if (
+                        !projectSnap.exists()
+                    ) {
+
+                        continue;
+
+                    }
 
 
-                        <div class="request-buttons">
+
+                    const project =
+                        projectSnap.data();
+
+
+
+                    // =============================
+                    // ONLY SHOW REQUESTS
+                    // FOR USER'S PROJECTS
+                    // =============================
+
+                    if (
+                        project.ownerId !==
+                        user.uid
+                    ) {
+
+                        continue;
+
+                    }
+
+
+
+                    visibleRequests++;
+
+
+
+                    // =============================
+                    // REQUEST STATUS
+                    // =============================
+
+                    const requestStatus =
+                        request.status ||
+                        "pending";
+
+
+
+                    let statusIcon =
+                        "🧟";
+
+
+
+                    if (
+                        requestStatus ===
+                        "accepted"
+                    ) {
+
+                        statusIcon =
+                            "✅";
+
+                    }
+
+
+
+                    if (
+                        requestStatus ===
+                        "rejected"
+                    ) {
+
+                        statusIcon =
+                            "❌";
+
+                    }
+
+
+
+                    // =============================
+                    // BUTTONS
+                    // =============================
+
+                    let buttons = "";
+
+
+
+                    if (
+                        requestStatus ===
+                        "pending"
+                    ) {
+
+
+                        buttons = `
 
                             <button
                                 class="accept-btn"
-                                data-id="${requestDoc.id}">
+                                data-id="${requestDoc.id}"
+                            >
+
                                 ✅ Accept Revival
+
                             </button>
 
 
                             <button
                                 class="reject-btn"
-                                data-id="${requestDoc.id}">
+                                data-id="${requestDoc.id}"
+                            >
+
                                 ❌ Reject
+
                             </button>
+
+                        `;
+
+                    }
+
+
+
+                    else if (
+                        requestStatus ===
+                        "accepted"
+                    ) {
+
+
+                        buttons = `
+
+                            <button
+                                class="accept-btn"
+                                disabled
+                            >
+
+                                ✅ Revival Accepted
+
+                            </button>
+
+                        `;
+
+                    }
+
+
+
+                    else if (
+                        requestStatus ===
+                        "rejected"
+                    ) {
+
+
+                        buttons = `
+
+                            <button
+                                class="reject-btn"
+                                disabled
+                            >
+
+                                ❌ Request Rejected
+
+                            </button>
+
+                        `;
+
+                    }
+
+
+
+                    // =============================
+                    // REQUESTER DETAILS
+                    // =============================
+
+                    const requesterName =
+                        request.requesterName ||
+                        "Anonymous Developer";
+
+
+                    const requesterEmail =
+                        request.requesterEmail ||
+                        "Email not provided";
+
+
+
+                    // =============================
+                    // REQUEST CARD
+                    // =============================
+
+                    const card =
+                        document.createElement(
+                            "article"
+                        );
+
+
+                    card.className =
+                        "request-card";
+
+
+
+                    card.innerHTML = `
+
+                        <div class="request-icon">
+
+                            ${statusIcon}
+
+                        </div>
+
+
+
+                        <span class="request-status">
+
+                            ${escapeHTML(
+                                requestStatus.toUpperCase()
+                            )}
+
+                        </span>
+
+
+
+                        <h2>
+
+                            ${escapeHTML(
+                                request.projectName ||
+                                project.name ||
+                                "Unknown Project"
+                            )}
+
+                        </h2>
+
+
+
+                        <p>
+
+                            This student wants to bring
+                            your project back to life.
+
+                        </p>
+
+
+
+                        <!-- =============================
+                             REQUESTER
+                        ============================== -->
+
+                        <div class="requester-info">
+
+                            <strong>
+                                🧟 Revival Requester
+                            </strong>
+
+
+                            <div class="requester-name">
+
+                                👤 ${escapeHTML(
+                                    requesterName
+                                )}
+
+                            </div>
+
+
+                            <div class="requester-email">
+
+                                📧 ${escapeHTML(
+                                    requesterEmail
+                                )}
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- =============================
+                             PROJECT OWNER
+                        ============================== -->
+
+                        <div
+                            class="request-project-owner"
+                            style="
+                                margin-top: 12px;
+                                color: #999;
+                                font-size: 14px;
+                            "
+                        >
+
+                            👤 Project Owner:
+
+                            ${escapeHTML(
+                                project.ownerName ||
+                                user.displayName ||
+                                "Unknown"
+                            )}
+
+                        </div>
+
+
+
+                        <!-- =============================
+                             BUTTONS
+                        ============================== -->
+
+                        <div class="request-buttons">
+
+                            ${buttons}
 
                         </div>
 
                     `;
 
 
-                    requestsGrid.appendChild(card);
 
-                });
+                    requestsGrid.appendChild(
+                        card
+                    );
 
+                }
+
+
+
+                // =============================
+                // NO REQUESTS
+                // =============================
+
+                if (
+                    visibleRequests ===
+                    0
+                ) {
+
+
+                    requestsGrid.innerHTML = `
+
+                        <div class="no-requests">
+
+                            <h2>
+
+                                💀 No Revival Requests
+
+                            </h2>
+
+
+                            <p>
+
+                                Nobody has requested to revive
+                                your projects yet.
+
+                            </p>
+
+
+                            <a
+                                href="projects.html"
+                                class="btn primary"
+                            >
+
+                                🔎 Explore Projects
+
+                            </a>
+
+                        </div>
+
+                    `;
+
+
+                    return;
+
+                }
+
+
+
+                // =============================
+                // BUTTON LISTENERS
+                // =============================
 
                 addButtonListeners();
 
+            }
 
-            } catch (error) {
+
+
+            catch (error) {
+
 
                 console.error(
                     "Error loading requests:",
@@ -173,16 +795,23 @@
                 );
 
 
+
                 requestsGrid.innerHTML = `
 
                     <div class="no-requests">
 
                         <h2>
+
                             ❌ Unable to load requests
+
                         </h2>
 
+
                         <p>
-                            Please refresh the page and try again.
+
+                            Please refresh the page
+                            and try again.
+
                         </p>
 
                     </div>
@@ -194,87 +823,290 @@
         }
 
 
+
+        // =============================
+        // BUTTON LISTENERS
+        // =============================
+
         function addButtonListeners() {
 
 
             document
-                .querySelectorAll(".accept-btn")
-                .forEach(button => {
+                .querySelectorAll(
+                    ".accept-btn:not([disabled])"
+                )
+                .forEach(
+                    button => {
 
-                    button.addEventListener(
-                        "click",
-                        () => updateRequest(
-                            button.dataset.id,
-                            "accepted"
-                        )
-                    );
 
-                });
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+
+                                updateRequest(
+                                    button.dataset.id,
+                                    "accepted"
+                                );
+
+                            }
+
+                        );
+
+                    }
+
+                );
+
 
 
             document
-                .querySelectorAll(".reject-btn")
-                .forEach(button => {
+                .querySelectorAll(
+                    ".reject-btn:not([disabled])"
+                )
+                .forEach(
+                    button => {
 
-                    button.addEventListener(
-                        "click",
-                        () => updateRequest(
-                            button.dataset.id,
-                            "rejected"
-                        )
-                    );
 
-                });
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+
+                                updateRequest(
+                                    button.dataset.id,
+                                    "rejected"
+                                );
+
+                            }
+
+                        );
+
+                    }
+
+                );
 
         }
 
+
+
+        // =============================
+        // UPDATE REQUEST
+        // =============================
 
         async function updateRequest(
             requestId,
             newStatus
         ) {
 
+
             try {
 
-                await updateDoc(
 
+                // =============================
+                // GET REQUEST
+                // =============================
+
+                const requestRef =
                     doc(
                         db,
                         "revivalRequests",
                         requestId
-                    ),
+                    );
 
-                    {
-                        status: newStatus
-                    }
 
-                );
-                const requestSnap = await getDoc(
-                    doc(db, "revivalRequests", requestId)
-                );
+                const requestSnap =
+                    await getDoc(
+                        requestRef
+                    );
 
-                const request = requestSnap.data();
-                if (newStatus === "accepted" && request.projectId) {
+
+
+                if (
+                    !requestSnap.exists()
+                ) {
+
+
+                    alert(
+                        "❌ Request no longer exists."
+                    );
+
+
+                    return;
+
+                }
+
+
+
+                const request =
+                    requestSnap.data();
+
+
+
+                // =============================
+                // PROJECT CHECK
+                // =============================
+
+                if (
+                    !request.projectId
+                ) {
+
+
+                    alert(
+                        "❌ This request is missing a project."
+                    );
+
+
+                    return;
+
+                }
+
+
+
+                // =============================
+                // GET PROJECT
+                // =============================
+
+                const projectRef =
+                    doc(
+                        db,
+                        "projects",
+                        request.projectId
+                    );
+
+
+                const projectSnap =
+                    await getDoc(
+                        projectRef
+                    );
+
+
+
+                if (
+                    !projectSnap.exists()
+                ) {
+
+
+                    alert(
+                        "❌ The project no longer exists."
+                    );
+
+
+                    return;
+
+                }
+
+
+
+                const project =
+                    projectSnap.data();
+
+
+
+                // =============================
+                // SECURITY CHECK
+                // =============================
+
+                if (
+                    !currentUser ||
+                    project.ownerId !==
+                    currentUser.uid
+                ) {
+
+
+                    alert(
+                        "🔐 Only the project owner can manage this request."
+                    );
+
+
+                    return;
+
+                }
+
+
+
+                // =============================
+                // UPDATE REQUEST
+                // =============================
+
                 await updateDoc(
-                    doc(db, "projects", request.projectId),
+
+                    requestRef,
+
                     {
-                        status: "in-progress"
+                        status:
+                            newStatus
                     }
+
                 );
+
+
+
+                // =============================
+                // ACCEPT REVIVAL
+                // =============================
+
+                if (
+                    newStatus ===
+                    "accepted"
+                ) {
+
+
+                    await updateDoc(
+
+                        projectRef,
+
+                        {
+                            status:
+                                "in-progress"
+                        }
+
+                    );
+
+                }
+
+
+
+                // =============================
+                // SUCCESS MESSAGE
+                // =============================
+
+                if (
+                    newStatus ===
+                    "accepted"
+                ) {
+
+
+                    alert(
+                        "🎉 Revival request accepted! The project is now In Progress."
+                    );
+
+                }
+
+                else {
+
+
+                    alert(
+                        "💀 Revival request rejected."
+                    );
+
+                }
+
+
+
+                // =============================
+                // RELOAD
+                // =============================
+
+                await loadRequests(
+                    currentUser
+                );
+
             }
 
 
-                alert(
-                    newStatus === "accepted"
-                        ? "🎉 Revival request accepted!"
-                        : "💀 Revival request rejected."
-                );
 
+            catch (error) {
 
-                loadRequests();
-
-
-            } catch (error) {
 
                 console.error(
                     "Error updating request:",
@@ -291,9 +1123,10 @@
         }
 
 
-        loadRequests();
-
     </script>
 
+
+
 </body>
+
 </html>

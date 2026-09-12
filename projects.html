@@ -2,36 +2,139 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Project Graveyard | Explore</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        /* =============================
+           SORTING
+        ============================== */
+
+        .project-sort {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        .project-sort label {
+            color: #b8b8c7;
+            font-size: 14px;
+        }
+
+        .project-sort select {
+            background: #17131f;
+            color: #ffffff;
+            border: 1px solid #3b3150;
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .project-sort select:focus {
+            border-color: #8b5cf6;
+        }
+
+
+        /* =============================
+           REVIVAL POTENTIAL
+        ============================== */
+
+        .revival-score {
+            display: inline-block;
+            margin: 12px 0 4px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(139, 92, 246, 0.12);
+            color: #c4b5fd;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+
+        /* =============================
+           MOBILE
+        ============================== */
+
+        @media (max-width: 600px) {
+
+            .project-sort {
+                justify-content: flex-start;
+            }
+
+            .project-sort select {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-    <!-- Navigation -->
+
+    <!-- =============================
+         NAVIGATION
+    ============================== -->
 
     <nav>
 
         <div class="logo">
+
             ⚰️ Project<span>Graveyard</span>
+
         </div>
 
+
         <div>
-            <a href="index.html">Home</a>
-            <a href="projects.html">Explore</a>
-            <a href="bury.html">Bury a Project</a>
-            <a href="requests.html">Requests</a>
-            <a href="login.html" id="authLink">Login</a>
+
+            <a href="index.html">
+                Home
+            </a>
+
+
+            <a href="projects.html">
+                Explore
+            </a>
+
+
+            <a href="bury.html">
+                Bury a Project
+            </a>
+
+
+            <a href="requests.html">
+                Requests
+            </a>
+
+
+            <a href="login.html" id="authLink">
+                Login
+            </a>
+
         </div>
 
     </nav>
 
 
-    <!-- Page Header -->
+
+    <!-- =============================
+         PAGE HEADER
+    ============================== -->
 
     <section class="projects-header">
 
@@ -39,21 +142,30 @@
             ⚰️
         </div>
 
+
         <h1>
             The Project Graveyard
         </h1>
 
+
         <p>
+
             Thousands of ideas are abandoned before they reach their potential.
+
             Maybe you can give one of them a second life.
+
         </p>
 
     </section>
 
 
-    <!-- Search and Filters -->
+
+    <!-- =============================
+         SEARCH AND FILTERS
+    ============================== -->
 
     <section class="project-controls">
+
 
         <input
             type="text"
@@ -62,9 +174,11 @@
         >
 
 
+
         <!-- Category Filters -->
 
         <div class="filters">
+
 
             <button
                 class="filter active"
@@ -73,12 +187,14 @@
                 All
             </button>
 
+
             <button
                 class="filter"
                 onclick="filterProjects('web', this)"
             >
                 Web
             </button>
+
 
             <button
                 class="filter"
@@ -87,6 +203,7 @@
                 AI / ML
             </button>
 
+
             <button
                 class="filter"
                 onclick="filterProjects('mobile', this)"
@@ -94,12 +211,15 @@
                 Mobile
             </button>
 
+
         </div>
+
 
 
         <!-- Status Filters -->
 
         <div class="filters status-filters">
+
 
             <button
                 class="status-filter active"
@@ -108,12 +228,14 @@
                 All Status
             </button>
 
+
             <button
                 class="status-filter"
                 onclick="filterByStatus('abandoned', this)"
             >
                 ☠️ Abandoned
             </button>
+
 
             <button
                 class="status-filter"
@@ -122,12 +244,14 @@
                 🧟 Revival Requested
             </button>
 
+
             <button
                 class="status-filter"
                 onclick="filterByStatus('in-progress', this)"
             >
                 🔨 In Progress
             </button>
+
 
             <button
                 class="status-filter"
@@ -136,12 +260,55 @@
                 ✨ Revived
             </button>
 
+
         </div>
+
+
+
+        <!-- =============================
+             SORT PROJECTS
+        ============================== -->
+
+        <div class="project-sort">
+
+            <label for="sortSelect">
+                Sort by:
+            </label>
+
+
+            <select id="sortSelect">
+
+                <option value="default">
+                    ✨ Default
+                </option>
+
+
+                <option value="revival">
+                    🔥 Revival Potential
+                </option>
+
+
+                <option value="recent">
+                    🆕 Recently Buried
+                </option>
+
+
+                <option value="easy">
+                    ⭐ Easiest to Revive
+                </option>
+
+            </select>
+
+        </div>
+
 
     </section>
 
 
-    <!-- Projects -->
+
+    <!-- =============================
+         PROJECTS
+    ============================== -->
 
     <main
         class="project-grid"
@@ -153,30 +320,55 @@
     </main>
 
 
-    <!-- Main JavaScript -->
 
-    <script type="module" src="script.js"></script>
+    <!-- =============================
+         MAIN JAVASCRIPT
+    ============================== -->
+
+    <script
+        type="module"
+        src="script.js"
+    ></script>
 
 
-    <!-- Firebase Projects -->
+
+    <!-- =============================
+         FIREBASE PROJECTS
+    ============================== -->
 
     <script type="module">
 
+
         import { db } from "./firebase.js";
 
+
         import {
+
             collection,
             getDocs
+
         } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
 
 
         const projectGrid =
             document.getElementById("projectGrid");
 
 
+        const sortSelect =
+            document.getElementById("sortSelect");
+
+
+
+        // =============================
+        // LOAD PROJECTS
+        // =============================
+
         async function loadProjects() {
 
+
             try {
+
 
                 const snapshot =
                     await getDocs(
@@ -184,34 +376,45 @@
                     );
 
 
+
                 if (snapshot.empty) {
 
+
                     projectGrid.innerHTML = `
+
                         <div class="no-projects">
 
                             <h2>
                                 💀 The Graveyard is Empty
                             </h2>
 
+
                             <p>
                                 No abandoned projects have been buried yet.
                             </p>
+
 
                             <a href="bury.html">
                                 Bury the First Project
                             </a>
 
                         </div>
+
                     `;
 
+
                     return;
+
                 }
+
 
 
                 snapshot.forEach((doc) => {
 
+
                     const project =
                         doc.data();
+
 
 
                     // =============================
@@ -222,10 +425,12 @@
                         project.status || "abandoned";
 
 
+
                     let statusText =
                         projectStatus
                             .replaceAll("-", " ")
                             .toUpperCase();
+
 
 
                     // =============================
@@ -235,25 +440,38 @@
                     let statusIcon = "☠️";
 
 
-                    if (projectStatus === "revival-requested") {
+
+                    if (
+                        projectStatus ===
+                        "revival-requested"
+                    ) {
 
                         statusIcon = "🧟";
 
                     }
 
 
-                    if (projectStatus === "in-progress") {
+
+                    if (
+                        projectStatus ===
+                        "in-progress"
+                    ) {
 
                         statusIcon = "🔨";
 
                     }
 
 
-                    if (projectStatus === "revived") {
+
+                    if (
+                        projectStatus ===
+                        "revived"
+                    ) {
 
                         statusIcon = "✨";
 
                     }
+
 
 
                     // =============================
@@ -264,8 +482,10 @@
                         document.createElement("article");
 
 
+
                     card.className =
                         "project-card";
+
 
 
                     card.dataset.category =
@@ -276,6 +496,129 @@
                         projectStatus;
 
 
+
+                    // =============================
+                    // REVIVAL POTENTIAL SCORE
+                    // =============================
+
+                    let revivalScore = 50;
+
+
+
+                    if (
+                        project.difficulty === "easy"
+                    ) {
+
+                        revivalScore += 20;
+
+                    }
+
+                    else if (
+                        project.difficulty === "medium"
+                    ) {
+
+                        revivalScore += 10;
+
+                    }
+
+
+
+                    if (project.description) {
+
+                        if (
+                            project.description.length >= 100
+                        ) {
+
+                            revivalScore += 10;
+
+                        }
+
+                        else {
+
+                            revivalScore += 5;
+
+                        }
+
+                    }
+
+
+
+                    if (project.technology) {
+
+                        revivalScore += 5;
+
+                    }
+
+
+
+                    if (project.github) {
+
+                        revivalScore += 10;
+
+                    }
+
+
+
+                    if (project.unfinished) {
+
+                        revivalScore += 5;
+
+                    }
+
+
+
+                    revivalScore =
+                        Math.min(
+                            revivalScore,
+                            100
+                        );
+
+
+
+                    // =============================
+                    // CREATED TIME
+                    // =============================
+
+                    let createdTime = 0;
+
+
+
+                    if (project.createdAt) {
+
+
+                        if (
+                            typeof project.createdAt.toMillis ===
+                            "function"
+                        ) {
+
+                            createdTime =
+                                project.createdAt.toMillis();
+
+                        }
+
+                        else if (
+                            project.createdAt.seconds
+                        ) {
+
+                            createdTime =
+                                project.createdAt.seconds *
+                                1000;
+
+                        }
+
+                    }
+
+
+
+                    card.dataset.revivalScore =
+                        revivalScore;
+
+
+                    card.dataset.createdTime =
+                        createdTime;
+
+
+
                     // =============================
                     // REVIVE BUTTON
                     // =============================
@@ -283,69 +626,103 @@
                     let reviveButton = "";
 
 
-                    if (projectStatus === "abandoned") {
+
+                    if (
+                        projectStatus ===
+                        "abandoned"
+                    ) {
+
 
                         reviveButton = `
+
                             <button
                                 class="revive-btn"
                                 onclick="reviveProject(
                                     '${escapeJS(doc.id)}',
-                                    '${escapeJS(project.name || "Unnamed Project")}'
+                                    '${escapeJS(
+                                        project.name ||
+                                        "Unnamed Project"
+                                    )}'
                                 )"
                             >
+
                                 🧟 Revive
+
                             </button>
+
                         `;
 
                     }
 
 
+
                     else if (
-                        projectStatus === "revival-requested"
+                        projectStatus ===
+                        "revival-requested"
                     ) {
 
+
                         reviveButton = `
+
                             <button
                                 class="revive-btn"
                                 disabled
                             >
+
                                 ⏳ Request Pending
+
                             </button>
+
                         `;
 
                     }
 
 
+
                     else if (
-                        projectStatus === "in-progress"
+                        projectStatus ===
+                        "in-progress"
                     ) {
 
+
                         reviveButton = `
+
                             <button
                                 class="revive-btn"
                                 disabled
                             >
+
                                 🔨 In Progress
+
                             </button>
+
                         `;
 
                     }
 
 
+
                     else if (
-                        projectStatus === "revived"
+                        projectStatus ===
+                        "revived"
                     ) {
 
+
                         reviveButton = `
+
                             <button
                                 class="revive-btn"
                                 disabled
                             >
+
                                 ✨ Revived
+
                             </button>
+
                         `;
 
                     }
+
 
 
                     // =============================
@@ -354,105 +731,162 @@
 
                     card.innerHTML = `
 
+
                         <div class="tombstone">
+
                             ⚰️
+
                         </div>
+
 
 
                         <span class="status">
 
                             ${statusIcon}
+
                             ${statusText}
 
                         </span>
 
 
+
+                        <!-- REVIVAL SCORE -->
+
+                        <div class="revival-score">
+
+                            🔥 ${revivalScore}%
+                            Revival Potential
+
+                        </div>
+
+
+
                         <h2>
+
                             ${escapeHTML(
-                                project.name || "Unnamed Project"
+                                project.name ||
+                                "Unnamed Project"
                             )}
+
                         </h2>
 
 
+
                         <p>
+
                             ${escapeHTML(
                                 project.description ||
                                 "No description provided."
                             )}
+
                         </p>
+
 
 
                         <div class="tech">
 
+
                             ${
                                 project.technology
+
                                     ? project.technology
+
                                         .split(",")
+
                                         .map(
                                             tech =>
                                                 `<span>${escapeHTML(
                                                     tech.trim()
                                                 )}</span>`
                                         )
+
                                         .join("")
+
                                     : "<span>Not specified</span>"
                             }
+
 
                         </div>
 
 
+
                         <div class="cause">
+
 
                             <strong>
                                 Cause of death:
                             </strong>
 
+
                             ${escapeHTML(
-                                project.cause || "Unknown"
+                                project.cause ||
+                                "Unknown"
                             )}
 
+
                         </div>
+
 
 
                         <div class="difficulty">
 
+
                             Difficulty:
+
 
                             ${
                                 "⭐".repeat(
-                                    project.difficulty === "easy"
+
+                                    project.difficulty ===
+                                    "easy"
+
                                         ? 1
-                                        : project.difficulty === "medium"
+
+                                        : project.difficulty ===
+                                          "medium"
+
                                             ? 2
+
                                             : 3
+
                                 )
                             }
+
 
                         </div>
 
 
+
                         <div class="card-buttons">
 
-                            <!-- View Project -->
+
+                            <!-- VIEW PROJECT -->
 
                             <button
                                 class="view-btn"
                                 data-project-id="${doc.id}"
                             >
+
                                 View Project
+
                             </button>
 
 
-                            <!-- Status-based Revive Button -->
+
+                            <!-- REVIVE -->
 
                             ${reviveButton}
 
+
                         </div>
+
 
                     `;
 
 
+
                     projectGrid.appendChild(card);
+
 
 
                     // =============================
@@ -465,21 +899,29 @@
                             "click",
                             function () {
 
+
                                 window.location.href =
                                     `project-details.html?id=${doc.id}`;
+
 
                             }
                         );
 
+
                 });
 
 
-            } catch (error) {
+            }
+
+
+            catch (error) {
+
 
                 console.error(
                     "Error loading projects:",
                     error
                 );
+
 
 
                 projectGrid.innerHTML = `
@@ -490,9 +932,12 @@
                             ❌ Unable to Load Projects
                         </h2>
 
+
                         <p>
+
                             Something went wrong while loading
                             the Project Graveyard.
+
                         </p>
 
                     </div>
@@ -504,11 +949,165 @@
         }
 
 
+
         // =============================
-        // START LOADING PROJECTS
+        // SORT PROJECTS
         // =============================
 
-        loadProjects();
+        sortSelect.addEventListener(
+            "change",
+            function () {
+
+
+                const cards =
+                    Array.from(
+                        projectGrid.querySelectorAll(
+                            ".project-card"
+                        )
+                    );
+
+
+
+                const sortType =
+                    sortSelect.value;
+
+
+
+                cards.sort(
+                    function (a, b) {
+
+
+                        // =============================
+                        // REVIVAL POTENTIAL
+                        // =============================
+
+                        if (
+                            sortType ===
+                            "revival"
+                        ) {
+
+
+                            return (
+
+                                Number(
+                                    b.dataset.revivalScore
+                                )
+
+                                -
+
+                                Number(
+                                    a.dataset.revivalScore
+                                )
+
+                            );
+
+                        }
+
+
+
+                        // =============================
+                        // RECENTLY BURIED
+                        // =============================
+
+                        if (
+                            sortType ===
+                            "recent"
+                        ) {
+
+
+                            return (
+
+                                Number(
+                                    b.dataset.createdTime
+                                )
+
+                                -
+
+                                Number(
+                                    a.dataset.createdTime
+                                )
+
+                            );
+
+                        }
+
+
+
+                        // =============================
+                        // EASIEST TO REVIVE
+                        // =============================
+
+                        if (
+                            sortType ===
+                            "easy"
+                        ) {
+
+
+                            const starsA =
+                                (
+                                    a
+                                        .querySelector(
+                                            ".difficulty"
+                                        )
+                                        ?.textContent
+                                        .match(
+                                            /⭐/g
+                                        )
+                                    || []
+                                ).length;
+
+
+
+                            const starsB =
+                                (
+                                    b
+                                        .querySelector(
+                                            ".difficulty"
+                                        )
+                                        ?.textContent
+                                        .match(
+                                            /⭐/g
+                                        )
+                                    || []
+                                ).length;
+
+
+
+                            return (
+                                starsA -
+                                starsB
+                            );
+
+                        }
+
+
+
+                        // =============================
+                        // DEFAULT
+                        // =============================
+
+                        return 0;
+
+
+                    }
+                );
+
+
+
+                cards.forEach(
+                    function (card) {
+
+                        projectGrid.appendChild(
+                            card
+                        );
+
+                    }
+                );
+
+
+            }
+        );
+
 
 
         // =============================
@@ -517,74 +1116,138 @@
 
         function escapeHTML(text) {
 
+
             return String(text)
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
+
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+
 
         }
+
 
 
         function escapeJS(text) {
 
+
             return String(text)
-                .replace(/\\/g, "\\\\")
-                .replace(/'/g, "\\'")
-                .replace(/\n/g, "\\n")
-                .replace(/\r/g, "\\r");
+
+                .replace(
+                    /\\/g,
+                    "\\\\"
+                )
+
+                .replace(
+                    /'/g,
+                    "\\'"
+                )
+
+                .replace(
+                    /\n/g,
+                    "\\n"
+                )
+
+                .replace(
+                    /\r/g,
+                    "\\r"
+                );
+
 
         }
+
+
+
+        // =============================
+        // START
+        // =============================
+
+        loadProjects();
+
 
     </script>
 
 
-    <!-- Authentication -->
+
+    <!-- =============================
+         AUTHENTICATION
+    ============================== -->
 
     <script type="module">
 
+
         import { auth } from "./firebase.js";
 
+
         import {
-            onAuthStateChanged,
-            signOut
+
+            onAuthStateChanged
+
         } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
 
 
         const authLink =
             document.getElementById("authLink");
 
 
+
         onAuthStateChanged(
+
             auth,
+
             (user) => {
+
 
                 if (user) {
 
+
+                    // =============================
+                    // USER LOGGED IN
+                    // =============================
+
                     authLink.textContent =
                         "👤 " +
-                        (user.displayName || "Account");
+                        (
+                            user.displayName ||
+                            "Account"
+                        );
 
 
                     authLink.href =
-                        "#";
+                        "account.html";
 
-
-                    authLink.onclick =
-                        async function (event) {
-
-                            event.preventDefault();
-
-                            await signOut(auth);
-
-                            window.location.reload();
-
-                        };
 
                 }
 
+
                 else {
+
+
+                    // =============================
+                    // USER LOGGED OUT
+                    // =============================
 
                     authLink.textContent =
                         "Login";
@@ -593,10 +1256,13 @@
                     authLink.href =
                         "login.html";
 
+
                 }
 
             }
+
         );
+
 
     </script>
 

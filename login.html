@@ -2,15 +2,27 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Login | Project Graveyard</title>
 
     <link rel="stylesheet" href="style.css">
+
 </head>
 
+
 <body>
+
+
+    <!-- =============================
+         LOGIN HEADER
+    ============================== -->
 
     <header class="navbar">
 
@@ -18,36 +30,49 @@
             ⚰️ Project Graveyard
         </div>
 
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="projects.html">Graveyard</a>
-            <a href="bury.html">Bury Project</a>
-            <a href="requests.html">Requests</a>
-        </nav>
-
     </header>
+
+
+    <!-- =============================
+         AUTHENTICATION
+    ============================== -->
 
     <main>
 
         <div class="auth-container">
 
-            <div class="auth-card" id="loginCard">
+
+            <!-- =============================
+                 LOGIN CARD
+            ============================== -->
+
+            <div
+                class="auth-card"
+                id="loginCard"
+            >
 
                 <div class="auth-icon">
                     ⚰️
                 </div>
 
-                <h1>Welcome Back</h1>
+
+                <h1>
+                    Welcome Back
+                </h1>
+
 
                 <p class="auth-subtitle">
                     Login to Project Graveyard
                 </p>
 
+
                 <form id="loginForm">
+
 
                     <label for="loginEmail">
                         Email
                     </label>
+
 
                     <input
                         type="email"
@@ -56,9 +81,11 @@
                         required
                     >
 
+
                     <label for="loginPassword">
                         Password
                     </label>
+
 
                     <input
                         type="password"
@@ -67,6 +94,7 @@
                         required
                     >
 
+
                     <button
                         type="submit"
                         class="auth-btn"
@@ -74,28 +102,51 @@
                         🔐 Login
                     </button>
 
+
                 </form>
+
+
+                <!-- Divider -->
 
                 <div class="auth-divider">
                     <span>OR</span>
                 </div>
 
+
+                <!-- Google Login -->
+
                 <button
                     id="googleLogin"
                     class="google-btn"
+                    type="button"
                 >
                     🌐 Continue with Google
                 </button>
 
+
+                <!-- Signup Link -->
+
                 <p class="auth-switch">
+
                     Don't have an account?
-                    <a href="#" id="showSignup">
+
+                    <a
+                        href="#"
+                        id="showSignup"
+                    >
                         Sign Up
                     </a>
+
                 </p>
+
 
             </div>
 
+
+
+            <!-- =============================
+                 SIGNUP CARD
+            ============================== -->
 
             <div
                 class="auth-card signup-card"
@@ -106,17 +157,24 @@
                     🧟
                 </div>
 
-                <h1>Create Account</h1>
+
+                <h1>
+                    Create Account
+                </h1>
+
 
                 <p class="auth-subtitle">
                     Join the Project Graveyard
                 </p>
 
+
                 <form id="signupForm">
+
 
                     <label for="signupName">
                         Name
                     </label>
+
 
                     <input
                         type="text"
@@ -125,9 +183,11 @@
                         required
                     >
 
+
                     <label for="signupEmail">
                         Email
                     </label>
+
 
                     <input
                         type="email"
@@ -136,9 +196,11 @@
                         required
                     >
 
+
                     <label for="signupPassword">
                         Password
                     </label>
+
 
                     <input
                         type="password"
@@ -148,6 +210,7 @@
                         required
                     >
 
+
                     <button
                         type="submit"
                         class="auth-btn"
@@ -155,25 +218,43 @@
                         🧟 Create Account
                     </button>
 
+
                 </form>
 
+
+                <!-- Login Link -->
+
                 <p class="auth-switch">
+
                     Already have an account?
-                    <a href="#" id="showLogin">
+
+                    <a
+                        href="#"
+                        id="showLogin"
+                    >
                         Login
                     </a>
+
                 </p>
 
+
             </div>
+
 
         </div>
 
     </main>
 
 
+
+    <!-- =============================
+         FIREBASE AUTHENTICATION
+    ============================== -->
+
     <script type="module">
 
         import { auth, db } from "./firebase.js";
+
 
         import {
             createUserWithEmailAndPassword,
@@ -181,35 +262,52 @@
             GoogleAuthProvider,
             signInWithPopup,
             updateProfile
-            
         } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+
         import {
             doc,
             setDoc
         } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
+
+        // =============================
+        // GET ELEMENTS
+        // =============================
+
         const loginForm =
             document.getElementById("loginForm");
+
 
         const signupForm =
             document.getElementById("signupForm");
 
+
         const googleLogin =
             document.getElementById("googleLogin");
-        
+
+
         const loginCard =
             document.getElementById("loginCard");
+
 
         const signupCard =
             document.getElementById("signupCard");
 
+
         const showSignup =
             document.getElementById("showSignup");
+
 
         const showLogin =
             document.getElementById("showLogin");
 
+
+
+        // =============================
+        // SWITCH TO SIGNUP
+        // =============================
 
         showSignup.addEventListener(
             "click",
@@ -218,11 +316,17 @@
                 event.preventDefault();
 
                 loginCard.style.display = "none";
+
                 signupCard.style.display = "block";
 
             }
         );
 
+
+
+        // =============================
+        // SWITCH TO LOGIN
+        // =============================
 
         showLogin.addEventListener(
             "click",
@@ -231,11 +335,17 @@
                 event.preventDefault();
 
                 signupCard.style.display = "none";
+
                 loginCard.style.display = "block";
 
             }
         );
 
+
+
+        // =============================
+        // EMAIL / PASSWORD SIGNUP
+        // =============================
 
         signupForm.addEventListener(
             "submit",
@@ -243,51 +353,73 @@
 
                 event.preventDefault();
 
+
                 const name =
-                    document.getElementById("signupName").value.trim();
+                    document
+                        .getElementById("signupName")
+                        .value
+                        .trim();
+
 
                 const email =
-                    document.getElementById("signupEmail").value.trim();
+                    document
+                        .getElementById("signupEmail")
+                        .value
+                        .trim();
+
 
                 const password =
-                    document.getElementById("signupPassword").value;
+                    document
+                        .getElementById("signupPassword")
+                        .value;
 
 
                 try {
 
-                    const userCredential = await createUserWithEmailAndPassword(
-                        auth,
-                        email,
-                        password
+                    // Create Firebase account
+
+                    const userCredential =
+                        await createUserWithEmailAndPassword(
+                            auth,
+                            email,
+                            password
+                        );
+
+
+                    // Save display name
+
+                    await updateProfile(
+                        userCredential.user,
+                        {
+                            displayName: name
+                        }
                     );
 
-                    await updateProfile(userCredential.user, {
-                        displayName: name
-                    });
+
+                    // Save user to Firestore
 
                     await setDoc(
-                        doc(db, "users", userCredential.user.uid),
+                        doc(
+                            db,
+                            "users",
+                            userCredential.user.uid
+                        ),
                         {
                             name: name,
                             email: email,
                             createdAt: new Date()
                         }
                     );
-                    await setDoc(
-                        doc(db, "users", userCredential.user.uid),
-                        {
-                            name: name,
-                            email: email,
-                            createdAt: new Date()
-                        }
-                    );
+
 
                     alert(
                         "🎉 Account created successfully!"
                     );
 
+
                     window.location.href =
                         "index.html";
+
 
                 } catch (error) {
 
@@ -295,6 +427,7 @@
                         "Signup error:",
                         error
                     );
+
 
                     alert(
                         "❌ " + error.message
@@ -306,17 +439,29 @@
         );
 
 
+
+        // =============================
+        // EMAIL / PASSWORD LOGIN
+        // =============================
+
         loginForm.addEventListener(
             "submit",
             async function (event) {
 
                 event.preventDefault();
 
+
                 const email =
-                    document.getElementById("loginEmail").value.trim();
+                    document
+                        .getElementById("loginEmail")
+                        .value
+                        .trim();
+
 
                 const password =
-                    document.getElementById("loginPassword").value;
+                    document
+                        .getElementById("loginPassword")
+                        .value;
 
 
                 try {
@@ -327,12 +472,15 @@
                         password
                     );
 
+
                     alert(
                         "👋 Login successful!"
                     );
 
+
                     window.location.href =
                         "index.html";
+
 
                 } catch (error) {
 
@@ -340,6 +488,7 @@
                         "Login error:",
                         error
                     );
+
 
                     alert(
                         "❌ " + error.message
@@ -351,6 +500,11 @@
         );
 
 
+
+        // =============================
+        // GOOGLE LOGIN
+        // =============================
+
         googleLogin.addEventListener(
             "click",
             async function () {
@@ -360,17 +514,51 @@
                     const provider =
                         new GoogleAuthProvider();
 
-                    await signInWithPopup(
-                        auth,
-                        provider
+
+                    const result =
+                        await signInWithPopup(
+                            auth,
+                            provider
+                        );
+
+
+                    const user =
+                        result.user;
+
+
+                    // Save Google user to Firestore
+
+                    await setDoc(
+                        doc(
+                            db,
+                            "users",
+                            user.uid
+                        ),
+                        {
+                            name:
+                                user.displayName ||
+                                "Google User",
+
+                            email:
+                                user.email || "",
+
+                            createdAt:
+                                new Date()
+                        },
+                        {
+                            merge: true
+                        }
                     );
+
 
                     alert(
                         "🌐 Google login successful!"
                     );
 
+
                     window.location.href =
                         "index.html";
+
 
                 } catch (error) {
 
@@ -378,6 +566,7 @@
                         "Google login error:",
                         error
                     );
+
 
                     alert(
                         "❌ " + error.message
@@ -389,6 +578,7 @@
         );
 
     </script>
+
 
 </body>
 

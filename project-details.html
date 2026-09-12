@@ -2,51 +2,92 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Project Details | Project Graveyard</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
+
 
 <body>
 
-    <!-- ============================= -->
-    <!-- NAVIGATION -->
-    <!-- ============================= -->
 
-    <header class="navbar">
+    <!-- =============================
+         NAVIGATION
+    ============================== -->
+
+    <nav>
 
         <div class="logo">
-            ⚰️ Project Graveyard
+            ⚰️ Project<span>Graveyard</span>
         </div>
 
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="projects.html">Graveyard</a>
-            <a href="bury.html">Bury Project</a>
-            <a href="requests.html">Requests</a>
-        </nav>
 
-    </header>
+        <div>
+
+            <a href="index.html">
+                Home
+            </a>
 
 
-    <!-- ============================= -->
-    <!-- PROJECT DETAILS -->
-    <!-- ============================= -->
+            <a href="projects.html">
+                Explore
+            </a>
+
+
+            <a href="bury.html">
+                Bury a Project
+            </a>
+
+
+            <a href="requests.html">
+                Requests
+            </a>
+
+
+            <a
+                href="login.html"
+                id="authLink"
+            >
+                Login
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =============================
+         PROJECT DETAILS
+    ============================== -->
 
     <main>
 
         <div class="details-page">
 
-            <a href="projects.html" class="back-link">
+
+            <a
+                href="projects.html"
+                class="back-link"
+            >
                 ← Back to Graveyard
             </a>
 
+
             <div id="projectDetails">
 
-                <!-- Loading message -->
                 <div class="loading">
                     ⚰️ Digging up project details...
                 </div>
@@ -58,13 +99,23 @@
     </main>
 
 
-    <!-- ============================= -->
-    <!-- FIREBASE -->
-    <!-- ============================= -->
+
+    <!-- =============================
+         FIREBASE
+    ============================== -->
 
     <script type="module">
 
-        import { db } from "./firebase.js";
+        import {
+            auth,
+            db
+        } from "./firebase.js";
+
+
+        import {
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
 
         import {
             doc,
@@ -72,20 +123,108 @@
             collection,
             addDoc,
             updateDoc,
-            serverTimestamp
+            serverTimestamp,
+            query,
+            where,
+            getDocs
         } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
+        // =============================
+        // GET ELEMENTS
+        // =============================
+
         const projectDetails =
-            document.getElementById("projectDetails");
+            document.getElementById(
+                "projectDetails"
+            );
 
 
-        // Get project ID from URL
-        const urlParams = new URLSearchParams(
-            window.location.search
+        const authLink =
+            document.getElementById(
+                "authLink"
+            );
+
+
+        // =============================
+        // GET PROJECT ID
+        // =============================
+
+        const urlParams =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        const projectId =
+            urlParams.get("id");
+
+
+        // =============================
+        // CURRENT USER
+        // =============================
+
+        let currentUser = null;
+
+
+        // =============================
+        // SECURITY HELPER
+        // =============================
+
+        function escapeHTML(text) {
+
+            return String(text)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+
+        // =============================
+        // AUTHENTICATION
+        // =============================
+
+        onAuthStateChanged(
+            auth,
+            (user) => {
+
+                currentUser =
+                    user || null;
+
+
+                if (user) {
+
+                    authLink.textContent =
+                        "👤 " +
+                        (
+                            user.displayName ||
+                            "Account"
+                        );
+
+
+                    authLink.href =
+                        "account.html";
+
+                }
+
+                else {
+
+                    authLink.textContent =
+                        "Login";
+
+
+                    authLink.href =
+                        "login.html";
+
+                }
+
+            }
         );
 
-        const projectId = urlParams.get("id");
 
 
         // =============================
@@ -97,40 +236,69 @@
             if (!projectId) {
 
                 projectDetails.innerHTML = `
+
                     <div class="error-box">
-                        ☠️
-                        <h1>Project Not Found</h1>
-                        <p>No project ID was provided.</p>
+
+                        <div class="error-icon">
+                            ☠️
+                        </div>
+
+                        <h1>
+                            Project Not Found
+                        </h1>
+
+                        <p>
+                            No project ID was provided.
+                        </p>
 
                         <a href="projects.html">
                             Return to Graveyard
                         </a>
+
                     </div>
+
                 `;
 
                 return;
+
             }
 
 
             try {
 
+                // =============================
+                // GET PROJECT
+                // =============================
+
                 const projectRef =
-                    doc(db, "projects", projectId);
+                    doc(
+                        db,
+                        "projects",
+                        projectId
+                    );
+
 
                 const projectSnap =
-                    await getDoc(projectRef);
+                    await getDoc(
+                        projectRef
+                    );
 
 
-                if (!projectSnap.exists()) {
+                if (
+                    !projectSnap.exists()
+                ) {
 
                     projectDetails.innerHTML = `
+
                         <div class="error-box">
 
                             <div class="error-icon">
                                 ☠️
                             </div>
 
-                            <h1>Project Not Found</h1>
+                            <h1>
+                                Project Not Found
+                            </h1>
 
                             <p>
                                 This project may have been removed
@@ -142,9 +310,11 @@
                             </a>
 
                         </div>
+
                     `;
 
                     return;
+
                 }
 
 
@@ -152,8 +322,72 @@
                     projectSnap.data();
 
 
+                // =============================
+                // PROJECT STATUS
+                // =============================
+
+                const projectStatus =
+                    project.status ||
+                    "abandoned";
+
+
+                let statusIcon =
+                    "☠️";
+
+
+                let statusText =
+                    "ABANDONED";
+
+
+                if (
+                    projectStatus ===
+                    "revival-requested"
+                ) {
+
+                    statusIcon =
+                        "🧟";
+
+                    statusText =
+                        "REVIVAL REQUESTED";
+
+                }
+
+
+                if (
+                    projectStatus ===
+                    "in-progress"
+                ) {
+
+                    statusIcon =
+                        "🔨";
+
+                    statusText =
+                        "IN PROGRESS";
+
+                }
+
+
+                if (
+                    projectStatus ===
+                    "revived"
+                ) {
+
+                    statusIcon =
+                        "✨";
+
+                    statusText =
+                        "REVIVED";
+
+                }
+
+
+                // =============================
+                // DIFFICULTY
+                // =============================
+
                 const difficulty =
-                    project.difficulty || "easy";
+                    project.difficulty ||
+                    "easy";
 
 
                 const stars =
@@ -176,16 +410,30 @@
                             ⚰️
                         </div>
 
+
                         <span class="details-status">
-                            ☠️ ABANDONED
+
+                            ${statusIcon}
+                            ${statusText}
+
                         </span>
 
+
                         <h1>
-                            ${project.name || "Unnamed Project"}
+                            ${escapeHTML(
+                                project.name ||
+                                "Unnamed Project"
+                            )}
                         </h1>
 
+
                         <p class="details-description">
-                            ${project.description || "No description provided."}
+
+                            ${escapeHTML(
+                                project.description ||
+                                "No description provided."
+                            )}
+
                         </p>
 
                     </div>
@@ -202,15 +450,24 @@
                                 🛠️
                             </div>
 
+
                             <div>
-                                <h2>Technology</h2>
+
+                                <h2>
+                                    Technology
+                                </h2>
 
                                 <p>
-                                    ${project.technology || "Not specified"}
+                                    ${escapeHTML(
+                                        project.technology ||
+                                        "Not specified"
+                                    )}
                                 </p>
+
                             </div>
 
                         </div>
+
 
 
                         <!-- CAUSE -->
@@ -221,15 +478,24 @@
                                 💀
                             </div>
 
+
                             <div>
-                                <h2>Cause of Abandonment</h2>
+
+                                <h2>
+                                    Cause of Abandonment
+                                </h2>
 
                                 <p>
-                                    ${project.cause || "Unknown"}
+                                    ${escapeHTML(
+                                        project.cause ||
+                                        "Unknown"
+                                    )}
                                 </p>
+
                             </div>
 
                         </div>
+
 
 
                         <!-- UNFINISHED -->
@@ -240,15 +506,24 @@
                                 🚧
                             </div>
 
+
                             <div>
-                                <h2>What's Unfinished?</h2>
+
+                                <h2>
+                                    What's Unfinished?
+                                </h2>
 
                                 <p>
-                                    ${project.unfinished || "Not specified"}
+                                    ${escapeHTML(
+                                        project.unfinished ||
+                                        "Not specified"
+                                    )}
                                 </p>
+
                             </div>
 
                         </div>
+
 
 
                         <!-- DIFFICULTY -->
@@ -259,23 +534,63 @@
                                 ⭐
                             </div>
 
+
                             <div>
 
-                                <h2>Difficulty</h2>
+                                <h2>
+                                    Difficulty
+                                </h2>
 
                                 <p class="difficulty-stars">
                                     ${stars}
                                 </p>
 
                                 <span class="difficulty-label">
-                                    ${difficulty.toUpperCase()}
+                                    ${escapeHTML(
+                                        difficulty.toUpperCase()
+                                    )}
                                 </span>
 
                             </div>
 
                         </div>
 
+
                     </div>
+
+
+
+                    <!-- PROJECT OWNER -->
+
+                    <div
+                        class="detail-card"
+                        style="
+                            margin-top: 20px;
+                        "
+                    >
+
+                        <div class="detail-icon">
+                            👤
+                        </div>
+
+
+                        <div>
+
+                            <h2>
+                                Project Owner
+                            </h2>
+
+                            <p>
+                                ${escapeHTML(
+                                    project.ownerName ||
+                                    "Anonymous Developer"
+                                )}
+                            </p>
+
+                        </div>
+
+                    </div>
+
 
 
                     <!-- ACTIONS -->
@@ -286,17 +601,22 @@
                         ${
                             project.github
                                 ? `
+
                                     <a
-                                        href="${project.github}"
+                                        href="${escapeHTML(
+                                            project.github
+                                        )}"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         class="github-btn"
                                     >
                                         💻 View GitHub
                                     </a>
+
                                   `
                                 : ""
                         }
+
 
 
                         <button
@@ -305,6 +625,9 @@
                         >
                             🧟 Revive This Project
                         </button>
+
+
+
                         <button
                             class="revived-btn"
                             id="revivedButton"
@@ -316,6 +639,7 @@
                     </div>
 
 
+
                     <!-- FUTURE AI SECTION -->
 
                     <div class="autopsy-preview">
@@ -324,21 +648,26 @@
                             🤖
                         </div>
 
+
                         <div>
 
                             <span class="coming-soon">
                                 COMING SOON
                             </span>
 
+
                             <h2>
                                 🔬 AI Project Autopsy
                             </h2>
 
+
                             <p>
+
                                 Let AI analyze this abandoned project,
                                 identify what's missing, estimate
                                 completion difficulty, and suggest
                                 how to bring it back to life.
+
                             </p>
 
                         </div>
@@ -348,46 +677,291 @@
                 `;
 
 
+
                 // =============================
-                // REVIVE BUTTON
+                // GET BUTTONS
                 // =============================
 
-                document
-                    .getElementById("reviveButton")
-                    .addEventListener("click", async function () {
+                const reviveButton =
+                    document.getElementById(
+                        "reviveButton"
+                    );
+
+
+                const revivedButton =
+                    document.getElementById(
+                        "revivedButton"
+                    );
+
+
+
+                // =============================
+                // BUTTON STATE
+                // =============================
+
+                if (
+                    projectStatus !==
+                    "abandoned"
+                ) {
+
+                    reviveButton.disabled =
+                        true;
+
+
+                    if (
+                        projectStatus ===
+                        "revival-requested"
+                    ) {
+
+                        reviveButton.textContent =
+                            "⏳ Revival Request Pending";
+
+                    }
+
+
+                    if (
+                        projectStatus ===
+                        "in-progress"
+                    ) {
+
+                        reviveButton.textContent =
+                            "🔨 Project In Progress";
+
+                    }
+
+
+                    if (
+                        projectStatus ===
+                        "revived"
+                    ) {
+
+                        reviveButton.textContent =
+                            "✨ Project Revived";
+
+                    }
+
+                }
+
+
+
+                // =============================
+                // REVIVED BUTTON
+                // =============================
+
+                if (
+                    projectStatus !==
+                    "in-progress"
+                ) {
+
+                    revivedButton.disabled =
+                        true;
+
+                }
+
+
+
+                // =============================
+                // REVIVE PROJECT
+                // =============================
+
+                reviveButton.addEventListener(
+                    "click",
+                    async function () {
+
+                        // =============================
+                        // LOGIN CHECK
+                        // =============================
+
+                        if (!currentUser) {
+
+                            alert(
+                                "🔐 Please login before requesting a revival."
+                            );
+
+
+                            window.location.href =
+                                "login.html";
+
+
+                            return;
+
+                        }
+
+
+
+                        // =============================
+                        // OWNER CHECK
+                        // =============================
+
+                        if (
+                            project.ownerId &&
+                            project.ownerId ===
+                            currentUser.uid
+                        ) {
+
+                            alert(
+                                "⚠️ You cannot request a revival for your own project."
+                            );
+
+
+                            return;
+
+                        }
+
+
 
                         try {
 
+                            reviveButton.disabled =
+                                true;
+
+
+                            reviveButton.textContent =
+                                "🧟 Sending Request...";
+
+
+
+                            // =============================
+                            // CHECK FOR EXISTING REQUEST
+                            // =============================
+
+                            const requestsQuery =
+                                query(
+                                    collection(
+                                        db,
+                                        "revivalRequests"
+                                    ),
+                                    where(
+                                        "projectId",
+                                        "==",
+                                        projectId
+                                    ),
+                                    where(
+                                        "requesterId",
+                                        "==",
+                                        currentUser.uid
+                                    )
+                                );
+
+
+                            const existingRequests =
+                                await getDocs(
+                                    requestsQuery
+                                );
+
+
+
+                            if (
+                                !existingRequests.empty
+                            ) {
+
+                                alert(
+                                    "⏳ You have already requested to revive this project."
+                                );
+
+
+                                reviveButton.disabled =
+                                    false;
+
+
+                                reviveButton.textContent =
+                                    "🧟 Revive This Project";
+
+
+                                return;
+
+                            }
+
+
+
+                            // =============================
+                            // CREATE REVIVAL REQUEST
+                            // =============================
+
                             await addDoc(
-                                collection(db, "revivalRequests"),
+                                collection(
+                                    db,
+                                    "revivalRequests"
+                                ),
                                 {
+
+                                    // Project information
+
                                     projectName:
-                                        project.name || "Unnamed Project",
+                                        project.name ||
+                                        "Unnamed Project",
+
 
                                     projectId:
                                         projectId,
 
-                                    requestedAt:
-                                        serverTimestamp(),
+
+                                    // =============================
+                                    // REQUESTER INFORMATION
+                                    // =============================
+
+                                    requesterId:
+                                        currentUser.uid,
+
+
+                                    requesterName:
+                                        currentUser.displayName ||
+                                        "Anonymous Developer",
+
+
+                                    requesterEmail:
+                                        currentUser.email ||
+                                        "",
+
+
+                                    // =============================
+                                    // REQUEST STATUS
+                                    // =============================
 
                                     status:
-                                        "pending"
-                                }
-                            );
-                            await updateDoc(
-                                doc(db, "projects", projectId),
-                                {
-                                    status: "revival-requested"
+                                        "pending",
+
+
+                                    requestedAt:
+                                        serverTimestamp()
+
                                 }
                             );
 
+
+
+                            // =============================
+                            // UPDATE PROJECT STATUS
+                            // =============================
+
+                            await updateDoc(
+                                doc(
+                                    db,
+                                    "projects",
+                                    projectId
+                                ),
+                                {
+                                    status:
+                                        "revival-requested"
+                                }
+                            );
+
+
+
+                            // =============================
+                            // SUCCESS
+                            // =============================
 
                             alert(
                                 "🧟 Revival Request Sent!\n\n" +
-                                "Someone will review your request."
+                                "The project owner can now review your request."
                             );
 
+
+                            window.location.reload();
+
                         }
+
 
                         catch (error) {
 
@@ -396,48 +970,140 @@
                                 error
                             );
 
+
                             alert(
                                 "❌ Something went wrong. Please try again."
                             );
 
+
+                            reviveButton.disabled =
+                                false;
+
+
+                            reviveButton.textContent =
+                                "🧟 Revive This Project";
+
                         }
 
-                    });
-                    document
-                        .getElementById("revivedButton")
-                        .addEventListener("click", async function () {
+                    }
+                );
 
-                            try {
 
-                                await updateDoc(
-                                    doc(db, "projects", projectId),
-                                    {
-                                        status: "revived"
-                                    }
-                                );
 
-                                alert(
-                                    "✨ Project Revived!\n\n" +
-                                    "This project has officially been brought back to life!"
-                                );
+                // =============================
+                // MARK AS REVIVED
+                // =============================
 
-                                window.location.reload();
+                revivedButton.addEventListener(
+                    "click",
+                    async function () {
 
-                            } catch (error) {
+                        // =============================
+                        // LOGIN CHECK
+                        // =============================
 
-                                console.error(
-                                    "Error marking project as revived:",
-                                    error
-                                );
+                        if (!currentUser) {
 
-                                alert(
-                                    "❌ Something went wrong. Please try again."
-                                );
+                            alert(
+                                "🔐 Please login before changing project status."
+                            );
 
-                            }
 
-                        });
+                            window.location.href =
+                                "login.html";
+
+
+                            return;
+
+                        }
+
+
+
+                        // =============================
+                        // OWNER CHECK
+                        // =============================
+
+                        if (
+                            project.ownerId &&
+                            project.ownerId !==
+                            currentUser.uid
+                        ) {
+
+                            alert(
+                                "🔐 Only the project owner can mark this project as revived."
+                            );
+
+
+                            return;
+
+                        }
+
+
+
+                        try {
+
+                            revivedButton.disabled =
+                                true;
+
+
+                            revivedButton.textContent =
+                                "✨ Reviving...";
+
+
+
+                            await updateDoc(
+                                doc(
+                                    db,
+                                    "projects",
+                                    projectId
+                                ),
+                                {
+                                    status:
+                                        "revived"
+                                }
+                            );
+
+
+
+                            alert(
+                                "✨ Project Revived!\n\n" +
+                                "This project has officially been brought back to life!"
+                            );
+
+
+
+                            window.location.reload();
+
+                        }
+
+
+                        catch (error) {
+
+                            console.error(
+                                "Error marking project as revived:",
+                                error
+                            );
+
+
+                            alert(
+                                "❌ Something went wrong. Please try again."
+                            );
+
+
+                            revivedButton.disabled =
+                                false;
+
+
+                            revivedButton.textContent =
+                                "✨ Mark as Revived";
+
+                        }
+
+                    }
+                );
+
             }
+
 
             catch (error) {
 
@@ -445,6 +1111,7 @@
                     "Error loading project:",
                     error
                 );
+
 
                 projectDetails.innerHTML = `
 
@@ -454,14 +1121,17 @@
                             ⚠️
                         </div>
 
+
                         <h1>
                             Unable to Load Project
                         </h1>
+
 
                         <p>
                             Something went wrong while retrieving
                             this project.
                         </p>
+
 
                         <a href="projects.html">
                             ← Back to Graveyard
@@ -476,10 +1146,15 @@
         }
 
 
-        // Start
+
+        // =============================
+        // START
+        // =============================
+
         loadProject();
 
     </script>
+
 
 </body>
 
