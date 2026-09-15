@@ -17,6 +17,131 @@
         href="style.css"
     >
 
+    <style>
+
+        /* =============================
+           SAVED PROJECTS
+        ============================== */
+
+        .saved-projects {
+            margin-top: 50px;
+        }
+
+        .saved-project-grid {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(280px, 1fr)
+            );
+            gap: 22px;
+            margin-top: 25px;
+        }
+
+        .saved-project-card {
+            background: rgba(255,255,255,0.035);
+            border: 1px solid rgba(139,92,246,0.18);
+            border-radius: 16px;
+            padding: 22px;
+            transition:
+                transform 0.2s ease,
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .saved-project-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(139,92,246,0.4);
+            box-shadow:
+                0 12px 30px rgba(0,0,0,0.2);
+        }
+
+        .saved-project-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .saved-project-icon {
+            font-size: 28px;
+        }
+
+        .saved-project-card h3 {
+            margin: 0 0 10px;
+        }
+
+        .saved-project-card p {
+            color: #aaa8b5;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .saved-project-tech {
+            margin-top: 14px;
+            color: #bdb9c9;
+            font-size: 13px;
+        }
+
+        .saved-project-footer {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .remove-save-btn {
+            border: 1px solid rgba(239,68,68,0.3);
+            background: rgba(239,68,68,0.08);
+            color: #fca5a5;
+            padding: 10px 14px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .remove-save-btn:hover {
+            background: rgba(239,68,68,0.15);
+            border-color: rgba(239,68,68,0.5);
+        }
+
+        .saved-empty {
+            text-align: center;
+            padding: 55px 25px;
+            border: 1px dashed rgba(139,92,246,0.25);
+            border-radius: 16px;
+            background: rgba(255,255,255,0.02);
+        }
+
+        .saved-empty-icon {
+            font-size: 45px;
+            margin-bottom: 12px;
+        }
+
+        .saved-empty h2 {
+            margin-bottom: 10px;
+        }
+
+        .saved-empty p {
+            color: #aaa8b5;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+
+            .saved-project-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .saved-project-footer button {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
 </head>
 
 
@@ -73,15 +198,11 @@
             👤
         </div>
 
-
         <div class="account-profile-info">
 
             <p class="account-label">
                 PROJECT GRAVEYARD MEMBER
             </p>
-
-
-            <!-- USER NAME -->
 
             <div
                 style="
@@ -98,7 +219,6 @@
                 >
                     Loading...
                 </h1>
-
 
                 <button
                     id="editNameButton"
@@ -146,7 +266,6 @@
                     "
                 >
 
-
                 <button
                     id="saveNameButton"
                     type="button"
@@ -164,7 +283,6 @@
                     💾 Save
                 </button>
 
-
                 <button
                     id="cancelNameButton"
                     type="button"
@@ -181,7 +299,6 @@
                 >
                     Cancel
                 </button>
-
 
                 <p
                     id="nameMessage"
@@ -234,9 +351,6 @@
 
     <section class="account-stats">
 
-
-        <!-- Total Projects -->
-
         <div class="account-stat">
 
             <div class="account-stat-icon">
@@ -253,8 +367,6 @@
 
         </div>
 
-
-        <!-- Awaiting Revival -->
 
         <div class="account-stat">
 
@@ -273,8 +385,6 @@
         </div>
 
 
-        <!-- In Progress -->
-
         <div class="account-stat">
 
             <div class="account-stat-icon">
@@ -292,8 +402,6 @@
         </div>
 
 
-        <!-- Revived -->
-
         <div class="account-stat">
 
             <div class="account-stat-icon">
@@ -306,6 +414,25 @@
 
             <p>
                 Projects Revived
+            </p>
+
+        </div>
+
+
+        <!-- SAVED PROJECTS -->
+
+        <div class="account-stat">
+
+            <div class="account-stat-icon">
+                🔖
+            </div>
+
+            <h2 id="savedCount">
+                0
+            </h2>
+
+            <p>
+                Saved Projects
             </p>
 
         </div>
@@ -326,14 +453,12 @@
             🔎 Explore Projects
         </a>
 
-
         <a
             href="bury.html"
             class="account-action primary-action"
         >
             ⚰️ Bury a Project
         </a>
-
 
         <a
             href="requests.html"
@@ -347,10 +472,9 @@
 
     <!-- =============================
          MY PROJECTS
-    ============================== -->
+    ============================= -->
 
     <section class="account-projects">
-
 
         <div class="account-section-header">
 
@@ -365,7 +489,6 @@
                 </h2>
 
             </div>
-
 
             <a
                 href="bury.html"
@@ -384,6 +507,50 @@
 
             <div class="loading">
                 Loading your projects...
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =============================
+         SAVED PROJECTS
+    ============================== -->
+
+    <section class="saved-projects">
+
+        <div class="account-section-header">
+
+            <div>
+
+                <p class="account-section-label">
+                    YOUR COLLECTION
+                </p>
+
+                <h2>
+                    🔖 Saved Projects
+                </h2>
+
+            </div>
+
+            <a
+                href="projects.html"
+                class="btn primary"
+            >
+                🔎 Explore More
+            </a>
+
+        </div>
+
+
+        <div
+            id="savedProjects"
+            class="saved-project-grid"
+        >
+
+            <div class="loading">
+                Loading saved projects...
             </div>
 
         </div>
@@ -416,7 +583,8 @@
             query,
             where,
             doc,
-            setDoc
+            setDoc,
+            deleteDoc
         } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
@@ -425,63 +593,89 @@
         // =============================
 
         const accountName =
-            document.getElementById("accountName");
-
+            document.getElementById(
+                "accountName"
+            );
 
         const accountEmail =
-            document.getElementById("accountEmail");
-
+            document.getElementById(
+                "accountEmail"
+            );
 
         const memberSince =
-            document.getElementById("memberSince");
-
+            document.getElementById(
+                "memberSince"
+            );
 
         const logoutButton =
-            document.getElementById("logoutButton");
-
+            document.getElementById(
+                "logoutButton"
+            );
 
         const buriedCount =
-            document.getElementById("buriedCount");
-
+            document.getElementById(
+                "buriedCount"
+            );
 
         const pendingCount =
-            document.getElementById("pendingCount");
-
+            document.getElementById(
+                "pendingCount"
+            );
 
         const progressCount =
-            document.getElementById("progressCount");
-
+            document.getElementById(
+                "progressCount"
+            );
 
         const revivedCount =
-            document.getElementById("revivedCount");
+            document.getElementById(
+                "revivedCount"
+            );
 
+        const savedCount =
+            document.getElementById(
+                "savedCount"
+            );
 
         const myProjects =
-            document.getElementById("myProjects");
+            document.getElementById(
+                "myProjects"
+            );
 
+        const savedProjects =
+            document.getElementById(
+                "savedProjects"
+            );
 
         const editNameButton =
-            document.getElementById("editNameButton");
-
+            document.getElementById(
+                "editNameButton"
+            );
 
         const editNameForm =
-            document.getElementById("editNameForm");
-
+            document.getElementById(
+                "editNameForm"
+            );
 
         const newName =
-            document.getElementById("newName");
-
+            document.getElementById(
+                "newName"
+            );
 
         const saveNameButton =
-            document.getElementById("saveNameButton");
-
+            document.getElementById(
+                "saveNameButton"
+            );
 
         const cancelNameButton =
-            document.getElementById("cancelNameButton");
-
+            document.getElementById(
+                "cancelNameButton"
+            );
 
         const nameMessage =
-            document.getElementById("nameMessage");
+            document.getElementById(
+                "nameMessage"
+            );
 
 
         // =============================
@@ -491,11 +685,31 @@
         function escapeHTML(text) {
 
             return String(text)
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
+
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
 
         }
 
@@ -515,7 +729,6 @@
 
             }
 
-
             if (
                 status ===
                 "in-progress"
@@ -525,7 +738,6 @@
 
             }
 
-
             if (
                 status ===
                 "revived"
@@ -534,7 +746,6 @@
                 return "✨";
 
             }
-
 
             return "☠️";
 
@@ -556,7 +767,6 @@
 
             }
 
-
             if (
                 status ===
                 "in-progress"
@@ -566,7 +776,6 @@
 
             }
 
-
             if (
                 status ===
                 "revived"
@@ -575,7 +784,6 @@
                 return "status-revived";
 
             }
-
 
             return "status-abandoned";
 
@@ -616,7 +824,8 @@
                 let revived = 0;
 
 
-                myProjects.innerHTML = "";
+                myProjects.innerHTML =
+                    "";
 
 
                 if (snapshot.empty) {
@@ -718,10 +927,6 @@
                             );
 
 
-                        // =============================
-                        // PROJECT CARD
-                        // =============================
-
                         const card =
                             document.createElement(
                                 "article"
@@ -761,12 +966,10 @@
                             <p
                                 class="account-project-description"
                             >
-
                                 ${escapeHTML(
                                     project.description ||
                                     "No description provided."
                                 )}
-
                             </p>
 
 
@@ -817,10 +1020,6 @@
                         );
 
 
-                        // =============================
-                        // VIEW PROJECT
-                        // =============================
-
                         card
                             .querySelector(
                                 ".view-btn"
@@ -840,21 +1039,14 @@
                 );
 
 
-                // =============================
-                // UPDATE STATS
-                // =============================
-
                 buriedCount.textContent =
                     buried;
-
 
                 pendingCount.textContent =
                     pending;
 
-
                 progressCount.textContent =
                     inProgress;
-
 
                 revivedCount.textContent =
                     revived;
@@ -879,6 +1071,435 @@
 
                         <h2>
                             Unable to load your projects
+                        </h2>
+
+                        <p>
+                            Please refresh the page and try again.
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        // =============================
+        // LOAD SAVED PROJECTS
+        // =============================
+
+        async function loadSavedProjects(user) {
+
+            try {
+
+                savedProjects.innerHTML = `
+
+                    <div class="loading">
+                        Loading saved projects...
+                    </div>
+
+                `;
+
+
+                const savedQuery =
+                    query(
+                        collection(
+                            db,
+                            "savedProjects"
+                        ),
+                        where(
+                            "userId",
+                            "==",
+                            user.uid
+                        )
+                    );
+
+
+                const savedSnapshot =
+                    await getDocs(
+                        savedQuery
+                    );
+
+
+                savedProjects.innerHTML =
+                    "";
+
+
+                savedCount.textContent =
+                    savedSnapshot.size;
+
+
+                if (
+                    savedSnapshot.empty
+                ) {
+
+                    savedProjects.innerHTML = `
+
+                        <div class="saved-empty">
+
+                            <div class="saved-empty-icon">
+                                🔖
+                            </div>
+
+                            <h2>
+                                No Saved Projects Yet
+                            </h2>
+
+                            <p>
+                                Find an interesting abandoned project
+                                and save it here for later.
+                            </p>
+
+                            <a
+                                href="projects.html"
+                                class="btn primary"
+                            >
+                                🔎 Explore Projects
+                            </a>
+
+                        </div>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                // =============================
+                // LOAD PROJECT DATA
+                // =============================
+
+                for (
+                    const savedDoc of savedSnapshot.docs
+                ) {
+
+                    const saved =
+                        savedDoc.data();
+
+
+                    let project = null;
+
+
+                    try {
+
+                        const projectRef =
+                            doc(
+                                db,
+                                "projects",
+                                saved.projectId
+                            );
+
+
+                        const projectSnapshot =
+                            await getDocs(
+                                query(
+                                    collection(
+                                        db,
+                                        "projects"
+                                    ),
+                                    where(
+                                        "__name__",
+                                        "==",
+                                        saved.projectId
+                                    )
+                                )
+                            );
+
+
+                        if (
+                            !projectSnapshot.empty
+                        ) {
+
+                            project =
+                                projectSnapshot
+                                    .docs[0]
+                                    .data();
+
+                        }
+
+                    }
+
+                    catch (projectError) {
+
+                        console.error(
+                            "Could not load project:",
+                            projectError
+                        );
+
+                    }
+
+
+                    // =============================
+                    // SAVED PROJECT CARD
+                    // =============================
+
+                    const card =
+                        document.createElement(
+                            "article"
+                        );
+
+
+                    card.className =
+                        "saved-project-card";
+
+
+                    const projectName =
+                        project?.name ||
+                        saved.projectName ||
+                        "Unnamed Project";
+
+
+                    const projectDescription =
+                        project?.description ||
+                        "No description provided.";
+
+
+                    const projectTechnology =
+                        project?.technology ||
+                        "Not specified";
+
+
+                    const projectStatus =
+                        project?.status ||
+                        "abandoned";
+
+
+                    const statusIcon =
+                        getStatusIcon(
+                            projectStatus
+                        );
+
+
+                    const statusText =
+                        projectStatus
+                            .replaceAll(
+                                "-",
+                                " "
+                            )
+                            .toUpperCase();
+
+
+                    card.innerHTML = `
+
+                        <div class="saved-project-top">
+
+                            <div class="saved-project-icon">
+                                ⚰️
+                            </div>
+
+                            <span
+                                class="account-project-status ${getStatusClass(projectStatus)}"
+                            >
+                                ${statusIcon}
+                                ${statusText}
+                            </span>
+
+                        </div>
+
+
+                        <h3>
+                            ${escapeHTML(
+                                projectName
+                            )}
+                        </h3>
+
+
+                        <p>
+                            ${escapeHTML(
+                                projectDescription
+                            )}
+                        </p>
+
+
+                        <div class="saved-project-tech">
+
+                            <strong>
+                                💻 Tech:
+                            </strong>
+
+                            ${escapeHTML(
+                                projectTechnology
+                            )}
+
+                        </div>
+
+
+                        <div class="saved-project-footer">
+
+                            <button
+                                class="view-btn"
+                            >
+                                View Project →
+                            </button>
+
+
+                            <button
+                                class="remove-save-btn"
+                            >
+                                🗑️ Remove Saved
+                            </button>
+
+                        </div>
+
+                    `;
+
+
+                    savedProjects.appendChild(
+                        card
+                    );
+
+
+                    // =============================
+                    // VIEW SAVED PROJECT
+                    // =============================
+
+                    card
+                        .querySelector(
+                            ".view-btn"
+                        )
+                        .addEventListener(
+                            "click",
+                            function () {
+
+                                window.location.href =
+                                    "project-details.html?id=" +
+                                    saved.projectId;
+
+                            }
+                        );
+
+
+                    // =============================
+                    // REMOVE SAVED PROJECT
+                    // =============================
+
+                    card
+                        .querySelector(
+                            ".remove-save-btn"
+                        )
+                        .addEventListener(
+                            "click",
+                            async function () {
+
+                                try {
+
+                                    this.disabled =
+                                        true;
+
+                                    this.textContent =
+                                        "Removing...";
+
+
+                                    await deleteDoc(
+                                        doc(
+                                            db,
+                                            "savedProjects",
+                                            savedDoc.id
+                                        )
+                                    );
+
+
+                                    card.remove();
+
+
+                                    const newCount =
+                                        Math.max(
+                                            0,
+                                            Number(
+                                                savedCount.textContent
+                                            ) - 1
+                                        );
+
+
+                                    savedCount.textContent =
+                                        newCount;
+
+
+                                    if (
+                                        newCount === 0
+                                    ) {
+
+                                        savedProjects.innerHTML = `
+
+                                            <div class="saved-empty">
+
+                                                <div class="saved-empty-icon">
+                                                    🔖
+                                                </div>
+
+                                                <h2>
+                                                    No Saved Projects Yet
+                                                </h2>
+
+                                                <p>
+                                                    Find an interesting abandoned project
+                                                    and save it here for later.
+                                                </p>
+
+                                                <a
+                                                    href="projects.html"
+                                                    class="btn primary"
+                                                >
+                                                    🔎 Explore Projects
+                                                </a>
+
+                                            </div>
+
+                                        `;
+
+                                    }
+
+                                }
+
+                                catch (error) {
+
+                                    console.error(
+                                        "Error removing saved project:",
+                                        error
+                                    );
+
+
+                                    alert(
+                                        "❌ Could not remove the saved project."
+                                    );
+
+
+                                    this.disabled =
+                                        false;
+
+                                    this.textContent =
+                                        "🗑️ Remove Saved";
+
+                                }
+
+                            }
+                        );
+
+                }
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Error loading saved projects:",
+                    error
+                );
+
+
+                savedProjects.innerHTML = `
+
+                    <div class="saved-empty">
+
+                        <div class="saved-empty-icon">
+                            ⚠️
+                        </div>
+
+                        <h2>
+                            Unable to load saved projects
                         </h2>
 
                         <p>
@@ -920,8 +1541,6 @@
                     user.displayName ||
                     "Project Graveyard User";
 
-
-                // Put current name into edit box
 
                 newName.value =
                     user.displayName || "";
@@ -973,10 +1592,15 @@
 
 
                 // =============================
-                // LOAD PROJECTS
+                // LOAD DATA
                 // =============================
 
                 await loadMyProjects(
+                    user
+                );
+
+
+                await loadSavedProjects(
                     user
                 );
 
@@ -1094,10 +1718,6 @@
                     }
 
 
-                    // =============================
-                    // UPDATE FIREBASE AUTH PROFILE
-                    // =============================
-
                     await updateProfile(
                         user,
                         {
@@ -1105,10 +1725,6 @@
                         }
                     );
 
-
-                    // =============================
-                    // UPDATE / CREATE FIRESTORE USER
-                    // =============================
 
                     await setDoc(
                         doc(
@@ -1125,10 +1741,6 @@
                         }
                     );
 
-
-                    // =============================
-                    // UPDATE PAGE
-                    // =============================
 
                     accountName.textContent =
                         name;
@@ -1231,4 +1843,4 @@
 
 </body>
 
-</html>
+</html> 

@@ -5,11 +5,17 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Project Graveyard | Explore</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
     <style>
 
@@ -64,6 +70,166 @@
 
 
         /* =============================
+           SAVE BUTTON
+        ============================== */
+
+        .save-btn {
+            border: 1px solid rgba(139, 92, 246, 0.25);
+            background: rgba(139, 92, 246, 0.08);
+            color: #c4b5fd;
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition:
+                background 0.2s ease,
+                border-color 0.2s ease,
+                color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .save-btn:hover {
+            background: rgba(139, 92, 246, 0.16);
+            border-color: rgba(139, 92, 246, 0.5);
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .save-btn.saved {
+            background: rgba(34, 197, 94, 0.12);
+            border-color: rgba(34, 197, 94, 0.4);
+            color: #86efac;
+        }
+
+        .save-btn.saved:hover {
+            background: rgba(34, 197, 94, 0.18);
+            border-color: rgba(34, 197, 94, 0.6);
+            color: #bbf7d0;
+        }
+
+
+        /* =============================
+           QUICK SEARCH
+        ============================== */
+
+        #quickSearch {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+            margin-bottom: 4px;
+        }
+
+        .quick-search-label {
+            color: #a9a7b2;
+            font-size: 13px;
+            margin-right: 4px;
+        }
+
+        #quickSearch button {
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.035);
+            color: #b9b7c2;
+            padding: 7px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition:
+                background 0.2s ease,
+                border-color 0.2s ease,
+                color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        #quickSearch button:hover {
+            background: rgba(190,30,60,0.12);
+            border-color: rgba(220,55,80,0.45);
+            color: #f2a1ad;
+            transform: translateY(-1px);
+        }
+
+        #quickSearch button.active {
+            background: rgba(190,30,60,0.18);
+            border-color: #c51f43;
+            color: #f3a1ad;
+        }
+
+
+        /* =============================
+           PROJECT TAGS
+        ============================== */
+
+        .project-tag-groups {
+            margin-bottom: 18px;
+        }
+
+        .project-tag-group {
+            margin-bottom: 10px;
+        }
+
+        .project-tag-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .project-tag-label {
+            display: block;
+            margin-bottom: 7px;
+            color: #777a87;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .project-tag {
+            appearance: none;
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            background: rgba(255, 255, 255, 0.04);
+            color: #cfd1da;
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 1.1;
+            cursor: pointer;
+            transition:
+                background 0.18s ease,
+                border-color 0.18s ease,
+                color 0.18s ease,
+                transform 0.18s ease,
+                box-shadow 0.18s ease;
+        }
+
+        .project-tag:hover {
+            background: rgba(185, 28, 60, 0.14);
+            border-color: rgba(197, 31, 67, 0.55);
+            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(185, 28, 60, 0.10);
+        }
+
+        .project-tag.skill-tag {
+            background: rgba(185, 28, 60, 0.055);
+            border-color: rgba(185, 28, 60, 0.20);
+            color: #f3a0ad;
+        }
+
+        .project-tag.type-tag {
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+
+        /* =============================
            MOBILE
         ============================== */
 
@@ -75,6 +241,25 @@
 
             .project-sort select {
                 width: 100%;
+            }
+
+            #quickSearch {
+                gap: 6px;
+            }
+
+            .quick-search-label {
+                width: 100%;
+                margin-bottom: 2px;
+            }
+
+            #quickSearch button {
+                font-size: 11px;
+                padding: 7px 10px;
+            }
+
+            .project-tag {
+                font-size: 10px;
+                padding: 6px 9px;
             }
 
         }
@@ -94,11 +279,8 @@
     <nav>
 
         <div class="logo">
-
             ⚰️ Project<span>Graveyard</span>
-
         </div>
-
 
         <div>
 
@@ -106,30 +288,28 @@
                 Home
             </a>
 
-
             <a href="projects.html">
                 Explore
             </a>
-
 
             <a href="bury.html">
                 Bury a Project
             </a>
 
-
             <a href="requests.html">
                 Requests
             </a>
 
-
-            <a href="login.html" id="authLink">
+            <a
+                href="login.html"
+                id="authLink"
+            >
                 Login
             </a>
 
         </div>
 
     </nav>
-
 
 
     <!-- =============================
@@ -142,22 +322,16 @@
             ⚰️
         </div>
 
-
         <h1>
             The Project Graveyard
         </h1>
 
-
         <p>
-
             Thousands of ideas are abandoned before they reach their potential.
-
             Maybe you can give one of them a second life.
-
         </p>
 
     </section>
-
 
 
     <!-- =============================
@@ -166,7 +340,6 @@
 
     <section class="project-controls">
 
-
         <input
             type="text"
             id="searchInput"
@@ -174,11 +347,9 @@
         >
 
 
-
-        <!-- Category Filters -->
+        <!-- CATEGORY FILTERS -->
 
         <div class="filters">
-
 
             <button
                 class="filter active"
@@ -187,14 +358,12 @@
                 All
             </button>
 
-
             <button
                 class="filter"
                 onclick="filterProjects('web', this)"
             >
                 Web
             </button>
-
 
             <button
                 class="filter"
@@ -203,7 +372,6 @@
                 AI / ML
             </button>
 
-
             <button
                 class="filter"
                 onclick="filterProjects('mobile', this)"
@@ -211,15 +379,12 @@
                 Mobile
             </button>
 
-
         </div>
 
 
-
-        <!-- Status Filters -->
+        <!-- STATUS FILTERS -->
 
         <div class="filters status-filters">
-
 
             <button
                 class="status-filter active"
@@ -228,14 +393,12 @@
                 All Status
             </button>
 
-
             <button
                 class="status-filter"
                 onclick="filterByStatus('abandoned', this)"
             >
                 ☠️ Abandoned
             </button>
-
 
             <button
                 class="status-filter"
@@ -244,14 +407,12 @@
                 🧟 Revival Requested
             </button>
 
-
             <button
                 class="status-filter"
                 onclick="filterByStatus('in-progress', this)"
             >
                 🔨 In Progress
             </button>
-
 
             <button
                 class="status-filter"
@@ -260,14 +421,10 @@
                 ✨ Revived
             </button>
 
-
         </div>
 
 
-
-        <!-- =============================
-             SORT PROJECTS
-        ============================== -->
+        <!-- SORT PROJECTS -->
 
         <div class="project-sort">
 
@@ -275,23 +432,19 @@
                 Sort by:
             </label>
 
-
             <select id="sortSelect">
 
                 <option value="default">
                     ✨ Default
                 </option>
 
-
                 <option value="revival">
                     🔥 Revival Potential
                 </option>
 
-
                 <option value="recent">
                     🆕 Recently Buried
                 </option>
-
 
                 <option value="easy">
                     ⭐ Easiest to Revive
@@ -301,9 +454,7 @@
 
         </div>
 
-
     </section>
-
 
 
     <!-- =============================
@@ -320,7 +471,6 @@
     </main>
 
 
-
     <!-- =============================
          MAIN JAVASCRIPT
     ============================== -->
@@ -331,33 +481,596 @@
     ></script>
 
 
-
     <!-- =============================
          FIREBASE PROJECTS
     ============================== -->
 
     <script type="module">
 
-
-        import { db } from "./firebase.js";
+        import {
+            db,
+            auth
+        } from "./firebase.js";
 
 
         import {
-
             collection,
-            getDocs
-
+            getDocs,
+            addDoc,
+            deleteDoc,
+            doc,
+            query,
+            where,
+            serverTimestamp
         } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
+        import {
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
 
         const projectGrid =
-            document.getElementById("projectGrid");
+            document.getElementById(
+                "projectGrid"
+            );
 
 
         const sortSelect =
-            document.getElementById("sortSelect");
+            document.getElementById(
+                "sortSelect"
+            );
 
+
+        // =============================
+        // CURRENT USER
+        // =============================
+
+        let currentUser = null;
+
+        let savedProjectIds =
+            new Set();
+
+
+        // =============================
+        // LOAD SAVED PROJECTS
+        // =============================
+
+        async function loadSavedProjects() {
+
+            savedProjectIds =
+                new Set();
+
+            if (!currentUser) {
+                return;
+            }
+
+            try {
+
+                const savedQuery =
+                    query(
+                        collection(
+                            db,
+                            "savedProjects"
+                        ),
+                        where(
+                            "userId",
+                            "==",
+                            currentUser.uid
+                        )
+                    );
+
+
+                const snapshot =
+                    await getDocs(
+                        savedQuery
+                    );
+
+
+                snapshot.forEach(
+                    function(savedDoc) {
+
+                        const saved =
+                            savedDoc.data();
+
+
+                        if (saved.projectId) {
+
+                            savedProjectIds.add(
+                                saved.projectId
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Error loading saved projects:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        // =============================
+        // SAVE PROJECT
+        // =============================
+
+        async function toggleSaveProject(
+            projectId,
+            projectName,
+            button
+        ) {
+
+            if (!currentUser) {
+
+                alert(
+                    "🔐 Please log in to save projects."
+                );
+
+                window.location.href =
+                    "login.html";
+
+                return;
+
+            }
+
+
+            try {
+
+                // =============================
+                // UNSAVE
+                // =============================
+
+                if (
+                    savedProjectIds.has(
+                        projectId
+                    )
+                ) {
+
+                    const savedQuery =
+                        query(
+                            collection(
+                                db,
+                                "savedProjects"
+                            ),
+                            where(
+                                "userId",
+                                "==",
+                                currentUser.uid
+                            ),
+                            where(
+                                "projectId",
+                                "==",
+                                projectId
+                            )
+                        );
+
+
+                    const snapshot =
+                        await getDocs(
+                            savedQuery
+                        );
+
+
+                    for (
+                        const savedDoc of snapshot.docs
+                    ) {
+
+                        await deleteDoc(
+                            doc(
+                                db,
+                                "savedProjects",
+                                savedDoc.id
+                            )
+                        );
+
+                    }
+
+
+                    savedProjectIds.delete(
+                        projectId
+                    );
+
+
+                    button.classList.remove(
+                        "saved"
+                    );
+
+
+                    button.textContent =
+                        "🔖 Save";
+
+
+                    button.title =
+                        "Save Project";
+
+
+                    return;
+
+                }
+
+
+                // =============================
+                // SAVE
+                // =============================
+
+                await addDoc(
+                    collection(
+                        db,
+                        "savedProjects"
+                    ),
+                    {
+
+                        userId:
+                            currentUser.uid,
+
+                        projectId:
+                            projectId,
+
+                        projectName:
+                            projectName,
+
+                        savedAt:
+                            serverTimestamp()
+
+                    }
+                );
+
+
+                savedProjectIds.add(
+                    projectId
+                );
+
+
+                button.classList.add(
+                    "saved"
+                );
+
+
+                button.textContent =
+                    "✅ Saved";
+
+
+                button.title =
+                    "Remove from saved projects";
+
+            }
+
+
+            catch (error) {
+
+                console.error(
+                    "Error saving project:",
+                    error
+                );
+
+
+                alert(
+                    "❌ Could not save the project.\n\nPlease try again."
+                );
+
+            }
+
+        }
+
+
+        // =============================
+        // PROJECT TAG LABELS
+        // =============================
+
+        const skillLabels = {
+
+            "frontend":
+                "🖥️ Frontend",
+
+            "backend":
+                "⚙️ Backend",
+
+            "ai-ml":
+                "🧠 AI / ML",
+
+            "ui-ux":
+                "🎨 UI / UX",
+
+            "database":
+                "🗄️ Database",
+
+            "apis":
+                "🔌 APIs",
+
+            "testing":
+                "🧪 Testing",
+
+            "documentation":
+                "📝 Documentation"
+
+        };
+
+
+        const projectTypeLabels = {
+
+            "web-app":
+                "🌐 Web App",
+
+            "mobile-app":
+                "📱 Mobile App",
+
+            "ai-project":
+                "🤖 AI Project",
+
+            "data-project":
+                "📊 Data Project",
+
+            "game":
+                "🎮 Game",
+
+            "tool":
+                "🔧 Tool",
+
+            "education":
+                "🎓 Education",
+
+            "fintech":
+                "💰 FinTech",
+
+            "agriculture":
+                "🌱 Agriculture"
+
+        };
+
+
+        function prettyTag(value) {
+
+            return String(
+                value || ""
+            )
+                .replaceAll(
+                    "-",
+                    " "
+                )
+                .replace(
+                    /\b\w/g,
+                    function(letter) {
+
+                        return letter.toUpperCase();
+
+                    }
+                );
+
+        }
+
+
+        // =============================
+        // TAG CLICK
+        // =============================
+
+        function addTagFilter(
+            button
+        ) {
+
+            button.addEventListener(
+                "click",
+                function(event) {
+
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+
+                    const searchInput =
+                        document.getElementById(
+                            "searchInput"
+                        );
+
+
+                    if (!searchInput) {
+                        return;
+                    }
+
+
+                    searchInput.value =
+                        this.dataset.searchTag ||
+                        this.textContent.trim();
+
+
+                    searchInput.dispatchEvent(
+                        new Event(
+                            "input",
+                            {
+                                bubbles: true
+                            }
+                        )
+                    );
+
+
+                    searchInput.focus();
+
+                }
+            );
+
+        }
+
+
+        // =============================
+        // RENDER TAGS
+        // =============================
+
+        function renderProjectTags(
+            container,
+            skills,
+            projectTypes
+        ) {
+
+            if (!container) {
+                return;
+            }
+
+
+            const safeSkills =
+                Array.isArray(skills)
+                    ? skills.filter(Boolean)
+                    : [];
+
+
+            const safeTypes =
+                Array.isArray(projectTypes)
+                    ? projectTypes.filter(Boolean)
+                    : [];
+
+
+            function createGroup(
+                title,
+                values,
+                labels,
+                className
+            ) {
+
+                if (
+                    values.length === 0
+                ) {
+
+                    return;
+
+                }
+
+
+                const group =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                group.className =
+                    "project-tag-group";
+
+
+                const label =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                label.className =
+                    "project-tag-label";
+
+
+                label.textContent =
+                    title;
+
+
+                const tags =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                tags.className =
+                    "project-tags";
+
+
+                values.forEach(
+                    function(value) {
+
+                        const key =
+                            String(
+                                value
+                            )
+                                .trim()
+                                .toLowerCase();
+
+
+                        const button =
+                            document.createElement(
+                                "button"
+                            );
+
+
+                        button.type =
+                            "button";
+
+
+                        button.className =
+                            "project-tag " +
+                            className;
+
+
+                        button.textContent =
+                            labels[key] ||
+                            (
+                                "🏷️ " +
+                                prettyTag(
+                                    value
+                                )
+                            );
+
+
+                        button.dataset.searchTag =
+                            prettyTag(
+                                value
+                            );
+
+
+                        button.title =
+                            "Show projects tagged " +
+                            prettyTag(
+                                value
+                            );
+
+
+                        addTagFilter(
+                            button
+                        );
+
+
+                        tags.appendChild(
+                            button
+                        );
+
+                    }
+                );
+
+
+                group.appendChild(
+                    label
+                );
+
+
+                group.appendChild(
+                    tags
+                );
+
+
+                container.appendChild(
+                    group
+                );
+
+            }
+
+
+            createGroup(
+                "Skills",
+                safeSkills,
+                skillLabels,
+                "skill-tag"
+            );
+
+
+            createGroup(
+                "Project Type",
+                safeTypes,
+                projectTypeLabels,
+                "type-tag"
+            );
+
+        }
 
 
         // =============================
@@ -366,19 +1079,21 @@
 
         async function loadProjects() {
 
-
             try {
+
+                await loadSavedProjects();
 
 
                 const snapshot =
                     await getDocs(
-                        collection(db, "projects")
+                        collection(
+                            db,
+                            "projects"
+                        )
                     );
 
 
-
                 if (snapshot.empty) {
-
 
                     projectGrid.innerHTML = `
 
@@ -388,11 +1103,9 @@
                                 💀 The Graveyard is Empty
                             </h2>
 
-
                             <p>
                                 No abandoned projects have been buried yet.
                             </p>
-
 
                             <a href="bury.html">
                                 Bury the First Project
@@ -402,526 +1115,591 @@
 
                     `;
 
-
                     return;
 
                 }
 
 
+                snapshot.forEach(
+                    function(projectDoc) {
 
-                snapshot.forEach((doc) => {
+                        const project =
+                            projectDoc.data();
 
 
-                    const project =
-                        doc.data();
+                        // =============================
+                        // PROJECT STATUS
+                        // =============================
 
+                        const projectStatus =
+                            project.status ||
+                            "abandoned";
 
 
-                    // =============================
-                    // PROJECT STATUS
-                    // =============================
+                        let statusText =
+                            projectStatus
+                                .replaceAll(
+                                    "-",
+                                    " "
+                                )
+                                .toUpperCase();
 
-                    const projectStatus =
-                        project.status || "abandoned";
 
+                        // =============================
+                        // STATUS ICON
+                        // =============================
 
-
-                    let statusText =
-                        projectStatus
-                            .replaceAll("-", " ")
-                            .toUpperCase();
-
-
-
-                    // =============================
-                    // STATUS ICON
-                    // =============================
-
-                    let statusIcon = "☠️";
-
-
-
-                    if (
-                        projectStatus ===
-                        "revival-requested"
-                    ) {
-
-                        statusIcon = "🧟";
-
-                    }
-
-
-
-                    if (
-                        projectStatus ===
-                        "in-progress"
-                    ) {
-
-                        statusIcon = "🔨";
-
-                    }
-
-
-
-                    if (
-                        projectStatus ===
-                        "revived"
-                    ) {
-
-                        statusIcon = "✨";
-
-                    }
-
-
-
-                    // =============================
-                    // CREATE PROJECT CARD
-                    // =============================
-
-                    const card =
-                        document.createElement("article");
-
-
-
-                    card.className =
-                        "project-card";
-
-
-
-                    card.dataset.category =
-                        project.category || "other";
-
-
-                    card.dataset.status =
-                        projectStatus;
-
-
-
-                    // =============================
-                    // REVIVAL POTENTIAL SCORE
-                    // =============================
-
-                    let revivalScore = 50;
-
-
-
-                    if (
-                        project.difficulty === "easy"
-                    ) {
-
-                        revivalScore += 20;
-
-                    }
-
-                    else if (
-                        project.difficulty === "medium"
-                    ) {
-
-                        revivalScore += 10;
-
-                    }
-
-
-
-                    if (project.description) {
-
-                        if (
-                            project.description.length >= 100
-                        ) {
-
-                            revivalScore += 10;
-
-                        }
-
-                        else {
-
-                            revivalScore += 5;
-
-                        }
-
-                    }
-
-
-
-                    if (project.technology) {
-
-                        revivalScore += 5;
-
-                    }
-
-
-
-                    if (project.github) {
-
-                        revivalScore += 10;
-
-                    }
-
-
-
-                    if (project.unfinished) {
-
-                        revivalScore += 5;
-
-                    }
-
-
-
-                    revivalScore =
-                        Math.min(
-                            revivalScore,
-                            100
-                        );
-
-
-
-                    // =============================
-                    // CREATED TIME
-                    // =============================
-
-                    let createdTime = 0;
-
-
-
-                    if (project.createdAt) {
+                        let statusIcon =
+                            "☠️";
 
 
                         if (
-                            typeof project.createdAt.toMillis ===
-                            "function"
+                            projectStatus ===
+                            "revival-requested"
                         ) {
 
-                            createdTime =
-                                project.createdAt.toMillis();
+                            statusIcon =
+                                "🧟";
+
+                        }
+
+
+                        if (
+                            projectStatus ===
+                            "in-progress"
+                        ) {
+
+                            statusIcon =
+                                "🔨";
+
+                        }
+
+
+                        if (
+                            projectStatus ===
+                            "revived"
+                        ) {
+
+                            statusIcon =
+                                "✨";
+
+                        }
+
+
+                        // =============================
+                        // CREATE CARD
+                        // =============================
+
+                        const card =
+                            document.createElement(
+                                "article"
+                            );
+
+
+                        card.className =
+                            "project-card";
+
+
+                        card.dataset.category =
+                            project.category ||
+                            "other";
+
+
+                        card.dataset.status =
+                            projectStatus;
+
+
+                        // =============================
+                        // REVIVAL POTENTIAL
+                        // =============================
+
+                        let revivalScore =
+                            50;
+
+
+                        if (
+                            project.difficulty ===
+                            "easy"
+                        ) {
+
+                            revivalScore +=
+                                20;
 
                         }
 
                         else if (
-                            project.createdAt.seconds
+                            project.difficulty ===
+                            "medium"
                         ) {
 
-                            createdTime =
-                                project.createdAt.seconds *
-                                1000;
+                            revivalScore +=
+                                10;
 
                         }
 
-                    }
 
+                        if (
+                            project.description
+                        ) {
 
+                            if (
+                                project.description.length >=
+                                100
+                            ) {
 
-                    card.dataset.revivalScore =
-                        revivalScore;
+                                revivalScore +=
+                                    10;
 
+                            }
 
-                    card.dataset.createdTime =
-                        createdTime;
+                            else {
 
+                                revivalScore +=
+                                    5;
 
+                            }
 
-                    // =============================
-                    // REVIVE BUTTON
-                    // =============================
+                        }
 
-                    let reviveButton = "";
 
+                        if (
+                            project.technology
+                        ) {
 
+                            revivalScore +=
+                                5;
 
-                    if (
-                        projectStatus ===
-                        "abandoned"
-                    ) {
+                        }
 
 
-                        reviveButton = `
+                        if (
+                            project.github
+                        ) {
 
-                            <button
-                                class="revive-btn"
-                                onclick="reviveProject(
-                                    '${escapeJS(doc.id)}',
-                                    '${escapeJS(
-                                        project.name ||
-                                        "Unnamed Project"
-                                    )}'
-                                )"
-                            >
+                            revivalScore +=
+                                10;
 
-                                🧟 Revive
+                        }
 
-                            </button>
 
-                        `;
+                        if (
+                            project.unfinished
+                        ) {
 
-                    }
+                            revivalScore +=
+                                5;
 
+                        }
 
 
-                    else if (
-                        projectStatus ===
-                        "revival-requested"
-                    ) {
+                        revivalScore =
+                            Math.min(
+                                revivalScore,
+                                100
+                            );
 
 
-                        reviveButton = `
+                        // =============================
+                        // CREATED TIME
+                        // =============================
 
-                            <button
-                                class="revive-btn"
-                                disabled
-                            >
+                        let createdTime =
+                            0;
 
-                                ⏳ Request Pending
 
-                            </button>
+                        if (
+                            project.createdAt
+                        ) {
 
-                        `;
+                            if (
+                                typeof
+                                project.createdAt.toMillis ===
+                                "function"
+                            ) {
 
-                    }
+                                createdTime =
+                                    project.createdAt.toMillis();
 
+                            }
 
+                            else if (
+                                project.createdAt.seconds
+                            ) {
 
-                    else if (
-                        projectStatus ===
-                        "in-progress"
-                    ) {
+                                createdTime =
+                                    project.createdAt.seconds *
+                                    1000;
 
+                            }
 
-                        reviveButton = `
+                        }
 
-                            <button
-                                class="revive-btn"
-                                disabled
-                            >
 
-                                🔨 In Progress
+                        card.dataset.revivalScore =
+                            revivalScore;
 
-                            </button>
 
-                        `;
+                        card.dataset.createdTime =
+                            createdTime;
 
-                    }
 
+                        // =============================
+                        // REVIVE BUTTON
+                        // =============================
 
+                        let reviveButton =
+                            "";
 
-                    else if (
-                        projectStatus ===
-                        "revived"
-                    ) {
 
+                        if (
+                            projectStatus ===
+                            "abandoned"
+                        ) {
 
-                        reviveButton = `
+                            reviveButton = `
 
-                            <button
-                                class="revive-btn"
-                                disabled
-                            >
-
-                                ✨ Revived
-
-                            </button>
-
-                        `;
-
-                    }
-
-
-
-                    // =============================
-                    // PROJECT CARD HTML
-                    // =============================
-
-                    card.innerHTML = `
-
-
-                        <div class="tombstone">
-
-                            ⚰️
-
-                        </div>
-
-
-
-                        <span class="status">
-
-                            ${statusIcon}
-
-                            ${statusText}
-
-                        </span>
-
-
-
-                        <!-- REVIVAL SCORE -->
-
-                        <div class="revival-score">
-
-                            🔥 ${revivalScore}%
-                            Revival Potential
-
-                        </div>
-
-
-
-                        <h2>
-
-                            ${escapeHTML(
-                                project.name ||
-                                "Unnamed Project"
-                            )}
-
-                        </h2>
-
-
-
-                        <p>
-
-                            ${escapeHTML(
-                                project.description ||
-                                "No description provided."
-                            )}
-
-                        </p>
-
-
-
-                        <div class="tech">
-
-
-                            ${
-                                project.technology
-
-                                    ? project.technology
-
-                                        .split(",")
-
-                                        .map(
-                                            tech =>
-                                                `<span>${escapeHTML(
-                                                    tech.trim()
-                                                )}</span>`
+                                <button
+                                    class="revive-btn"
+                                    onclick="
+                                        reviveProject(
+                                            '${escapeJS(projectDoc.id)}',
+                                            '${escapeJS(
+                                                project.name ||
+                                                "Unnamed Project"
+                                            )}'
                                         )
+                                    "
+                                >
 
-                                        .join("")
+                                    🧟 Revive
 
-                                    : "<span>Not specified</span>"
-                            }
+                                </button>
 
+                            `;
 
-                        </div>
+                        }
 
+                        else if (
+                            projectStatus ===
+                            "revival-requested"
+                        ) {
 
+                            reviveButton = `
 
-                        <div class="cause">
+                                <button
+                                    class="revive-btn"
+                                    disabled
+                                >
 
+                                    ⏳ Request Pending
 
-                            <strong>
-                                Cause of death:
-                            </strong>
+                                </button>
 
+                            `;
 
-                            ${escapeHTML(
-                                project.cause ||
-                                "Unknown"
-                            )}
+                        }
 
+                        else if (
+                            projectStatus ===
+                            "in-progress"
+                        ) {
 
-                        </div>
+                            reviveButton = `
 
+                                <button
+                                    class="revive-btn"
+                                    disabled
+                                >
 
+                                    🔨 In Progress
 
-                        <div class="difficulty">
+                                </button>
 
+                            `;
 
-                            Difficulty:
+                        }
 
+                        else if (
+                            projectStatus ===
+                            "revived"
+                        ) {
 
-                            ${
-                                "⭐".repeat(
+                            reviveButton = `
 
-                                    project.difficulty ===
-                                    "easy"
+                                <button
+                                    class="revive-btn"
+                                    disabled
+                                >
 
-                                        ? 1
+                                    ✨ Revived
 
-                                        : project.difficulty ===
-                                          "medium"
+                                </button>
 
-                                            ? 2
+                            `;
 
-                                            : 3
-
-                                )
-                            }
-
-
-                        </div>
-
-
-
-                        <div class="card-buttons">
-
-
-                            <!-- VIEW PROJECT -->
-
-                            <button
-                                class="view-btn"
-                                data-project-id="${doc.id}"
-                            >
-
-                                View Project
-
-                            </button>
-
+                        }
 
 
-                            <!-- REVIVE -->
+                        // =============================
+                        // SAVED STATE
+                        // =============================
 
-                            ${reviveButton}
-
-
-                        </div>
-
-
-                    `;
-
+                        const isSaved =
+                            savedProjectIds.has(
+                                projectDoc.id
+                            );
 
 
-                    projectGrid.appendChild(card);
+                        const saveButtonText =
+                            isSaved
+                                ? "✅ Saved"
+                                : "🔖 Save";
 
 
-
-                    // =============================
-                    // VIEW PROJECT
-                    // =============================
-
-                    card
-                        .querySelector(".view-btn")
-                        .addEventListener(
-                            "click",
-                            function () {
+                        const saveButtonClass =
+                            isSaved
+                                ? "save-btn saved"
+                                : "save-btn";
 
 
-                                window.location.href =
-                                    `project-details.html?id=${doc.id}`;
+                        const saveButtonTitle =
+                            isSaved
+                                ? "Remove from saved projects"
+                                : "Save Project";
 
 
-                            }
+                        // =============================
+                        // CARD HTML
+                        // =============================
+
+                        card.innerHTML = `
+
+                            <div class="tombstone">
+                                ⚰️
+                            </div>
+
+
+                            <span class="status">
+
+                                ${statusIcon}
+                                ${statusText}
+
+                            </span>
+
+
+                            <div class="revival-score">
+
+                                🔥
+                                ${revivalScore}%
+                                Revival Potential
+
+                            </div>
+
+
+                            <h2>
+
+                                ${escapeHTML(
+                                    project.name ||
+                                    "Unnamed Project"
+                                )}
+
+                            </h2>
+
+
+                            <p>
+
+                                ${escapeHTML(
+                                    project.description ||
+                                    "No description provided."
+                                )}
+
+                            </p>
+
+
+                            <!-- TECHNOLOGY -->
+
+                            <div class="tech">
+
+                                ${
+                                    project.technology
+
+                                        ? project.technology
+                                            .split(",")
+                                            .map(
+                                                tech =>
+                                                    `
+                                                    <span>
+                                                        ${escapeHTML(
+                                                            tech.trim()
+                                                        )}
+                                                    </span>
+                                                    `
+                                            )
+                                            .join("")
+
+                                        : `
+                                            <span>
+                                                Not specified
+                                            </span>
+                                        `
+                                }
+
+                            </div>
+
+
+                            <!-- NEW PROJECT TAGS -->
+
+                            <div
+                                class="project-tag-groups"
+                            ></div>
+
+
+                            <div class="cause">
+
+                                <strong>
+                                    Cause of death:
+                                </strong>
+
+                                ${escapeHTML(
+                                    project.cause ||
+                                    "Unknown"
+                                )}
+
+                            </div>
+
+
+                            <div class="difficulty">
+
+                                Difficulty:
+
+                                ${
+                                    "⭐".repeat(
+
+                                        project.difficulty ===
+                                        "easy"
+
+                                            ? 1
+
+                                            : project.difficulty ===
+                                              "medium"
+
+                                                ? 2
+
+                                                : 3
+
+                                    )
+                                }
+
+                            </div>
+
+
+                            <div class="card-buttons">
+
+
+                                <!-- VIEW PROJECT -->
+
+                                <button
+                                    class="view-btn"
+                                    data-project-id="${projectDoc.id}"
+                                >
+
+                                    View Project
+
+                                </button>
+
+
+                                <!-- SAVE PROJECT -->
+
+                                <button
+                                    class="${saveButtonClass}"
+                                    data-project-id="${projectDoc.id}"
+                                    title="${saveButtonTitle}"
+                                >
+
+                                    ${saveButtonText}
+
+                                </button>
+
+
+                                <!-- REVIVE -->
+
+                                ${reviveButton}
+
+                            </div>
+
+                        `;
+
+
+                        projectGrid.appendChild(
+                            card
                         );
 
 
-                });
+                        // =============================
+                        // RENDER TAGS
+                        // =============================
 
+                        renderProjectTags(
+                            card.querySelector(
+                                ".project-tag-groups"
+                            ),
+                            project.skills,
+                            project.projectTypes
+                        );
+
+
+                        // =============================
+                        // VIEW PROJECT
+                        // =============================
+
+                        card
+                            .querySelector(
+                                ".view-btn"
+                            )
+                            .addEventListener(
+                                "click",
+                                function() {
+
+                                    window.location.href =
+                                        `project-details.html?id=${projectDoc.id}`;
+
+                                }
+                            );
+
+
+                        // =============================
+                        // SAVE PROJECT
+                        // =============================
+
+                        card
+                            .querySelector(
+                                ".save-btn"
+                            )
+                            .addEventListener(
+                                "click",
+                                function() {
+
+                                    toggleSaveProject(
+                                        projectDoc.id,
+                                        project.name ||
+                                        "Unnamed Project",
+                                        this
+                                    );
+
+                                }
+                            );
+
+                    }
+                );
 
             }
 
-
             catch (error) {
-
 
                 console.error(
                     "Error loading projects:",
                     error
                 );
-
 
 
                 projectGrid.innerHTML = `
@@ -932,12 +1710,9 @@
                             ❌ Unable to Load Projects
                         </h2>
 
-
                         <p>
-
                             Something went wrong while loading
                             the Project Graveyard.
-
                         </p>
 
                     </div>
@@ -949,15 +1724,13 @@
         }
 
 
-
         // =============================
         // SORT PROJECTS
         // =============================
 
         sortSelect.addEventListener(
             "change",
-            function () {
-
+            function() {
 
                 const cards =
                     Array.from(
@@ -967,25 +1740,20 @@
                     );
 
 
-
                 const sortType =
                     sortSelect.value;
 
 
-
                 cards.sort(
-                    function (a, b) {
+                    function(a, b) {
 
 
-                        // =============================
                         // REVIVAL POTENTIAL
-                        // =============================
 
                         if (
                             sortType ===
                             "revival"
                         ) {
-
 
                             return (
 
@@ -1004,16 +1772,12 @@
                         }
 
 
-
-                        // =============================
                         // RECENTLY BURIED
-                        // =============================
 
                         if (
                             sortType ===
                             "recent"
                         ) {
-
 
                             return (
 
@@ -1032,16 +1796,12 @@
                         }
 
 
-
-                        // =============================
                         // EASIEST TO REVIVE
-                        // =============================
 
                         if (
                             sortType ===
                             "easy"
                         ) {
-
 
                             const starsA =
                                 (
@@ -1055,7 +1815,6 @@
                                         )
                                     || []
                                 ).length;
-
 
 
                             const starsB =
@@ -1072,7 +1831,6 @@
                                 ).length;
 
 
-
                             return (
                                 starsA -
                                 starsB
@@ -1081,21 +1839,14 @@
                         }
 
 
-
-                        // =============================
-                        // DEFAULT
-                        // =============================
-
                         return 0;
-
 
                     }
                 );
 
 
-
                 cards.forEach(
-                    function (card) {
+                    function(card) {
 
                         projectGrid.appendChild(
                             card
@@ -1104,10 +1855,8 @@
                     }
                 );
 
-
             }
         );
-
 
 
         // =============================
@@ -1115,7 +1864,6 @@
         // =============================
 
         function escapeHTML(text) {
-
 
             return String(text)
 
@@ -1144,13 +1892,10 @@
                     "&#039;"
                 );
 
-
         }
 
 
-
         function escapeJS(text) {
-
 
             return String(text)
 
@@ -1174,58 +1919,63 @@
                     "\\r"
                 );
 
-
         }
 
+
+        // =============================
+        // MAKE SAVE FUNCTION AVAILABLE
+        // =============================
+
+        window.toggleSaveProject =
+            toggleSaveProject;
 
 
         // =============================
         // START
         // =============================
 
-        loadProjects();
+        onAuthStateChanged(
+            auth,
+            async function(user) {
 
+                currentUser =
+                    user;
+
+                await loadProjects();
+
+            }
+        );
 
     </script>
 
 
-
     <!-- =============================
-         AUTHENTICATION
+         AUTHENTICATION NAVIGATION
     ============================== -->
 
     <script type="module">
 
-
-        import { auth } from "./firebase.js";
+        import {
+            auth
+        } from "./firebase.js";
 
 
         import {
-
             onAuthStateChanged
-
         } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 
-
         const authLink =
-            document.getElementById("authLink");
-
+            document.getElementById(
+                "authLink"
+            );
 
 
         onAuthStateChanged(
-
             auth,
-
-            (user) => {
-
+            function(user) {
 
                 if (user) {
-
-
-                    // =============================
-                    // USER LOGGED IN
-                    // =============================
 
                     authLink.textContent =
                         "👤 " +
@@ -1234,35 +1984,23 @@
                             "Account"
                         );
 
-
                     authLink.href =
                         "account.html";
 
-
                 }
 
-
                 else {
-
-
-                    // =============================
-                    // USER LOGGED OUT
-                    // =============================
 
                     authLink.textContent =
                         "Login";
 
-
                     authLink.href =
                         "login.html";
-
 
                 }
 
             }
-
         );
-
 
     </script>
 

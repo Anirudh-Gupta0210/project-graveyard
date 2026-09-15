@@ -17,10 +17,88 @@
         href="style.css"
     >
 
+    <style>
+        /* =========================================
+           PROJECT TAGS
+        ========================================= */
+
+        .tag-group {
+            margin-top: 10px;
+        }
+
+        .tag-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-top: 10px;
+        }
+
+        .tag-option {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 13px;
+            border: 1px solid #3e414d;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.035);
+            color: #bfc1cb;
+            font-size: 12px;
+            font-weight: 650;
+            cursor: pointer;
+            user-select: none;
+            transition:
+                background 0.18s ease,
+                border-color 0.18s ease,
+                color 0.18s ease,
+                transform 0.18s ease;
+        }
+
+        .tag-option input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .tag-option:hover {
+            transform: translateY(-1px);
+            border-color: rgba(185, 28, 60, 0.48);
+            color: #ffffff;
+        }
+
+        .tag-option:has(input:checked) {
+            background: linear-gradient(
+                135deg,
+                rgba(185, 28, 60, 0.22),
+                rgba(127, 29, 45, 0.18)
+            );
+            border-color: #b91c3c;
+            color: #ffffff;
+            box-shadow: 0 6px 18px rgba(185, 28, 60, 0.10);
+        }
+
+        .tag-help {
+            display: block;
+            margin-top: 8px;
+            color: #777a87;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .tag-count {
+            display: block;
+            margin-top: 8px;
+            color: #f87171;
+            font-size: 11px;
+            font-weight: 700;
+        }
+    </style>
+
 </head>
 
 
+
 <body>
+
 
 
     <!-- =============================
@@ -34,27 +112,24 @@
         </div>
 
 
+
         <div>
 
             <a href="index.html">
                 Home
             </a>
 
-
             <a href="projects.html">
                 Explore
             </a>
-
 
             <a href="bury.html">
                 Bury a Project
             </a>
 
-
             <a href="requests.html">
                 Requests
             </a>
-
 
             <a
                 href="login.html"
@@ -79,17 +154,13 @@
             ⚰️
         </div>
 
-
         <h1>
             Bury Your Project
         </h1>
 
-
         <p>
-
             Don't let your unfinished idea disappear.
             Give another developer the chance to bring it back to life.
-
         </p>
 
     </section>
@@ -104,7 +175,6 @@
 
         <form id="buryForm">
 
-
             <!-- Project Name -->
 
             <div class="form-group">
@@ -112,7 +182,6 @@
                 <label for="projectName">
                     Project Name *
                 </label>
-
 
                 <input
                     type="text"
@@ -133,7 +202,6 @@
                     Project Description *
                 </label>
 
-
                 <textarea
                     id="description"
                     placeholder="Tell us what your project was supposed to do..."
@@ -152,19 +220,15 @@
                     GitHub Repository
                 </label>
 
-
                 <input
                     type="url"
                     id="github"
                     placeholder="https://github.com/username/project"
                 >
 
-
                 <small>
-
                     Optional — sharing the repository helps others
                     understand and revive your project.
-
                 </small>
 
             </div>
@@ -179,13 +243,231 @@
                     Technology / Tech Stack *
                 </label>
 
-
                 <input
                     type="text"
                     id="technology"
                     placeholder="e.g. React, Node.js, MongoDB"
                     required
                 >
+
+                <small>
+                    Separate technologies with commas.
+                </small>
+
+            </div>
+
+
+
+            <!-- Skills -->
+
+            <div class="form-group">
+
+                <label>
+                    Skills Needed *
+                </label>
+
+                <div class="tag-group">
+
+                    <div class="tag-options">
+
+                        <label class="tag-option">
+                            <input
+                                type="checkbox"
+                                name="skills"
+                                value="frontend"
+                            >
+                            🖥️ Frontend
+                        </label>
+
+                        <label class="tag-option">
+                            <input
+                                type="checkbox"
+                                name="skills"
+                                value="backend"
+                            >
+                            ⚙️ Backend
+                        </label>
+
+                        <label class="tag-option">
+                            <input
+                                type="checkbox"
+                                name="skills"
+                                value="ai-ml"
+                            >
+                            🧠 AI / ML
+                        </label>
+
+                        <label class="tag-option">
+                            <input
+                                type="checkbox"
+                                name="skills"
+                                value="ui-ux"
+                            >
+                            🎨 UI / UX
+                        </label>
+
+                        <label class="tag-option">
+                            <input
+                                type="checkbox"
+                                name="skills"
+                                value="database"
+                            >
+                            🗄️ Database
+                        </label>
+
+                        <label class="tag-option">
+                            <input
+                                type="checkbox"
+                                name="skills"
+                                value="apis"
+                            >
+                            🔌 APIs
+                        </label>
+
+                        <label class="tag-option">
+                            <input
+                                type="checkbox"
+                                name="skills"
+                                value="testing"
+                            >
+                            🧪 Testing
+                        </label>
+
+                        <label class="tag-option">
+                            <input
+                                type="checkbox"
+                                name="skills"
+                                value="documentation"
+                            >
+                            📝 Documentation
+                        </label>
+
+                    </div>
+
+                </div>
+
+                <small class="tag-help">
+                    Select the skills someone would need to help revive this project.
+                </small>
+
+                <span
+                    class="tag-count"
+                    id="skillsCount"
+                >
+                    0 skills selected
+                </span>
+
+            </div>
+
+
+
+            <!-- Project Type -->
+
+            <div class="form-group">
+
+                <label>
+                    Project Type *
+                </label>
+
+                <div class="tag-group">
+
+                    <div class="tag-options">
+
+                        <label class="tag-option">
+                            <input
+                                type="checkbox"
+                                name="projectTypes"
+                                value="web-app"
+                            >
+                            🌐 Web App
+                        </label>
+
+                        <label class="tag-option">
+                            <input
+                                type="checkbox"
+                                name="projectTypes"
+                                value="mobile-app"
+                            >
+                            📱 Mobile App
+                        </label>
+
+                        <label class="tag-option">
+                            <input
+                                type="checkbox"
+                                name="projectTypes"
+                                value="ai-project"
+                            >
+                            🤖 AI Project
+                        </label>
+
+                        <label class="tag-option">
+                            <input
+                                type="checkbox"
+                                name="projectTypes"
+                                value="data-project"
+                            >
+                            📊 Data Project
+                        </label>
+
+                        <label class="tag-option">
+                            <input
+                                type="checkbox"
+                                name="projectTypes"
+                                value="game"
+                            >
+                            🎮 Game
+                        </label>
+
+                        <label class="tag-option">
+                            <input
+                                type="checkbox"
+                                name="projectTypes"
+                                value="tool"
+                            >
+                            🔧 Tool
+                        </label>
+
+                        <label class="tag-option">
+                            <input
+                                type="checkbox"
+                                name="projectTypes"
+                                value="education"
+                            >
+                            🎓 Education
+                        </label>
+
+                        <label class="tag-option">
+                            <input
+                                type="checkbox"
+                                name="projectTypes"
+                                value="fintech"
+                            >
+                            💰 FinTech
+                        </label>
+
+                        <label class="tag-option">
+                            <input
+                                type="checkbox"
+                                name="projectTypes"
+                                value="agriculture"
+                            >
+                            🌱 Agriculture
+                        </label>
+
+                    </div>
+
+                </div>
+
+                <small class="tag-help">
+                    Choose the project formats that best describe what you built.
+                </small>
+
+                <span
+                    class="tag-count"
+                    id="projectTypesCount"
+                >
+                    0 types selected
+                </span>
 
             </div>
 
@@ -199,7 +481,6 @@
                     Project Category *
                 </label>
 
-
                 <select
                     id="category"
                     required
@@ -209,21 +490,17 @@
                         Select a category
                     </option>
 
-
                     <option value="web">
                         Web
                     </option>
-
 
                     <option value="ai">
                         AI / Machine Learning
                     </option>
 
-
                     <option value="mobile">
                         Mobile
                     </option>
-
 
                     <option value="other">
                         Other
@@ -243,7 +520,6 @@
                     Why was the project abandoned? *
                 </label>
 
-
                 <textarea
                     id="cause"
                     placeholder="e.g. Team graduated, lost interest, lack of time..."
@@ -261,7 +537,6 @@
                 <label for="unfinished">
                     What's unfinished? *
                 </label>
-
 
                 <textarea
                     id="unfinished"
@@ -281,7 +556,6 @@
                     Estimated Difficulty *
                 </label>
 
-
                 <select
                     id="difficulty"
                     required
@@ -291,16 +565,13 @@
                         Select difficulty
                     </option>
 
-
                     <option value="easy">
                         ⭐⭐ Easy
                     </option>
 
-
                     <option value="medium">
                         ⭐⭐⭐ Medium
                     </option>
-
 
                     <option value="hard">
                         ⭐⭐⭐⭐ Hard
@@ -322,7 +593,6 @@
                 ☠️ Bury This Project
             </button>
 
-
         </form>
 
     </section>
@@ -340,11 +610,9 @@
             db
         } from "./firebase.js";
 
-
         import {
             onAuthStateChanged
         } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
-
 
         import {
             collection,
@@ -360,16 +628,73 @@
         const form =
             document.getElementById("buryForm");
 
-
         const burySubmit =
             document.getElementById("burySubmit");
-
 
         const authLink =
             document.getElementById("authLink");
 
+        const skillsCount =
+            document.getElementById("skillsCount");
+
+        const projectTypesCount =
+            document.getElementById("projectTypesCount");
 
         let currentUser = null;
+
+
+
+        // =============================
+        // TAG COUNTS
+        // =============================
+
+        function updateTagCounts() {
+
+            const selectedSkills =
+                document.querySelectorAll(
+                    'input[name="skills"]:checked'
+                ).length;
+
+            const selectedProjectTypes =
+                document.querySelectorAll(
+                    'input[name="projectTypes"]:checked'
+                ).length;
+
+            skillsCount.textContent =
+                selectedSkills +
+                (
+                    selectedSkills === 1
+                        ? " skill selected"
+                        : " skills selected"
+                );
+
+            projectTypesCount.textContent =
+                selectedProjectTypes +
+                (
+                    selectedProjectTypes === 1
+                        ? " type selected"
+                        : " types selected"
+                );
+
+        }
+
+
+        document
+            .querySelectorAll(
+                'input[name="skills"], input[name="projectTypes"]'
+            )
+            .forEach(
+                (checkbox) => {
+
+                    checkbox.addEventListener(
+                        "change",
+                        updateTagCounts
+                    );
+
+                }
+            );
+
+        updateTagCounts();
 
 
 
@@ -385,35 +710,24 @@
 
                     currentUser = null;
 
-
                     authLink.textContent =
                         "Login";
 
-
                     authLink.href =
                         "login.html";
-
 
                     alert(
                         "🔐 Please login before burying a project."
                     );
 
-
                     window.location.href =
                         "login.html";
-
 
                     return;
 
                 }
 
-
-                // =============================
-                // USER IS LOGGED IN
-                // =============================
-
                 currentUser = user;
-
 
                 authLink.textContent =
                     "👤 " +
@@ -421,7 +735,6 @@
                         user.displayName ||
                         "Account"
                     );
-
 
                 authLink.href =
                     "account.html";
@@ -441,38 +754,85 @@
 
                 event.preventDefault();
 
-
-                // =============================
-                // MAKE SURE USER IS LOGGED IN
-                // =============================
-
                 if (!currentUser) {
 
                     alert(
                         "🔐 Please login before burying a project."
                     );
 
-
                     window.location.href =
                         "login.html";
-
 
                     return;
 
                 }
 
-
-
                 try {
-
-                    // Disable button while saving
 
                     burySubmit.disabled =
                         true;
 
-
                     burySubmit.textContent =
                         "⚰️ Burying Project...";
+
+
+                    // =============================
+                    // COLLECT TAGS
+                    // =============================
+
+                    const skills =
+                        Array.from(
+                            document.querySelectorAll(
+                                'input[name="skills"]:checked'
+                            )
+                        ).map(
+                            (checkbox) =>
+                                checkbox.value
+                        );
+
+                    const projectTypes =
+                        Array.from(
+                            document.querySelectorAll(
+                                'input[name="projectTypes"]:checked'
+                            )
+                        ).map(
+                            (checkbox) =>
+                                checkbox.value
+                        );
+
+
+                    if (skills.length === 0) {
+
+                        alert(
+                            "🧠 Select at least one skill needed for revival."
+                        );
+
+                        burySubmit.disabled =
+                            false;
+
+                        burySubmit.textContent =
+                            "☠️ Bury This Project";
+
+                        return;
+
+                    }
+
+
+                    if (projectTypes.length === 0) {
+
+                        alert(
+                            "📦 Select at least one project type."
+                        );
+
+                        burySubmit.disabled =
+                            false;
+
+                        burySubmit.textContent =
+                            "☠️ Bury This Project";
+
+                        return;
+
+                    }
 
 
 
@@ -482,129 +842,71 @@
 
                     const project = {
 
-                        // Project status
-
                         status:
                             "abandoned",
 
-
-
-                        // Project name
-
                         name:
                             document
-                                .getElementById(
-                                    "projectName"
-                                )
+                                .getElementById("projectName")
                                 .value
                                 .trim(),
-
-
-
-                        // Description
 
                         description:
                             document
-                                .getElementById(
-                                    "description"
-                                )
+                                .getElementById("description")
                                 .value
                                 .trim(),
-
-
-
-                        // GitHub repository
 
                         github:
                             document
-                                .getElementById(
-                                    "github"
-                                )
+                                .getElementById("github")
                                 .value
                                 .trim(),
-
-
-
-                        // Technology
 
                         technology:
                             document
-                                .getElementById(
-                                    "technology"
-                                )
+                                .getElementById("technology")
                                 .value
                                 .trim(),
-
-
-
-                        // Category
 
                         category:
                             document
-                                .getElementById(
-                                    "category"
-                                )
+                                .getElementById("category")
                                 .value,
 
+                        skills:
+                            skills,
 
-
-                        // Cause of abandonment
+                        projectTypes:
+                            projectTypes,
 
                         cause:
                             document
-                                .getElementById(
-                                    "cause"
-                                )
+                                .getElementById("cause")
                                 .value
                                 .trim(),
-
-
-
-                        // Unfinished features
 
                         unfinished:
                             document
-                                .getElementById(
-                                    "unfinished"
-                                )
+                                .getElementById("unfinished")
                                 .value
                                 .trim(),
 
-
-
-                        // Difficulty
-
                         difficulty:
                             document
-                                .getElementById(
-                                    "difficulty"
-                                )
+                                .getElementById("difficulty")
                                 .value,
-
-
-
-                        // =============================
-                        // PROJECT OWNER
-                        // =============================
 
                         ownerId:
                             currentUser.uid,
-
 
                         ownerName:
                             currentUser.displayName ||
                             "Anonymous Developer",
 
-
                         ownerEmail:
                             currentUser.email ||
                             "",
-
-
-
-                        // =============================
-                        // CREATION TIME
-                        // =============================
 
                         createdAt:
                             serverTimestamp()
@@ -635,15 +937,10 @@
                         "☠️ Project buried successfully!"
                     );
 
-
-
-                    // Go directly to Account
-
                     window.location.href =
                         "account.html";
 
                 }
-
 
                 catch (error) {
 
@@ -652,17 +949,12 @@
                         error
                     );
 
-
                     alert(
                         "❌ Something went wrong. Please try again."
                     );
 
-
-                    // Re-enable button
-
                     burySubmit.disabled =
                         false;
-
 
                     burySubmit.textContent =
                         "☠️ Bury This Project";
@@ -673,7 +965,6 @@
         );
 
     </script>
-
 
 </body>
 

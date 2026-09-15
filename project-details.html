@@ -17,15 +17,84 @@
         href="style.css"
     >
 
+    <style>
+
+        /* =========================================================
+           PROJECT DETAIL TAGS
+        ========================================================= */
+
+        .detail-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .detail-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 7px 11px;
+            border-radius: 999px;
+
+            background:
+                rgba(185, 28, 60, 0.08);
+
+            border:
+                1px solid rgba(185, 28, 60, 0.22);
+
+            color: #f3a0ad;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            line-height: 1.2;
+        }
+
+        .detail-tag.type-tag {
+            background:
+                rgba(255, 255, 255, 0.045);
+
+            border-color:
+                rgba(255, 255, 255, 0.10);
+
+            color: #d0d2da;
+        }
+
+        .detail-tags-empty {
+            color: #858896;
+            font-size: 12px;
+        }
+
+
+        /* =========================================================
+           MOBILE TAGS
+        ========================================================= */
+
+        @media (max-width: 600px) {
+
+            .detail-tags {
+                gap: 6px;
+            }
+
+            .detail-tag {
+                font-size: 10px;
+                padding: 6px 9px;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 
 <body>
 
 
-    <!-- =============================
+    <!-- =========================================================
          NAVIGATION
-    ============================== -->
+    ========================================================= -->
 
     <nav>
 
@@ -69,9 +138,9 @@
 
 
 
-    <!-- =============================
+    <!-- =========================================================
          PROJECT DETAILS
-    ============================== -->
+    ========================================================= -->
 
     <main>
 
@@ -84,6 +153,7 @@
             >
                 ← Back to Graveyard
             </a>
+
 
 
             <div id="projectDetails">
@@ -100,11 +170,16 @@
 
 
 
-    <!-- =============================
+    <!-- =========================================================
          FIREBASE
-    ============================== -->
+    ========================================================= -->
 
     <script type="module">
+
+
+        /* =========================================================
+           IMPORT FIREBASE
+        ========================================================= */
 
         import {
             auth,
@@ -130,9 +205,10 @@
         } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-        // =============================
-        // GET ELEMENTS
-        // =============================
+
+        /* =========================================================
+           GET ELEMENTS
+        ========================================================= */
 
         const projectDetails =
             document.getElementById(
@@ -146,9 +222,10 @@
             );
 
 
-        // =============================
-        // GET PROJECT ID
-        // =============================
+
+        /* =========================================================
+           GET PROJECT ID
+        ========================================================= */
 
         const urlParams =
             new URLSearchParams(
@@ -160,37 +237,125 @@
             urlParams.get("id");
 
 
-        // =============================
-        // CURRENT USER
-        // =============================
+
+        /* =========================================================
+           CURRENT USER
+        ========================================================= */
 
         let currentUser = null;
 
 
-        // =============================
-        // SECURITY HELPER
-        // =============================
+
+        /* =========================================================
+           SECURITY HELPER
+        ========================================================= */
 
         function escapeHTML(text) {
 
             return String(text)
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
+
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
 
         }
 
 
 
-        // =============================
-        // AUTHENTICATION
-        // =============================
+        /* =========================================================
+           TAG LABELS
+        ========================================================= */
+
+        const skillLabels = {
+
+            frontend:
+                "🖥️ Frontend",
+
+            backend:
+                "⚙️ Backend",
+
+            "ai-ml":
+                "🧠 AI / ML",
+
+            "ui-ux":
+                "🎨 UI / UX",
+
+            database:
+                "🗄️ Database",
+
+            apis:
+                "🔌 APIs",
+
+            testing:
+                "🧪 Testing",
+
+            documentation:
+                "📝 Documentation"
+
+        };
+
+
+        const projectTypeLabels = {
+
+            "web-app":
+                "🌐 Web App",
+
+            "mobile-app":
+                "📱 Mobile App",
+
+            "ai-project":
+                "🤖 AI Project",
+
+            "data-project":
+                "📊 Data Project",
+
+            game:
+                "🎮 Game",
+
+            tool:
+                "🔧 Tool",
+
+            education:
+                "🎓 Education",
+
+            fintech:
+                "💰 FinTech",
+
+            agriculture:
+                "🌱 Agriculture"
+
+        };
+
+
+
+        /* =========================================================
+           AUTHENTICATION
+        ========================================================= */
 
         onAuthStateChanged(
             auth,
-            (user) => {
+            function(user) {
 
                 currentUser =
                     user || null;
@@ -227,11 +392,16 @@
 
 
 
-        // =============================
-        // LOAD PROJECT
-        // =============================
+        /* =========================================================
+           LOAD PROJECT
+        ========================================================= */
 
         async function loadProject() {
+
+
+            /* =====================================================
+               CHECK PROJECT ID
+            ===================================================== */
 
             if (!projectId) {
 
@@ -264,11 +434,13 @@
             }
 
 
+
             try {
 
-                // =============================
-                // GET PROJECT
-                // =============================
+
+                /* =================================================
+                   GET PROJECT
+                ================================================= */
 
                 const projectRef =
                     doc(
@@ -283,6 +455,11 @@
                         projectRef
                     );
 
+
+
+                /* =================================================
+                   PROJECT DOES NOT EXIST
+                ================================================= */
 
                 if (
                     !projectSnap.exists()
@@ -318,13 +495,19 @@
                 }
 
 
+
+                /* =================================================
+                   PROJECT DATA
+                ================================================= */
+
                 const project =
                     projectSnap.data();
 
 
-                // =============================
-                // PROJECT STATUS
-                // =============================
+
+                /* =================================================
+                   PROJECT STATUS
+                ================================================= */
 
                 const projectStatus =
                     project.status ||
@@ -381,9 +564,10 @@
                 }
 
 
-                // =============================
-                // DIFFICULTY
-                // =============================
+
+                /* =================================================
+                   DIFFICULTY
+                ================================================= */
 
                 const difficulty =
                     project.difficulty ||
@@ -391,40 +575,58 @@
 
 
                 const stars =
+
                     difficulty === "easy"
+
                         ? "⭐"
+
                         : difficulty === "medium"
+
                             ? "⭐⭐"
+
                             : "⭐⭐⭐";
 
 
-                // =============================
-                // PROJECT HTML
-                // =============================
+
+                /* =================================================
+                   PROJECT HTML
+                ================================================= */
 
                 projectDetails.innerHTML = `
 
+
+                    <!-- ==========================================
+                         PROJECT HEADER
+                    =========================================== -->
+
                     <div class="details-header">
+
 
                         <div class="grave-icon">
                             ⚰️
                         </div>
 
 
+
                         <span class="details-status">
 
                             ${statusIcon}
+
                             ${statusText}
 
                         </span>
 
 
+
                         <h1>
+
                             ${escapeHTML(
                                 project.name ||
                                 "Unnamed Project"
                             )}
+
                         </h1>
+
 
 
                         <p class="details-description">
@@ -436,13 +638,21 @@
 
                         </p>
 
+
                     </div>
 
+
+
+                    <!-- ==========================================
+                         DETAILS GRID
+                    =========================================== -->
 
                     <div class="details-grid">
 
 
-                        <!-- TECHNOLOGY -->
+                        <!-- ======================================
+                             TECHNOLOGY
+                        ======================================= -->
 
                         <div class="detail-card">
 
@@ -457,11 +667,14 @@
                                     Technology
                                 </h2>
 
+
                                 <p>
+
                                     ${escapeHTML(
                                         project.technology ||
                                         "Not specified"
                                     )}
+
                                 </p>
 
                             </div>
@@ -470,7 +683,9 @@
 
 
 
-                        <!-- CAUSE -->
+                        <!-- ======================================
+                             CAUSE
+                        ======================================= -->
 
                         <div class="detail-card cause-card">
 
@@ -485,11 +700,14 @@
                                     Cause of Abandonment
                                 </h2>
 
+
                                 <p>
+
                                     ${escapeHTML(
                                         project.cause ||
                                         "Unknown"
                                     )}
+
                                 </p>
 
                             </div>
@@ -498,7 +716,9 @@
 
 
 
-                        <!-- UNFINISHED -->
+                        <!-- ======================================
+                             UNFINISHED
+                        ======================================= -->
 
                         <div class="detail-card unfinished-card">
 
@@ -513,11 +733,14 @@
                                     What's Unfinished?
                                 </h2>
 
+
                                 <p>
+
                                     ${escapeHTML(
                                         project.unfinished ||
                                         "Not specified"
                                     )}
+
                                 </p>
 
                             </div>
@@ -526,7 +749,9 @@
 
 
 
-                        <!-- DIFFICULTY -->
+                        <!-- ======================================
+                             DIFFICULTY
+                        ======================================= -->
 
                         <div class="detail-card difficulty-card">
 
@@ -541,15 +766,81 @@
                                     Difficulty
                                 </h2>
 
+
                                 <p class="difficulty-stars">
+
                                     ${stars}
+
                                 </p>
 
+
                                 <span class="difficulty-label">
+
                                     ${escapeHTML(
                                         difficulty.toUpperCase()
                                     )}
+
                                 </span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- ======================================
+                             SKILLS NEEDED
+                        ======================================= -->
+
+                        <div class="detail-card">
+
+                            <div class="detail-icon">
+                                🧠
+                            </div>
+
+
+                            <div>
+
+                                <h2>
+                                    Skills Needed
+                                </h2>
+
+
+                                <div
+                                    id="projectSkills"
+                                    class="detail-tags"
+                                >
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- ======================================
+                             PROJECT TYPE
+                        ======================================= -->
+
+                        <div class="detail-card">
+
+                            <div class="detail-icon">
+                                📦
+                            </div>
+
+
+                            <div>
+
+                                <h2>
+                                    Project Type
+                                </h2>
+
+
+                                <div
+                                    id="projectTypes"
+                                    class="detail-tags"
+                                >
+                                </div>
 
                             </div>
 
@@ -560,7 +851,9 @@
 
 
 
-                    <!-- PROJECT OWNER -->
+                    <!-- ==========================================
+                         PROJECT OWNER
+                    =========================================== -->
 
                     <div
                         class="detail-card"
@@ -580,11 +873,14 @@
                                 Project Owner
                             </h2>
 
+
                             <p>
+
                                 ${escapeHTML(
                                     project.ownerName ||
                                     "Anonymous Developer"
                                 )}
+
                             </p>
 
                         </div>
@@ -593,7 +889,9 @@
 
 
 
-                    <!-- ACTIONS -->
+                    <!-- ==========================================
+                         ACTIONS
+                    =========================================== -->
 
                     <div class="details-actions">
 
@@ -610,10 +908,12 @@
                                         rel="noopener noreferrer"
                                         class="github-btn"
                                     >
+
                                         💻 View GitHub
+
                                     </a>
 
-                                  `
+                                `
                                 : ""
                         }
 
@@ -623,7 +923,9 @@
                             class="revive-btn"
                             id="reviveButton"
                         >
+
                             🧟 Revive This Project
+
                         </button>
 
 
@@ -632,7 +934,9 @@
                             class="revived-btn"
                             id="revivedButton"
                         >
+
                             ✨ Mark as Revived
+
                         </button>
 
 
@@ -640,9 +944,12 @@
 
 
 
-                    <!-- FUTURE AI SECTION -->
+                    <!-- ==========================================
+                         AI AUTOPSY
+                    =========================================== -->
 
                     <div class="autopsy-preview">
+
 
                         <div class="autopsy-icon">
                             🤖
@@ -674,13 +981,163 @@
 
                     </div>
 
+
                 `;
 
 
 
-                // =============================
-                // GET BUTTONS
-                // =============================
+                /* =================================================
+                   DISPLAY SKILLS
+                ================================================= */
+
+                const skillsContainer =
+                    document.getElementById(
+                        "projectSkills"
+                    );
+
+
+                const typesContainer =
+                    document.getElementById(
+                        "projectTypes"
+                    );
+
+
+
+                /* =================================================
+                   SKILLS
+                ================================================= */
+
+                if (
+                    skillsContainer &&
+                    Array.isArray(project.skills) &&
+                    project.skills.length > 0
+                ) {
+
+                    skillsContainer.innerHTML =
+
+                        project.skills
+                            .map(
+                                function(skill) {
+
+                                    const key =
+                                        String(
+                                            skill
+                                        )
+                                            .trim()
+                                            .toLowerCase();
+
+
+                                    return `
+
+                                        <span
+                                            class="detail-tag"
+                                        >
+
+                                            ${
+                                                skillLabels[key] ||
+                                                "🏷️ " +
+                                                escapeHTML(
+                                                    skill
+                                                )
+                                            }
+
+                                        </span>
+
+                                    `;
+
+                                }
+                            )
+                            .join("");
+
+                }
+
+                else if (
+                    skillsContainer
+                ) {
+
+                    skillsContainer.innerHTML = `
+
+                        <span class="detail-tags-empty">
+
+                            Not specified
+
+                        </span>
+
+                    `;
+
+                }
+
+
+
+                /* =================================================
+                   PROJECT TYPES
+                ================================================= */
+
+                if (
+                    typesContainer &&
+                    Array.isArray(project.projectTypes) &&
+                    project.projectTypes.length > 0
+                ) {
+
+                    typesContainer.innerHTML =
+
+                        project.projectTypes
+                            .map(
+                                function(type) {
+
+                                    const key =
+                                        String(
+                                            type
+                                        )
+                                            .trim()
+                                            .toLowerCase();
+
+
+                                    return `
+
+                                        <span
+                                            class="detail-tag type-tag"
+                                        >
+
+                                            ${
+                                                projectTypeLabels[key] ||
+                                                "🏷️ " +
+                                                escapeHTML(
+                                                    type
+                                                )
+                                            }
+
+                                        </span>
+
+                                    `;
+
+                                }
+                            )
+                            .join("");
+
+                }
+
+                else if (
+                    typesContainer
+                ) {
+
+                    typesContainer.innerHTML = `
+
+                        <span class="detail-tags-empty">
+
+                            Not specified
+
+                        </span>
+
+                    `;
+
+                }
+
+
+
+                /* =================================================
+                   GET BUTTONS
+                ================================================= */
 
                 const reviveButton =
                     document.getElementById(
@@ -695,9 +1152,9 @@
 
 
 
-                // =============================
-                // BUTTON STATE
-                // =============================
+                /* =================================================
+                   REVIVE BUTTON STATE
+                ================================================= */
 
                 if (
                     projectStatus !==
@@ -744,9 +1201,9 @@
 
 
 
-                // =============================
-                // REVIVED BUTTON
-                // =============================
+                /* =================================================
+                   MARK AS REVIVED BUTTON
+                ================================================= */
 
                 if (
                     projectStatus !==
@@ -760,17 +1217,18 @@
 
 
 
-                // =============================
-                // REVIVE PROJECT
-                // =============================
+                /* =================================================
+                   REVIVE PROJECT
+                ================================================= */
 
                 reviveButton.addEventListener(
                     "click",
-                    async function () {
+                    async function() {
 
-                        // =============================
-                        // LOGIN CHECK
-                        // =============================
+
+                        /* =========================================
+                           LOGIN CHECK
+                        ========================================== */
 
                         if (!currentUser) {
 
@@ -789,9 +1247,9 @@
 
 
 
-                        // =============================
-                        // OWNER CHECK
-                        // =============================
+                        /* =========================================
+                           OWNER CHECK
+                        ========================================== */
 
                         if (
                             project.ownerId &&
@@ -812,6 +1270,7 @@
 
                         try {
 
+
                             reviveButton.disabled =
                                 true;
 
@@ -821,9 +1280,9 @@
 
 
 
-                            // =============================
-                            // CHECK FOR EXISTING REQUEST
-                            // =============================
+                            /* =====================================
+                               CHECK EXISTING REQUEST
+                            ====================================== */
 
                             const requestsQuery =
                                 query(
@@ -874,9 +1333,9 @@
 
 
 
-                            // =============================
-                            // CREATE REVIVAL REQUEST
-                            // =============================
+                            /* =====================================
+                               CREATE REVIVAL REQUEST
+                            ====================================== */
 
                             await addDoc(
                                 collection(
@@ -885,42 +1344,26 @@
                                 ),
                                 {
 
-                                    // Project information
-
                                     projectName:
                                         project.name ||
                                         "Unnamed Project",
 
-
                                     projectId:
                                         projectId,
 
-
-                                    // =============================
-                                    // REQUESTER INFORMATION
-                                    // =============================
-
                                     requesterId:
                                         currentUser.uid,
-
 
                                     requesterName:
                                         currentUser.displayName ||
                                         "Anonymous Developer",
 
-
                                     requesterEmail:
                                         currentUser.email ||
                                         "",
 
-
-                                    // =============================
-                                    // REQUEST STATUS
-                                    // =============================
-
                                     status:
                                         "pending",
-
 
                                     requestedAt:
                                         serverTimestamp()
@@ -930,9 +1373,9 @@
 
 
 
-                            // =============================
-                            // UPDATE PROJECT STATUS
-                            // =============================
+                            /* =====================================
+                               UPDATE PROJECT STATUS
+                            ====================================== */
 
                             await updateDoc(
                                 doc(
@@ -941,16 +1384,18 @@
                                     projectId
                                 ),
                                 {
+
                                     status:
                                         "revival-requested"
+
                                 }
                             );
 
 
 
-                            // =============================
-                            // SUCCESS
-                            // =============================
+                            /* =====================================
+                               SUCCESS
+                            ====================================== */
 
                             alert(
                                 "🧟 Revival Request Sent!\n\n" +
@@ -990,17 +1435,18 @@
 
 
 
-                // =============================
-                // MARK AS REVIVED
-                // =============================
+                /* =================================================
+                   MARK AS REVIVED
+                ================================================= */
 
                 revivedButton.addEventListener(
                     "click",
-                    async function () {
+                    async function() {
 
-                        // =============================
-                        // LOGIN CHECK
-                        // =============================
+
+                        /* =========================================
+                           LOGIN CHECK
+                        ========================================== */
 
                         if (!currentUser) {
 
@@ -1019,9 +1465,9 @@
 
 
 
-                        // =============================
-                        // OWNER CHECK
-                        // =============================
+                        /* =========================================
+                           OWNER CHECK
+                        ========================================== */
 
                         if (
                             project.ownerId &&
@@ -1042,6 +1488,7 @@
 
                         try {
 
+
                             revivedButton.disabled =
                                 true;
 
@@ -1051,6 +1498,10 @@
 
 
 
+                            /* =====================================
+                               UPDATE PROJECT
+                            ====================================== */
+
                             await updateDoc(
                                 doc(
                                     db,
@@ -1058,18 +1509,23 @@
                                     projectId
                                 ),
                                 {
+
                                     status:
                                         "revived"
+
                                 }
                             );
 
 
 
+                            /* =====================================
+                               SUCCESS
+                            ====================================== */
+
                             alert(
                                 "✨ Project Revived!\n\n" +
                                 "This project has officially been brought back to life!"
                             );
-
 
 
                             window.location.reload();
@@ -1105,6 +1561,7 @@
             }
 
 
+
             catch (error) {
 
                 console.error(
@@ -1128,13 +1585,17 @@
 
 
                         <p>
+
                             Something went wrong while retrieving
                             this project.
+
                         </p>
 
 
                         <a href="projects.html">
+
                             ← Back to Graveyard
+
                         </a>
 
                     </div>
@@ -1147,9 +1608,9 @@
 
 
 
-        // =============================
-        // START
-        // =============================
+        /* =========================================================
+           START
+        ========================================================= */
 
         loadProject();
 

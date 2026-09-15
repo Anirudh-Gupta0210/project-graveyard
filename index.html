@@ -339,7 +339,7 @@
 
     <script type="module">
 
-        import { db } from "./firebase.js";
+        import { db, auth } from "./firebase.js";
 
 
         import {
@@ -348,19 +348,24 @@
         } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
+        import {
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+
+        // =============================
+        // LOAD HOMEPAGE STATISTICS
+        // =============================
+
         async function loadStats() {
 
             try {
 
+                // Get all projects
+
                 const snapshot =
                     await getDocs(
                         collection(db, "projects")
-                    );
-
-
-                const usersSnapshot =
-                    await getDocs(
-                        collection(db, "users")
                     );
 
 
@@ -369,15 +374,42 @@
                 let revived = 0;
 
 
+                // Store unique project owners
+
+                const developers =
+                    new Set();
+
+
                 snapshot.forEach(
-                    (doc) => {
+                    (projectDoc) => {
 
                         const project =
-                            doc.data();
+                            projectDoc.data();
 
+
+                        // =============================
+                        // COUNT PROJECTS
+                        // =============================
 
                         buried++;
 
+
+                        // =============================
+                        // COUNT UNIQUE DEVELOPERS
+                        // =============================
+
+                        if (project.ownerId) {
+
+                            developers.add(
+                                project.ownerId
+                            );
+
+                        }
+
+
+                        // =============================
+                        // COUNT REVIVED PROJECTS
+                        // =============================
 
                         if (
                             project.status ===
@@ -392,20 +424,33 @@
                 );
 
 
+                // =============================
+                // UPDATE PROJECTS BURIED
+                // =============================
+
                 document
                     .getElementById("projectsBuried")
                     .textContent = buried;
 
+
+                // =============================
+                // UPDATE PROJECTS REVIVED
+                // =============================
 
                 document
                     .getElementById("projectsRevived")
                     .textContent = revived;
 
 
+                // =============================
+                // UPDATE STUDENT DEVELOPERS
+                // =============================
+
                 document
                     .getElementById("studentDevelopers")
                     .textContent =
-                    usersSnapshot.size;
+                        developers.size;
+
 
             }
 
@@ -421,7 +466,22 @@
         }
 
 
-        loadStats();
+        // =============================
+        // WAIT FOR FIREBASE AUTH
+        // =============================
+
+        onAuthStateChanged(
+            auth,
+            (user) => {
+
+                if (user) {
+
+                    loadStats();
+
+                }
+
+            }
+        );
 
     </script>
 
