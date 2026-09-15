@@ -12,9 +12,80 @@
 
     <title>Login | Project Graveyard</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <style>
+
+        /* =====================================================
+           SHOW / HIDE PASSWORD
+        ===================================================== */
+
+        .password-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-wrapper input {
+            width: 100%;
+            padding-right: 48px;
+        }
+
+        .show-password {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+
+            transform: translateY(-50%);
+
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: none;
+            background: transparent;
+
+            color: #9295a3;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+            padding: 0;
+
+            transition:
+                color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .show-password:hover {
+            color: #f87171;
+
+            transform:
+                translateY(-50%)
+                scale(1.08);
+        }
+
+        .show-password:focus-visible {
+            outline:
+                2px solid #e05270;
+
+            outline-offset:
+                2px;
+
+            border-radius:
+                6px;
+        }
+
+    </style>
 
 </head>
+
 
 
 <body>
@@ -31,6 +102,7 @@
         </div>
 
     </header>
+
 
 
     <!-- =============================
@@ -87,12 +159,28 @@
                     </label>
 
 
-                    <input
-                        type="password"
-                        id="loginPassword"
-                        placeholder="Enter your password"
-                        required
-                    >
+                    <!-- PASSWORD FIELD -->
+
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="loginPassword"
+                            placeholder="Enter your password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="show-password"
+                            data-target="loginPassword"
+                            aria-label="Show password"
+                            title="Show password"
+                        >
+                            👁
+                        </button>
+
+                    </div>
 
 
                     <button
@@ -123,6 +211,7 @@
 
 
             </div>
+
 
 
             <!-- =============================
@@ -183,13 +272,29 @@
                     </label>
 
 
-                    <input
-                        type="password"
-                        id="signupPassword"
-                        placeholder="Create a password"
-                        minlength="6"
-                        required
-                    >
+                    <!-- PASSWORD FIELD -->
+
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="signupPassword"
+                            placeholder="Create a password"
+                            minlength="6"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="show-password"
+                            data-target="signupPassword"
+                            aria-label="Show password"
+                            title="Show password"
+                        >
+                            👁
+                        </button>
+
+                    </div>
 
 
                     <button
@@ -227,13 +332,17 @@
     </main>
 
 
+
     <!-- =============================
          FIREBASE AUTHENTICATION
     ============================== -->
 
     <script type="module">
 
-        import { auth, db } from "./firebase.js";
+        import {
+            auth,
+            db
+        } from "./firebase.js";
 
 
         import {
@@ -254,27 +363,40 @@
         // =============================
 
         const loginForm =
-            document.getElementById("loginForm");
+            document.getElementById(
+                "loginForm"
+            );
 
 
         const signupForm =
-            document.getElementById("signupForm");
+            document.getElementById(
+                "signupForm"
+            );
 
 
         const loginCard =
-            document.getElementById("loginCard");
+            document.getElementById(
+                "loginCard"
+            );
 
 
         const signupCard =
-            document.getElementById("signupCard");
+            document.getElementById(
+                "signupCard"
+            );
 
 
         const showSignup =
-            document.getElementById("showSignup");
+            document.getElementById(
+                "showSignup"
+            );
 
 
         const showLogin =
-            document.getElementById("showLogin");
+            document.getElementById(
+                "showLogin"
+            );
+
 
 
         // =============================
@@ -283,16 +405,19 @@
 
         showSignup.addEventListener(
             "click",
-            function (event) {
+            function(event) {
 
                 event.preventDefault();
 
-                loginCard.style.display = "none";
+                loginCard.style.display =
+                    "none";
 
-                signupCard.style.display = "block";
+                signupCard.style.display =
+                    "block";
 
             }
         );
+
 
 
         // =============================
@@ -301,16 +426,115 @@
 
         showLogin.addEventListener(
             "click",
-            function (event) {
+            function(event) {
 
                 event.preventDefault();
 
-                signupCard.style.display = "none";
+                signupCard.style.display =
+                    "none";
 
-                loginCard.style.display = "block";
+                loginCard.style.display =
+                    "block";
 
             }
         );
+
+
+
+        // =============================
+        // SHOW / HIDE PASSWORD
+        // =============================
+
+        document
+            .querySelectorAll(
+                ".show-password"
+            )
+            .forEach(
+                function(button) {
+
+                    button.addEventListener(
+                        "click",
+                        function() {
+
+                            const targetId =
+                                this.dataset.target;
+
+
+                            const passwordInput =
+                                document.getElementById(
+                                    targetId
+                                );
+
+
+                            if (!passwordInput) {
+                                return;
+                            }
+
+
+                            // =========================
+                            // SHOW PASSWORD
+                            // =========================
+
+                            if (
+                                passwordInput.type ===
+                                "password"
+                            ) {
+
+                                passwordInput.type =
+                                    "text";
+
+
+                                this.textContent =
+                                    "🙈";
+
+
+                                this.setAttribute(
+                                    "aria-label",
+                                    "Hide password"
+                                );
+
+
+                                this.setAttribute(
+                                    "title",
+                                    "Hide password"
+                                );
+
+                            }
+
+
+                            // =========================
+                            // HIDE PASSWORD
+                            // =========================
+
+                            else {
+
+                                passwordInput.type =
+                                    "password";
+
+
+                                this.textContent =
+                                    "👁";
+
+
+                                this.setAttribute(
+                                    "aria-label",
+                                    "Show password"
+                                );
+
+
+                                this.setAttribute(
+                                    "title",
+                                    "Show password"
+                                );
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
 
 
         // =============================
@@ -319,34 +543,43 @@
 
         signupForm.addEventListener(
             "submit",
-            async function (event) {
+            async function(event) {
 
                 event.preventDefault();
 
 
                 const name =
                     document
-                        .getElementById("signupName")
+                        .getElementById(
+                            "signupName"
+                        )
                         .value
                         .trim();
 
 
                 const email =
                     document
-                        .getElementById("signupEmail")
+                        .getElementById(
+                            "signupEmail"
+                        )
                         .value
                         .trim();
 
 
                 const password =
                     document
-                        .getElementById("signupPassword")
+                        .getElementById(
+                            "signupPassword"
+                        )
                         .value;
 
 
                 try {
 
-                    // Create Firebase account
+
+                    // =============================
+                    // CREATE FIREBASE ACCOUNT
+                    // =============================
 
                     const userCredential =
                         await createUserWithEmailAndPassword(
@@ -356,17 +589,22 @@
                         );
 
 
-                    // Save display name
+                    // =============================
+                    // SAVE DISPLAY NAME
+                    // =============================
 
                     await updateProfile(
                         userCredential.user,
                         {
-                            displayName: name
+                            displayName:
+                                name
                         }
                     );
 
 
-                    // Save user to Firestore
+                    // =============================
+                    // SAVE USER TO FIRESTORE
+                    // =============================
 
                     await setDoc(
                         doc(
@@ -375,9 +613,14 @@
                             userCredential.user.uid
                         ),
                         {
-                            name: name,
-                            email: email,
-                            createdAt: new Date()
+                            name:
+                                name,
+
+                            email:
+                                email,
+
+                            createdAt:
+                                new Date()
                         }
                     );
 
@@ -391,7 +634,9 @@
                         "index.html";
 
 
-                } catch (error) {
+                }
+
+                catch (error) {
 
                     console.error(
                         "Signup error:",
@@ -400,7 +645,8 @@
 
 
                     alert(
-                        "❌ " + error.message
+                        "❌ " +
+                        error.message
                     );
 
                 }
@@ -409,31 +655,41 @@
         );
 
 
+
         // =============================
         // EMAIL / PASSWORD LOGIN
         // =============================
 
         loginForm.addEventListener(
             "submit",
-            async function (event) {
+            async function(event) {
 
                 event.preventDefault();
 
 
                 const email =
                     document
-                        .getElementById("loginEmail")
+                        .getElementById(
+                            "loginEmail"
+                        )
                         .value
                         .trim();
 
 
                 const password =
                     document
-                        .getElementById("loginPassword")
+                        .getElementById(
+                            "loginPassword"
+                        )
                         .value;
 
 
                 try {
+
+
+                    // =============================
+                    // LOGIN
+                    // =============================
 
                     await signInWithEmailAndPassword(
                         auth,
@@ -451,7 +707,9 @@
                         "index.html";
 
 
-                } catch (error) {
+                }
+
+                catch (error) {
 
                     console.error(
                         "Login error:",
@@ -460,7 +718,8 @@
 
 
                     alert(
-                        "❌ " + error.message
+                        "❌ " +
+                        error.message
                     );
 
                 }
