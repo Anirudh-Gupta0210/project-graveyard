@@ -19,9 +19,9 @@
 
     <style>
 
-        /* =====================================================
-           SHOW / HIDE PASSWORD
-        ===================================================== */
+        /* =============================
+           PASSWORD FIELD
+        ============================== */
 
         .password-wrapper {
             position: relative;
@@ -30,62 +30,120 @@
 
         .password-wrapper input {
             width: 100%;
-            padding-right: 48px;
+            box-sizing: border-box;
+            padding-right: 50px;
         }
 
         .show-password {
             position: absolute;
+            right: 14px;
             top: 50%;
-            right: 10px;
-
             transform: translateY(-50%);
-
-            width: 34px;
-            height: 34px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
 
             border: none;
             background: transparent;
 
-            color: #9295a3;
-
-            font-size: 16px;
-
             cursor: pointer;
 
-            padding: 0;
+            font-size: 18px;
 
-            transition:
-                color 0.2s ease,
-                transform 0.2s ease;
+            color: #777;
+
+            padding: 4px;
         }
 
         .show-password:hover {
-            color: #f87171;
-
-            transform:
-                translateY(-50%)
-                scale(1.08);
+            color: #c51f3d;
         }
 
-        .show-password:focus-visible {
-            outline:
-                2px solid #e05270;
 
-            outline-offset:
-                2px;
+        /* =============================
+           FORGOT PASSWORD
+        ============================== */
 
-            border-radius:
-                6px;
+        .forgot-password {
+            display: block;
+
+            text-align: right;
+
+            margin-top: 10px;
+            margin-bottom: 20px;
+
+            color: #ff667c;
+
+            text-decoration: none;
+
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .forgot-password:hover {
+            color: #ff8b9b;
+            text-decoration: underline;
+        }
+
+
+        /* =============================
+           STATUS MESSAGE
+        ============================== */
+
+        .auth-status {
+            display: none;
+
+            width: 100%;
+
+            box-sizing: border-box;
+
+            padding: 14px 16px;
+
+            margin-bottom: 20px;
+
+            border-radius: 12px;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+            font-weight: 600;
+        }
+
+        .auth-status.success {
+            display: block;
+
+            background: rgba(34, 197, 94, 0.10);
+
+            border: 1px solid rgba(34, 197, 94, 0.30);
+
+            color: #69e79a;
+        }
+
+        .auth-status.error {
+            display: block;
+
+            background: rgba(239, 68, 68, 0.10);
+
+            border: 1px solid rgba(239, 68, 68, 0.30);
+
+            color: #ff7777;
+        }
+
+
+        /* =============================
+           LOADING BUTTON
+        ============================== */
+
+        .auth-btn.loading {
+            opacity: 0.7;
+
+            cursor: not-allowed;
+
+            pointer-events: none;
         }
 
     </style>
 
 </head>
-
 
 
 <body>
@@ -138,8 +196,18 @@
                 </p>
 
 
+                <!-- LOGIN STATUS -->
+
+                <div
+                    id="loginStatus"
+                    class="auth-status"
+                ></div>
+
+
                 <form id="loginForm">
 
+
+                    <!-- EMAIL -->
 
                     <label for="loginEmail">
                         Email
@@ -150,16 +218,17 @@
                         type="email"
                         id="loginEmail"
                         placeholder="Enter your email"
+                        autocomplete="email"
                         required
                     >
 
+
+                    <!-- PASSWORD -->
 
                     <label for="loginPassword">
                         Password
                     </label>
 
-
-                    <!-- PASSWORD FIELD -->
 
                     <div class="password-wrapper">
 
@@ -167,15 +236,16 @@
                             type="password"
                             id="loginPassword"
                             placeholder="Enter your password"
+                            autocomplete="current-password"
                             required
                         >
+
 
                         <button
                             type="button"
                             class="show-password"
-                            data-target="loginPassword"
+                            id="toggleLoginPassword"
                             aria-label="Show password"
-                            title="Show password"
                         >
                             👁
                         </button>
@@ -183,18 +253,31 @@
                     </div>
 
 
+                    <!-- FORGOT PASSWORD -->
+
+                    <a
+                        href="#"
+                        id="forgotPassword"
+                        class="forgot-password"
+                    >
+                        Forgot Password?
+                    </a>
+
+
+                    <!-- LOGIN BUTTON -->
+
                     <button
                         type="submit"
                         class="auth-btn"
+                        id="loginSubmit"
                     >
                         🔐 Login
                     </button>
 
-
                 </form>
 
 
-                <!-- Signup Link -->
+                <!-- SIGNUP LINK -->
 
                 <p class="auth-switch">
 
@@ -208,7 +291,6 @@
                     </a>
 
                 </p>
-
 
             </div>
 
@@ -238,8 +320,18 @@
                 </p>
 
 
+                <!-- SIGNUP STATUS -->
+
+                <div
+                    id="signupStatus"
+                    class="auth-status"
+                ></div>
+
+
                 <form id="signupForm">
 
+
+                    <!-- NAME -->
 
                     <label for="signupName">
                         Name
@@ -250,9 +342,12 @@
                         type="text"
                         id="signupName"
                         placeholder="Enter your name"
+                        autocomplete="name"
                         required
                     >
 
+
+                    <!-- EMAIL -->
 
                     <label for="signupEmail">
                         Email
@@ -263,16 +358,17 @@
                         type="email"
                         id="signupEmail"
                         placeholder="Enter your email"
+                        autocomplete="email"
                         required
                     >
 
+
+                    <!-- PASSWORD -->
 
                     <label for="signupPassword">
                         Password
                     </label>
 
-
-                    <!-- PASSWORD FIELD -->
 
                     <div class="password-wrapper">
 
@@ -280,16 +376,17 @@
                             type="password"
                             id="signupPassword"
                             placeholder="Create a password"
+                            autocomplete="new-password"
                             minlength="6"
                             required
                         >
 
+
                         <button
                             type="button"
                             class="show-password"
-                            data-target="signupPassword"
+                            id="toggleSignupPassword"
                             aria-label="Show password"
-                            title="Show password"
                         >
                             👁
                         </button>
@@ -297,18 +394,20 @@
                     </div>
 
 
+                    <!-- SIGNUP BUTTON -->
+
                     <button
                         type="submit"
                         class="auth-btn"
+                        id="signupSubmit"
                     >
                         🧟 Create Account
                     </button>
 
-
                 </form>
 
 
-                <!-- Login Link -->
+                <!-- LOGIN LINK -->
 
                 <p class="auth-switch">
 
@@ -322,7 +421,6 @@
                     </a>
 
                 </p>
-
 
             </div>
 
@@ -339,6 +437,11 @@
 
     <script type="module">
 
+
+        /* =============================
+           FIREBASE IMPORTS
+        ============================== */
+
         import {
             auth,
             db
@@ -348,7 +451,8 @@
         import {
             createUserWithEmailAndPassword,
             signInWithEmailAndPassword,
-            updateProfile
+            updateProfile,
+            sendPasswordResetEmail
         } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 
@@ -358,56 +462,217 @@
         } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-        // =============================
-        // GET ELEMENTS
-        // =============================
+
+        /* =============================
+           GET ELEMENTS
+        ============================== */
 
         const loginForm =
-            document.getElementById(
-                "loginForm"
-            );
+            document.getElementById("loginForm");
 
 
         const signupForm =
-            document.getElementById(
-                "signupForm"
-            );
+            document.getElementById("signupForm");
 
 
         const loginCard =
-            document.getElementById(
-                "loginCard"
-            );
+            document.getElementById("loginCard");
 
 
         const signupCard =
-            document.getElementById(
-                "signupCard"
-            );
+            document.getElementById("signupCard");
 
 
         const showSignup =
-            document.getElementById(
-                "showSignup"
-            );
+            document.getElementById("showSignup");
 
 
         const showLogin =
-            document.getElementById(
-                "showLogin"
-            );
+            document.getElementById("showLogin");
+
+
+        const forgotPassword =
+            document.getElementById("forgotPassword");
+
+
+        const loginStatus =
+            document.getElementById("loginStatus");
+
+
+        const signupStatus =
+            document.getElementById("signupStatus");
+
+
+        const loginSubmit =
+            document.getElementById("loginSubmit");
+
+
+        const signupSubmit =
+            document.getElementById("signupSubmit");
+
+
+        const loginPassword =
+            document.getElementById("loginPassword");
+
+
+        const signupPassword =
+            document.getElementById("signupPassword");
+
+
+        const toggleLoginPassword =
+            document.getElementById("toggleLoginPassword");
+
+
+        const toggleSignupPassword =
+            document.getElementById("toggleSignupPassword");
 
 
 
-        // =============================
-        // SWITCH TO SIGNUP
-        // =============================
+        /* =============================
+           SHOW STATUS
+        ============================== */
+
+        function showStatus(
+            element,
+            message,
+            type
+        ) {
+
+            element.textContent = message;
+
+            element.className =
+                "auth-status " + type;
+
+        }
+
+
+
+        /* =============================
+           CLEAR STATUS
+        ============================== */
+
+        function clearStatus(element) {
+
+            element.textContent = "";
+
+            element.className =
+                "auth-status";
+
+        }
+
+
+
+        /* =============================
+           FRIENDLY FIREBASE ERRORS
+        ============================== */
+
+        function getFriendlyError(error) {
+
+            switch (error.code) {
+
+                case "auth/invalid-email":
+
+                    return "Please enter a valid email address.";
+
+
+                case "auth/invalid-credential":
+
+                    return "Incorrect email or password.";
+
+
+                case "auth/wrong-password":
+
+                    return "Incorrect email or password.";
+
+
+                case "auth/user-not-found":
+
+                    return "No account exists with this email address.";
+
+
+                case "auth/email-already-in-use":
+
+                    return "An account already exists with this email.";
+
+
+                case "auth/weak-password":
+
+                    return "Password must contain at least 6 characters.";
+
+
+                case "auth/too-many-requests":
+
+                    return "Too many attempts. Please wait a little and try again.";
+
+
+                case "auth/network-request-failed":
+
+                    return "Network error. Please check your internet connection.";
+
+
+                case "auth/missing-password":
+
+                    return "Please enter your password.";
+
+
+                default:
+
+                    return error.message ||
+                        "Something went wrong. Please try again.";
+
+            }
+
+        }
+
+
+
+        /* =============================
+           BUTTON LOADING
+        ============================== */
+
+        function setLoading(
+            button,
+            loading,
+            normalText
+        ) {
+
+            if (loading) {
+
+                button.disabled = true;
+
+                button.classList.add("loading");
+
+                button.textContent =
+                    "⏳ Please wait...";
+
+            } else {
+
+                button.disabled = false;
+
+                button.classList.remove("loading");
+
+                button.textContent =
+                    normalText;
+
+            }
+
+        }
+
+
+
+        /* =============================
+           SWITCH TO SIGNUP
+        ============================== */
 
         showSignup.addEventListener(
             "click",
-            function(event) {
+            function (event) {
 
                 event.preventDefault();
+
+                clearStatus(loginStatus);
+
+                clearStatus(signupStatus);
 
                 loginCard.style.display =
                     "none";
@@ -420,15 +685,19 @@
 
 
 
-        // =============================
-        // SWITCH TO LOGIN
-        // =============================
+        /* =============================
+           SWITCH TO LOGIN
+        ============================== */
 
         showLogin.addEventListener(
             "click",
-            function(event) {
+            function (event) {
 
                 event.preventDefault();
+
+                clearStatus(loginStatus);
+
+                clearStatus(signupStatus);
 
                 signupCard.style.display =
                     "none";
@@ -441,145 +710,199 @@
 
 
 
-        // =============================
-        // SHOW / HIDE PASSWORD
-        // =============================
+        /* =============================
+           SHOW / HIDE LOGIN PASSWORD
+        ============================== */
 
-        document
-            .querySelectorAll(
-                ".show-password"
-            )
-            .forEach(
-                function(button) {
+        toggleLoginPassword.addEventListener(
+            "click",
+            function () {
 
-                    button.addEventListener(
-                        "click",
-                        function() {
+                if (
+                    loginPassword.type ===
+                    "password"
+                ) {
 
-                            const targetId =
-                                this.dataset.target;
+                    loginPassword.type =
+                        "text";
 
+                    toggleLoginPassword.textContent =
+                        "🙈";
 
-                            const passwordInput =
-                                document.getElementById(
-                                    targetId
-                                );
+                } else {
 
+                    loginPassword.type =
+                        "password";
 
-                            if (!passwordInput) {
-                                return;
-                            }
+                    toggleLoginPassword.textContent =
+                        "👁";
 
+                }
 
-                            // =========================
-                            // SHOW PASSWORD
-                            // =========================
-
-                            if (
-                                passwordInput.type ===
-                                "password"
-                            ) {
-
-                                passwordInput.type =
-                                    "text";
+            }
+        );
 
 
-                                this.textContent =
-                                    "🙈";
+
+        /* =============================
+           SHOW / HIDE SIGNUP PASSWORD
+        ============================== */
+
+        toggleSignupPassword.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    signupPassword.type ===
+                    "password"
+                ) {
+
+                    signupPassword.type =
+                        "text";
+
+                    toggleSignupPassword.textContent =
+                        "🙈";
+
+                } else {
+
+                    signupPassword.type =
+                        "password";
+
+                    toggleSignupPassword.textContent =
+                        "👁";
+
+                }
+
+            }
+        );
 
 
-                                this.setAttribute(
-                                    "aria-label",
-                                    "Hide password"
-                                );
+
+        /* =============================
+           FORGOT PASSWORD
+        ============================== */
+
+        forgotPassword.addEventListener(
+            "click",
+            async function (event) {
+
+                event.preventDefault();
+
+                clearStatus(loginStatus);
 
 
-                                this.setAttribute(
-                                    "title",
-                                    "Hide password"
-                                );
-
-                            }
-
-
-                            // =========================
-                            // HIDE PASSWORD
-                            // =========================
-
-                            else {
-
-                                passwordInput.type =
-                                    "password";
+                const email =
+                    document
+                        .getElementById("loginEmail")
+                        .value
+                        .trim();
 
 
-                                this.textContent =
-                                    "👁";
+                /* =============================
+                   CHECK EMAIL
+                ============================== */
+
+                if (!email) {
+
+                    showStatus(
+                        loginStatus,
+                        "📧 Enter your email address first.",
+                        "error"
+                    );
+
+                    document
+                        .getElementById("loginEmail")
+                        .focus();
+
+                    return;
+
+                }
 
 
-                                this.setAttribute(
-                                    "aria-label",
-                                    "Show password"
-                                );
+                /* =============================
+                   SEND PASSWORD RESET EMAIL
+                ============================== */
+
+                try {
+
+                    await sendPasswordResetEmail(
+                        auth,
+                        email
+                    );
 
 
-                                this.setAttribute(
-                                    "title",
-                                    "Show password"
-                                );
-
-                            }
-
-                        }
+                    showStatus(
+                        loginStatus,
+                        "📩 Password reset email sent! Check your inbox, including Spam and Promotions.",
+                        "success"
                     );
 
                 }
-            );
+
+
+                catch (error) {
+
+                    console.error(
+                        "Password reset error:",
+                        error
+                    );
+
+
+                    showStatus(
+                        loginStatus,
+                        "❌ " +
+                        getFriendlyError(error),
+                        "error"
+                    );
+
+                }
+
+            }
+        );
 
 
 
-        // =============================
-        // EMAIL / PASSWORD SIGNUP
-        // =============================
+        /* =============================
+           EMAIL / PASSWORD SIGNUP
+        ============================== */
 
         signupForm.addEventListener(
             "submit",
-            async function(event) {
+            async function (event) {
 
                 event.preventDefault();
+
+                clearStatus(signupStatus);
 
 
                 const name =
                     document
-                        .getElementById(
-                            "signupName"
-                        )
+                        .getElementById("signupName")
                         .value
                         .trim();
 
 
                 const email =
                     document
-                        .getElementById(
-                            "signupEmail"
-                        )
+                        .getElementById("signupEmail")
                         .value
                         .trim();
 
 
                 const password =
                     document
-                        .getElementById(
-                            "signupPassword"
-                        )
+                        .getElementById("signupPassword")
                         .value;
 
 
+                setLoading(
+                    signupSubmit,
+                    true,
+                    "🧟 Create Account"
+                );
+
+
                 try {
-
-
-                    // =============================
-                    // CREATE FIREBASE ACCOUNT
-                    // =============================
 
                     const userCredential =
                         await createUserWithEmailAndPassword(
@@ -589,22 +912,13 @@
                         );
 
 
-                    // =============================
-                    // SAVE DISPLAY NAME
-                    // =============================
-
                     await updateProfile(
                         userCredential.user,
                         {
-                            displayName:
-                                name
+                            displayName: name
                         }
                     );
 
-
-                    // =============================
-                    // SAVE USER TO FIRESTORE
-                    // =============================
 
                     await setDoc(
                         doc(
@@ -613,28 +927,32 @@
                             userCredential.user.uid
                         ),
                         {
-                            name:
-                                name,
-
-                            email:
-                                email,
-
-                            createdAt:
-                                new Date()
+                            name: name,
+                            email: email,
+                            createdAt: new Date()
                         }
                     );
 
 
-                    alert(
-                        "🎉 Account created successfully!"
+                    showStatus(
+                        signupStatus,
+                        "🎉 Account created successfully! Redirecting...",
+                        "success"
                     );
 
 
-                    window.location.href =
-                        "index.html";
+                    setTimeout(
+                        function () {
 
+                            window.location.href =
+                                "index.html";
+
+                        },
+                        1200
+                    );
 
                 }
+
 
                 catch (error) {
 
@@ -644,9 +962,18 @@
                     );
 
 
-                    alert(
+                    showStatus(
+                        signupStatus,
                         "❌ " +
-                        error.message
+                        getFriendlyError(error),
+                        "error"
+                    );
+
+
+                    setLoading(
+                        signupSubmit,
+                        false,
+                        "🧟 Create Account"
                     );
 
                 }
@@ -656,40 +983,40 @@
 
 
 
-        // =============================
-        // EMAIL / PASSWORD LOGIN
-        // =============================
+        /* =============================
+           EMAIL / PASSWORD LOGIN
+        ============================== */
 
         loginForm.addEventListener(
             "submit",
-            async function(event) {
+            async function (event) {
 
                 event.preventDefault();
+
+                clearStatus(loginStatus);
 
 
                 const email =
                     document
-                        .getElementById(
-                            "loginEmail"
-                        )
+                        .getElementById("loginEmail")
                         .value
                         .trim();
 
 
                 const password =
                     document
-                        .getElementById(
-                            "loginPassword"
-                        )
+                        .getElementById("loginPassword")
                         .value;
 
 
+                setLoading(
+                    loginSubmit,
+                    true,
+                    "🔐 Login"
+                );
+
+
                 try {
-
-
-                    // =============================
-                    // LOGIN
-                    // =============================
 
                     await signInWithEmailAndPassword(
                         auth,
@@ -698,16 +1025,25 @@
                     );
 
 
-                    alert(
-                        "👋 Login successful!"
+                    showStatus(
+                        loginStatus,
+                        "👋 Login successful! Redirecting...",
+                        "success"
                     );
 
 
-                    window.location.href =
-                        "index.html";
+                    setTimeout(
+                        function () {
 
+                            window.location.href =
+                                "index.html";
+
+                        },
+                        800
+                    );
 
                 }
+
 
                 catch (error) {
 
@@ -717,9 +1053,18 @@
                     );
 
 
-                    alert(
+                    showStatus(
+                        loginStatus,
                         "❌ " +
-                        error.message
+                        getFriendlyError(error),
+                        "error"
+                    );
+
+
+                    setLoading(
+                        loginSubmit,
+                        false,
+                        "🔐 Login"
                     );
 
                 }
