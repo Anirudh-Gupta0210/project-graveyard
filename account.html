@@ -18,128 +18,7 @@
     >
 
     <style>
-
-        /* =============================
-           SAVED PROJECTS
-        ============================== */
-
-        .saved-projects {
-            margin-top: 50px;
-        }
-
-        .saved-project-grid {
-            display: grid;
-            grid-template-columns: repeat(
-                auto-fit,
-                minmax(280px, 1fr)
-            );
-            gap: 22px;
-            margin-top: 25px;
-        }
-
-        .saved-project-card {
-            background: rgba(255,255,255,0.035);
-            border: 1px solid rgba(139,92,246,0.18);
-            border-radius: 16px;
-            padding: 22px;
-            transition:
-                transform 0.2s ease,
-                border-color 0.2s ease,
-                box-shadow 0.2s ease;
-        }
-
-        .saved-project-card:hover {
-            transform: translateY(-3px);
-            border-color: rgba(139,92,246,0.4);
-            box-shadow:
-                0 12px 30px rgba(0,0,0,0.2);
-        }
-
-        .saved-project-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .saved-project-icon {
-            font-size: 28px;
-        }
-
-        .saved-project-card h3 {
-            margin: 0 0 10px;
-        }
-
-        .saved-project-card p {
-            color: #aaa8b5;
-            line-height: 1.6;
-            font-size: 14px;
-        }
-
-        .saved-project-tech {
-            margin-top: 14px;
-            color: #bdb9c9;
-            font-size: 13px;
-        }
-
-        .saved-project-footer {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-
-        .remove-save-btn {
-            border: 1px solid rgba(239,68,68,0.3);
-            background: rgba(239,68,68,0.08);
-            color: #fca5a5;
-            padding: 10px 14px;
-            border-radius: 9px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .remove-save-btn:hover {
-            background: rgba(239,68,68,0.15);
-            border-color: rgba(239,68,68,0.5);
-        }
-
-        .saved-empty {
-            text-align: center;
-            padding: 55px 25px;
-            border: 1px dashed rgba(139,92,246,0.25);
-            border-radius: 16px;
-            background: rgba(255,255,255,0.02);
-        }
-
-        .saved-empty-icon {
-            font-size: 45px;
-            margin-bottom: 12px;
-        }
-
-        .saved-empty h2 {
-            margin-bottom: 10px;
-        }
-
-        .saved-empty p {
-            color: #aaa8b5;
-            margin-bottom: 20px;
-        }
-
-        @media (max-width: 600px) {
-
-            .saved-project-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .saved-project-footer button {
-                width: 100%;
-            }
-
-        }
-
+        .saved-projects{margin-top:50px}.saved-project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;margin-top:25px}.saved-project-card{background:rgba(255,255,255,.035);border:1px solid rgba(139,92,246,.18);border-radius:16px;padding:22px;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}.saved-project-card:hover{transform:translateY(-3px);border-color:rgba(139,92,246,.4);box-shadow:0 12px 30px rgba(0,0,0,.2)}.saved-project-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.saved-project-icon{font-size:28px}.saved-project-card h3{margin:0 0 10px}.saved-project-card p{color:#aaa8b5;line-height:1.6;font-size:14px}.saved-project-tech{margin-top:14px;color:#bdb9c9;font-size:13px}.saved-project-footer{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}.remove-save-btn{border:1px solid rgba(239,68,68,.3);background:rgba(239,68,68,.08);color:#fca5a5;padding:10px 14px;border-radius:9px;cursor:pointer;font-size:13px;font-weight:600}.remove-save-btn:hover{background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.5)}.saved-empty{text-align:center;padding:55px 25px;border:1px dashed rgba(139,92,246,.25);border-radius:16px;background:rgba(255,255,255,.02)}.saved-empty-icon{font-size:45px;margin-bottom:12px}.saved-empty h2{margin-bottom:10px}.saved-empty p{color:#aaa8b5;margin-bottom:20px}@media (max-width:600px){.saved-project-grid{grid-template-columns:1fr}.saved-project-footer button{width:100%}}
     </style>
 
 </head>
@@ -148,200 +27,38 @@
 <body>
 
 
-    <!-- =============================
-         NAVIGATION
-    ============================== -->
-
     <nav>
-
-        <div class="logo">
-            ⚰️ Project<span>Graveyard</span>
-        </div>
-
+        <div class="logo">⚰️ Project<span>Graveyard</span></div>
         <div>
-
-            <a href="index.html">
-                Home
-            </a>
-
-            <a href="projects.html">
-                Explore
-            </a>
-
-            <a href="bury.html">
-                Bury a Project
-            </a>
-
-            <a href="requests.html">
-                Requests
-            </a>
-
-            <a
-                href="account.html"
-                class="account-nav-active"
-            >
-                👤 Account
-            </a>
-
+            <a href="index.html">Home</a>
+            <a href="projects.html">Explore</a>
+            <a href="bury.html">Bury a Project</a>
+            <a href="requests.html">Requests</a>
+            <a href="account.html" class="account-nav-active">👤 Account</a>
         </div>
-
     </nav>
 
-
-    <!-- =============================
-         ACCOUNT PROFILE
-    ============================== -->
-
     <section class="account-profile">
-
-        <div class="account-profile-icon">
-            👤
-        </div>
-
+        <div class="account-profile-icon">👤</div>
         <div class="account-profile-info">
-
-            <p class="account-label">
-                PROJECT GRAVEYARD MEMBER
-            </p>
-
-            <div
-                style="
-                    display: flex;
-                    align-items: center;
-                    gap: 14px;
-                    flex-wrap: wrap;
-                "
-            >
-
-                <h1
-                    id="accountName"
-                    style="margin: 0;"
-                >
-                    Loading...
-                </h1>
-
-                <button
-                    id="editNameButton"
-                    type="button"
-                    style="
-                        border: 1px solid #8b5cf6;
-                        background: transparent;
-                        color: #a78bfa;
-                        padding: 8px 14px;
-                        border-radius: 8px;
-                        cursor: pointer;
-                        font-size: 14px;
-                    "
-                >
-                    ✏️ Edit Name
-                </button>
-
+            <p class="account-label">PROJECT GRAVEYARD MEMBER</p>
+            <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+                <h1 id="accountName" style="margin:0;">Loading...</h1>
+                <button id="editNameButton" type="button" style="border:1px solid #8b5cf6;background:transparent;color:#a78bfa;padding:8px 14px;border-radius:8px;cursor:pointer;font-size:14px;">✏️ Edit Name</button>
             </div>
 
-
-            <!-- EDIT NAME FORM -->
-
-            <div
-                id="editNameForm"
-                style="
-                    display: none;
-                    margin-top: 15px;
-                "
-            >
-
-                <input
-                    type="text"
-                    id="newName"
-                    placeholder="Enter your name"
-                    maxlength="50"
-                    style="
-                        padding: 11px 14px;
-                        border-radius: 8px;
-                        border: 1px solid #444;
-                        background: #181820;
-                        color: white;
-                        font-size: 15px;
-                        width: 250px;
-                        outline: none;
-                    "
-                >
-
-                <button
-                    id="saveNameButton"
-                    type="button"
-                    style="
-                        margin-left: 8px;
-                        border: none;
-                        background: #8b5cf6;
-                        color: white;
-                        padding: 11px 16px;
-                        border-radius: 8px;
-                        cursor: pointer;
-                        font-size: 14px;
-                    "
-                >
-                    💾 Save
-                </button>
-
-                <button
-                    id="cancelNameButton"
-                    type="button"
-                    style="
-                        margin-left: 6px;
-                        border: 1px solid #444;
-                        background: transparent;
-                        color: #aaa;
-                        padding: 10px 14px;
-                        border-radius: 8px;
-                        cursor: pointer;
-                        font-size: 14px;
-                    "
-                >
-                    Cancel
-                </button>
-
-                <p
-                    id="nameMessage"
-                    style="
-                        margin-top: 10px;
-                        font-size: 14px;
-                    "
-                ></p>
-
+            <div id="editNameForm" style="display:none;margin-top:15px;">
+                <input type="text" id="newName" placeholder="Enter your name" maxlength="50" style="padding:11px 14px;border-radius:8px;border:1px solid #444;background:#181820;color:#fff;font-size:15px;width:250px;outline:none;">
+                <button id="saveNameButton" type="button" style="margin-left:8px;border:none;background:#8b5cf6;color:#fff;padding:11px 16px;border-radius:8px;cursor:pointer;font-size:14px;">💾 Save</button>
+                <button id="cancelNameButton" type="button" style="margin-left:6px;border:1px solid #444;background:transparent;color:#aaa;padding:10px 14px;border-radius:8px;cursor:pointer;font-size:14px;">Cancel</button>
+                <p id="nameMessage" style="margin-top:10px;font-size:14px;"></p>
             </div>
 
-
-            <!-- EMAIL -->
-
-            <p
-                id="accountEmail"
-                class="account-email"
-            >
-                Loading account...
-            </p>
-
-
-            <!-- MEMBER SINCE -->
-
-            <p
-                id="memberSince"
-                class="member-since"
-            >
-                Member since: Loading...
-            </p>
-
+            <p id="accountEmail" class="account-email">Loading account...</p>
+            <p id="memberSince" class="member-since">Member since: Loading...</p>
         </div>
 
-
-        <!-- LOGOUT -->
-
-        <button
-            id="logoutButton"
-            class="logout-btn"
-        >
-            🚪 Logout
-        </button>
-
+        <button id="logoutButton" class="logout-btn">🚪 Logout</button>
     </section>
 
 
@@ -350,123 +67,17 @@
     ============================== -->
 
     <section class="account-stats">
-
-        <div class="account-stat">
-
-            <div class="account-stat-icon">
-                ☠️
-            </div>
-
-            <h2 id="buriedCount">
-                0
-            </h2>
-
-            <p>
-                Projects Buried
-            </p>
-
-        </div>
-
-
-        <div class="account-stat">
-
-            <div class="account-stat-icon">
-                🧟
-            </div>
-
-            <h2 id="pendingCount">
-                0
-            </h2>
-
-            <p>
-                Awaiting Revival
-            </p>
-
-        </div>
-
-
-        <div class="account-stat">
-
-            <div class="account-stat-icon">
-                🔨
-            </div>
-
-            <h2 id="progressCount">
-                0
-            </h2>
-
-            <p>
-                In Progress
-            </p>
-
-        </div>
-
-
-        <div class="account-stat">
-
-            <div class="account-stat-icon">
-                ✨
-            </div>
-
-            <h2 id="revivedCount">
-                0
-            </h2>
-
-            <p>
-                Projects Revived
-            </p>
-
-        </div>
-
-
-        <!-- SAVED PROJECTS -->
-
-        <div class="account-stat">
-
-            <div class="account-stat-icon">
-                🔖
-            </div>
-
-            <h2 id="savedCount">
-                0
-            </h2>
-
-            <p>
-                Saved Projects
-            </p>
-
-        </div>
-
+        <div class="account-stat"><div class="account-stat-icon">☠️</div><h2 id="buriedCount">0</h2><p>Projects Buried</p></div>
+        <div class="account-stat"><div class="account-stat-icon">🧟</div><h2 id="pendingCount">0</h2><p>Awaiting Revival</p></div>
+        <div class="account-stat"><div class="account-stat-icon">🔨</div><h2 id="progressCount">0</h2><p>In Progress</p></div>
+        <div class="account-stat"><div class="account-stat-icon">✨</div><h2 id="revivedCount">0</h2><p>Projects Revived</p></div>
+        <div class="account-stat"><div class="account-stat-icon">🔖</div><h2 id="savedCount">0</h2><p>Saved Projects</p></div>
     </section>
 
-
-    <!-- =============================
-         QUICK ACTIONS
-    ============================== -->
-
     <section class="account-actions">
-
-        <a
-            href="projects.html"
-            class="account-action secondary-action"
-        >
-            🔎 Explore Projects
-        </a>
-
-        <a
-            href="bury.html"
-            class="account-action primary-action"
-        >
-            ⚰️ Bury a Project
-        </a>
-
-        <a
-            href="requests.html"
-            class="account-action secondary-action"
-        >
-            🧟 View Requests
-        </a>
-
+        <a href="projects.html" class="account-action secondary-action">🔎 Explore Projects</a>
+        <a href="bury.html" class="account-action primary-action">⚰️ Bury a Project</a>
+        <a href="requests.html" class="account-action secondary-action">🧟 View Requests</a>
     </section>
 
 
